@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090a11"><title>Doomwatch | Avengers Watchlist</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800;1,900&family=Barlow:wght@500;600;700;800&display=swap');
+:root{--bg:#090a11;--panel:#11131d;--line:#292c3b;--muted:#85899c;--text:#f2f1f6;--acid:#d7ff4f;--red:#ff4657;--mono:'DM Mono',monospace;--display:'Space Grotesk',sans-serif}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -15%,#25223c 0,transparent 40%),var(--bg);color:var(--text);font:14px var(--display)}button,input{font:inherit;color:inherit}button{cursor:pointer}.wrap{max-width:1450px;margin:auto;padding:0 46px 38px}.top{height:74px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:13px;letter-spacing:.15em}.brandmark{width:32px;height:32px;border:1px solid var(--red);color:var(--red);display:grid;place-items:center;transform:rotate(45deg);font:17px var(--mono)}.brandmark span{transform:rotate(-45deg)}.topright{display:flex;align-items:center;gap:22px}.online,.local,.mono{font:9px var(--mono);letter-spacing:.1em}.online{color:var(--acid)}.online:before{content:'';display:inline-block;width:6px;height:6px;background:var(--acid);border-radius:50%;margin-right:9px;box-shadow:0 0 8px var(--acid)}.local{color:#a5a8b8;border:1px solid var(--line);padding:9px}.avatar{border:1px solid #555970;background:#202435;border-radius:9px;width:40px;height:40px;padding:2px}.pixelface{font-size:24px;line-height:1;image-rendering:pixelated}.intro{padding:35px 0 19px;display:flex;align-items:end;justify-content:space-between}.eyebrow{font:9px var(--mono);letter-spacing:.14em;color:#8c91a6}.intro h1{font-size:29px;font-weight:500;letter-spacing:-.06em;margin:10px 0 0}.accent{color:var(--red)}.status{font:9px var(--mono);letter-spacing:.08em;color:#ff8790;border:1px solid #67313d;padding:9px 11px}.hero{min-height:258px;padding:24px 30px;position:relative;overflow:hidden;border:1px solid #38394d;border-radius:4px;background:linear-gradient(105deg,#151723,#1a1926 68%,#25191f)}.hero:after{content:'';position:absolute;width:325px;height:325px;right:8%;top:-140px;border:1px solid #60607744;border-radius:50%;box-shadow:0 0 0 32px #d7ff4f08,0 0 0 65px #ff465708}.herotop,.herobottom{position:relative;z-index:1;display:flex;justify-content:space-between}.herolabel{font:9px var(--mono);letter-spacing:.12em}.herolabel b{color:var(--red);margin-right:8px}.heroarea{position:relative;z-index:1;display:flex;align-items:center;gap:40px;margin-top:31px}.clock{display:flex;align-items:start;gap:12px}.unit{min-width:68px}.num{font-size:clamp(42px,5.7vw,68px);line-height:1;letter-spacing:-.09em;font-variant-numeric:tabular-nums}.unitlabel{font:8px var(--mono);letter-spacing:.14em;color:#898da0;margin-top:9px}.colon{font-size:34px;color:#55586c}.heronote{border-left:1px solid #4b4b5d;padding:3px 0 3px 19px;color:#aeb0bf;max-width:240px;font-size:11px;line-height:1.7}.heronote strong{display:block;color:var(--acid);font:9px var(--mono);letter-spacing:.08em;margin-bottom:5px}.herobottom{position:absolute;left:30px;right:30px;bottom:15px;border-top:1px solid #3a3a4a;padding-top:10px;color:#85889a;font:8px var(--mono);letter-spacing:.06em}.green{color:var(--acid)}.timeline{margin-top:17px;padding:19px 22px 16px;background:var(--panel);border:1px solid var(--line);border-radius:4px}.timelinehead{display:flex;justify-content:space-between}.timelinehead h2{margin:0;font-size:14px}.timelinehead p{margin:5px 0 0;color:var(--muted);font:8px var(--mono);letter-spacing:.08em}.timelinepct{color:var(--acid);font:9px var(--mono)}.rail{height:62px;position:relative;margin:12px 8px 0}.railbase,.railfill{position:absolute;top:19px;left:0;height:2px;background:#343748}.railbase{right:0}.railfill{width:0;background:linear-gradient(90deg,#64b9ff,var(--acid));transition:width .35s}.dot{position:absolute;z-index:2;top:10px;left:0;width:20px;height:20px;border-radius:50%;background:var(--acid);border:4px solid #181b25;box-shadow:0 0 0 1px var(--acid),0 0 15px #d7ff4f99;transform:translateX(-50%);transition:left .35s}.dot:after{content:'';position:absolute;inset:4px;border-radius:50%;background:#11130e}.milestone{position:absolute;top:28px;transform:translateX(-50%);white-space:nowrap;text-align:center;color:#74798d;font:7px var(--mono);letter-spacing:.04em}.milestone:before{content:'';position:absolute;left:50%;top:-12px;width:5px;height:5px;border-radius:50%;background:#62677b;transform:translateX(-50%)}.milestone.passed{color:#d2d4df}.milestone.passed:before{background:var(--acid);box-shadow:0 0 7px var(--acid)}.milestone.first{transform:none}.milestone.last{transform:translateX(-100%)}.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.8fr);gap:17px;margin-top:17px}.card{background:var(--panel);border:1px solid var(--line);border-radius:4px}.cardhead{padding:18px 21px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.title{font-size:14px;font-weight:600}.sub{font:9px var(--mono);letter-spacing:.06em;color:var(--muted);margin-top:5px}.count{font:9px var(--mono);color:#a4a7b7}.progress{padding:13px 21px 16px}.progtop{display:flex;justify-content:space-between;color:#a6a9b9;font:9px var(--mono)}.progtop strong{color:var(--acid);font-weight:400}.track{height:4px;background:#292c3b;margin-top:9px}.fill{height:100%;width:0;background:var(--acid);box-shadow:0 0 10px #d7ff4f66;transition:width .3s}.phase{padding:12px 21px 8px;border-top:1px solid #232634;color:#777c91;font:8px var(--mono);letter-spacing:.1em}.item{min-height:48px;padding:9px 21px;border-top:1px solid #20232f;display:flex;align-items:center;gap:11px;cursor:pointer}.item:hover{background:#171a26}.check{width:16px;height:16px;flex:0 0 16px;border:1px solid #575b70;border-radius:2px;display:grid;place-items:center;color:#111;font:10px var(--mono)}.item.done .check{background:var(--acid);border-color:var(--acid)}.itemname{font-size:11px;flex:1;color:#d1d2dc}.item.done .itemname{color:#74788c;text-decoration:line-through}.kind{font:8px var(--mono);color:#777d94}.kind.series{color:#bc9dff}.remove{display:none;background:none;border:0;color:#888;font-size:16px}.item:hover .remove{display:block}.actions{display:flex;gap:8px;padding:14px 21px;border-top:1px solid #222532}.action{background:#191c29;border:1px solid #373a4c;color:#c3c5d0;padding:9px 11px;font:8px var(--mono)}.action:hover{border-color:var(--acid);color:var(--acid)}.side{display:flex;flex-direction:column;gap:16px}.summary,.heroes{padding:19px 20px}.sidehead{display:flex;justify-content:space-between;align-items:center}.sidehead h2{font-size:14px;margin:0}.ringrow{display:flex;align-items:center;gap:16px;margin-top:17px}.ring{width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--acid) 0deg,#2b2e3c 0deg);position:relative;display:grid;place-items:center;transition:.3s}.ring:before{content:'';position:absolute;inset:6px;border-radius:50%;background:var(--panel)}.ringtext{position:relative;text-align:center;font-size:18px;z-index:1}.ringtext small{display:block;color:#85899c;font:7px var(--mono)}.summarycopy{font-size:10px;color:#999daf;line-height:1.6}.summarycopy strong{display:block;font-size:11px;color:#eeeef2;margin-bottom:4px}.metrics{margin-top:16px;border-top:1px solid var(--line)}.metric{padding:11px 0;border-bottom:1px solid #222532;display:flex;justify-content:space-between;color:#b8bac7;font-size:10px}.metric:last-child{border:0;padding-bottom:0}.metric span:last-child{font:8px var(--mono);color:#898da0}.heroicons{display:flex;gap:8px;margin:15px 0 10px}.herochoice{border:1px solid #41455b;background:#1b1e2d;border-radius:9px;width:43px;height:43px;display:grid;place-items:center;cursor:pointer}.herochoice:hover{border-color:var(--acid);transform:translateY(-2px)}.herochoice .pixelface{font-size:23px}.herofoot{display:flex;justify-content:space-between;color:#888c9f;font:8px var(--mono)}.note{padding:16px 18px;background:#151722;border:1px solid #303346}.notelabel{font:8px var(--mono);color:var(--red);letter-spacing:.1em}.note p{color:#b5b7c5;font-size:10px;line-height:1.6;margin:9px 0 0}.footer{display:flex;justify-content:space-between;color:#62677c;font:8px var(--mono);margin-top:22px}.backdrop{position:fixed;inset:0;z-index:5;background:#06070cdd;display:grid;place-items:center;padding:18px}.modal{width:min(440px,100%);padding:25px;background:#131520;border:1px solid #44475b;max-height:94vh;overflow:auto}.modal h2{font-size:22px;font-weight:500;margin:0 0 8px}.modal p{font-size:11px;color:#a3a6b8;line-height:1.6;margin:0 0 18px}.modal label{display:block;color:#a0a3b6;font:8px var(--mono);letter-spacing:.1em;margin:12px 0 7px}.modal input{width:100%;background:#0b0c13;border:1px solid #3b3e52;padding:12px;outline:none}.modal input:focus{border-color:var(--acid)}.icon-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.iconbtn{height:51px;display:grid;place-items:center;background:#191c29;border:1px solid #393d51;border-radius:8px}.iconbtn.selected,.iconbtn:hover{border-color:var(--acid);background:#242a24}.iconbtn span{font-size:24px;image-rendering:pixelated}.modalfoot{display:flex;gap:8px;margin-top:17px}.primary,.secondary{padding:11px 14px;font:9px var(--mono)}.primary{background:var(--acid);color:#10120a;border:0}.secondary{background:transparent;border:1px solid #44475b;color:#aaadbc}.step{color:var(--acid);font:8px var(--mono);letter-spacing:.1em;margin-bottom:12px}.hidden{display:none!important}.toast{position:fixed;z-index:9;bottom:22px;left:50%;transform:translate(-50%,15px);opacity:0;background:var(--acid);color:#111;padding:10px 14px;font:8px var(--mono);transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:850px){.wrap{padding:0 24px 32px}.grid{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr;align-items:start}.note{grid-column:1/-1}}@media(max-width:580px){.wrap{padding:0 14px 24px}.top{height:62px}.topright{gap:11px}.local{display:none}.intro{padding-top:26px;align-items:flex-start;flex-direction:column;gap:12px}.intro h1{font-size:24px}.hero{padding:19px 16px;min-height:285px}.hero:after{right:-50%;top:-90px}.heroarea{display:block;margin-top:29px}.clock{justify-content:space-between;gap:4px}.unit{min-width:0}.num{font-size:clamp(34px,10.5vw,53px)}.colon{font-size:24px}.unitlabel{font-size:7px}.heronote{margin-top:21px;padding-left:12px;font-size:10px}.herobottom{left:16px;right:16px;font-size:7px}.timeline{padding:16px 13px 13px}.milestone{font-size:6px;letter-spacing:0}.cardhead{padding:16px}.progress{padding:12px 16px 15px}.phase{padding-left:16px}.item{padding:9px 16px;gap:8px}.kind{font-size:7px}.actions{padding:12px 16px}.side{grid-template-columns:1fr}.note{grid-column:auto}.footer{font-size:7px;gap:9px;line-height:1.5}.footer span:last-child{text-align:right}.icon-grid{grid-template-columns:repeat(4,1fr)}}
+
+
+:root{--bg:#161220;--panel:#211b30;--line:#4d3e60;--muted:#c1b4ce;--text:#fff2d5;--acid:#ffdf47;--red:#ff495a;--display:Barlow,system-ui,sans-serif;--headline:'Barlow Condensed',Impact,sans-serif}
+body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 6px,#161220}
+.wrap{max-width:1320px}.top{height:65px;border-bottom:3px solid #06050a}.brand{gap:10px;letter-spacing:.03em;font-size:15px}.brandmark{transform:none;background:#ec183e;color:#fff5d9;border:2px solid #09060c;width:auto;padding:0 8px;font:italic 900 17px var(--headline);box-shadow:3px 3px #06050a}.brandmark span{transform:none}.online{display:none}.avatar{border-color:#f3b743;background:#422655}
+.hero{isolation:isolate;margin-top:20px;min-height:420px;padding:32px 35px;background:radial-gradient(ellipse at 74% 38%,#affd884d,transparent 32%),linear-gradient(118deg,#4f0f37 5%,#a21b40 53%,#28163f 82%);border:3px solid #07050a;border-radius:0;box-shadow:6px 6px #07050a}
+.hero:before{content:'';position:absolute;inset:0;z-index:-2;background:radial-gradient(circle,#100a1e90 1px,transparent 1.6px) 0 0/6px 6px,repeating-conic-gradient(from 12deg at 75% 49%,#ffe27e3d 0deg 2deg,transparent 2deg 13deg);mask-image:linear-gradient(90deg,transparent,#000 68%)}
+.hero:after{display:none}.hero-art{position:absolute;z-index:-1;right:0;bottom:0;width:55%;height:100%;overflow:hidden;pointer-events:none}.portal{position:absolute;left:56%;top:46%;width:55%;aspect-ratio:1;transform:translate(-50%,-50%) rotate(-22deg);border:4px solid #adff8c;border-radius:50%;box-shadow:0 0 34px #8fff67,inset 0 0 35px #a1ff80,0 0 0 12px #5ffa5350,0 0 0 24px #b6fc8029;background:radial-gradient(#dbffc875,#69b95836 48%,#251130 72%)}.hero-art canvas{position:absolute;image-rendering:pixelated;filter:drop-shadow(6px 8px #0a0618) drop-shadow(0 0 11px #91fb8166)}.hero-art .villain{width:56%;right:8%;bottom:10%}.hero-art .fighter{width:31%;left:2%;bottom:5%;transform:rotate(-10deg)}.hero-art .mutant{width:32%;right:-4%;bottom:0;transform:rotate(10deg)}
+.herotop{align-items:center;gap:8px}.herolabel{display:inline-block;background:#ffe253;color:#1b1020;padding:7px 11px;transform:rotate(-3deg);font-weight:800;box-shadow:3px 3px #100915}.herolabel b{color:#a31038}
+.cover-title{position:relative;margin:18px 0 13px;width:max-content;max-width:100%;font:italic 900 clamp(55px,10vw,146px)/.76 var(--headline);letter-spacing:-.045em;color:#ffdf47;text-shadow:3px 4px #130a1d,6px 7px #130a1d,8px 9px #eb234a;-webkit-text-stroke:1px #1c0a1a;transform:rotate(-4deg);padding:0 14px 10px 0}.cover-title span{display:block;font-size:.43em;color:#fff2da;letter-spacing:.035em;margin-bottom:8px;text-shadow:3px 3px #170a1b}
+.heroarea{margin-top:19px}.clock{gap:9px}.unit{min-width:60px;background:#1f1229;border:2px solid #09050f;padding:7px 9px;box-shadow:3px 3px #09050f;text-align:center}.num{font:italic 900 clamp(29px,4vw,54px)/.9 var(--headline);letter-spacing:0;color:#fff1ca}.unitlabel{color:#ffcf7e}.colon{display:none}.heronote{display:none}.herobottom{position:relative;left:auto;right:auto;bottom:auto;justify-content:flex-start;gap:15px;border:0;margin-top:17px;padding:0;color:#ffe6c6}.herobottom .green{display:none}
+.intro{padding:20px 0 0}.intro h1{font:italic 900 34px var(--headline);margin:3px 0}.eyebrow,.status{display:none}.intro .accent{color:#ffcf54}
+.timeline,.card,.note{border:2px solid #07050a;border-radius:0;box-shadow:4px 4px #07050a}.timeline{background:linear-gradient(110deg,#362244,#251a38);padding-bottom:8px}.timelinehead h2,.title,.sidehead h2{font:italic 900 26px/.95 var(--headline);text-transform:uppercase}.timelinehead p,.sub,.count{color:#e6cde8}.railbase,.railfill{height:4px}.railbase{background:#a992af55}.railfill{background:linear-gradient(90deg,#ff4657,#ffdd4b)}.dot{width:22px;height:22px;box-shadow:0 0 0 2px #fff1ae,0 0 20px #ffe64b;top:10px}.dot:after{inset:3px;background:#fff5b0}.milestone{top:33px;color:#dbcae6}.milestone:before{top:-13px}.milestone.first:before{left:0}.milestone.last:before{left:100%}.timelinepct{font-size:11px}
+.cardhead{background:#ae1839;color:#fff4d4;gap:12px}.phase{font-size:10px;color:#ffe281;background:#342343;padding-block:10px}.item{border-color:#473552}.item:nth-child(even){background:#ffffff05}.item:hover,.item:nth-child(even):hover{background:#412947}.itemname{font-size:14px;color:#fff0db}.item.done .itemname{color:#c3abc8}.kind{color:#e0bad6}.check{border-color:#bda5cd}.progress,.actions{background:#251931}.action,.primary{font-weight:800}.sub,.kind,.count{font-size:9px}.remove{display:block}.herochoice,.iconbtn{border-color:#735281;background:#302141}.herochoice:hover,.iconbtn:hover,.iconbtn.selected{background:#513251}.iconbtn.selected{outline:2px solid #ffdf47}.heroicons{flex-wrap:wrap}.pixelface canvas,.iconbtn canvas{display:block;width:34px;height:34px;image-rendering:pixelated}.avatar canvas{width:32px;height:32px;margin:auto}.modal{border:3px solid #0a060f;background:#301f40;box-shadow:7px 7px #ef2348}.modal h2{font:italic 900 36px/.95 var(--headline);text-transform:uppercase}.modal p,.modal label{color:#e7cde8}.primary{font-size:10px}.primary:disabled{opacity:.45;cursor:default}.footer{color:#b5a2c1}.toast{pointer-events:none}button:focus-visible,.item:focus-visible{outline:2px solid #ffdf47;outline-offset:2px}
+@media(max-width:650px){.hero{min-height:0;padding:18px 15px}.hero-art{width:66%;height:76%;opacity:.78}.hero-art .villain{bottom:24%;right:2%}.hero-art .fighter{bottom:15%}.cover-title{font-size:clamp(51px,14vw,90px);margin-top:25px}.heroarea{margin-top:13px}.unit{min-width:43px;padding:6px}.herolabel,.timelinehead h2{font-size:21px}.itemname{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.dot,.railfill,.fill,.toast,.ring{transition:none}}
+
+.intro h2{font:italic 900 30px var(--headline);margin:3px 0}.herochoice[aria-pressed="true"]{border-color:var(--acid);background:#513251}.iconbtn{height:auto;min-height:63px;padding:5px 2px}.iconbtn small{font-size:10px;line-height:1;color:#ffeacb}.toast{pointer-events:none}
+.cover-title .cover-kicker{font-size:.34em;margin-bottom:9px}
+.cover-title .cover-subtitle{font-size:.37em;letter-spacing:.15em;margin:8px 0 0;color:#fff1cd}
+.intro-replay{align-self:center;background:#332140;border:1px solid #8d6299;padding:8px 12px;font:11px var(--mono)}
+.comic-opening{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:clamp(12px,4vw,48px);isolation:isolate;overflow:hidden;background:radial-gradient(circle at 50% 40%,#5a2445,#140b20 65%);perspective:1100px}
+.comic-book{position:relative;width:min(100%,1000px);height:min(68vh,570px);padding:clamp(7px,1.3vw,15px);background:#fff0c7;border:3px solid #130915;box-shadow:10px 13px #090512;transform-origin:left center}
+.comic-opening.play .comic-book{animation:open-book 3.8s both}
+.comic-spread{position:absolute;inset:clamp(7px,1.3vw,15px);display:grid;grid-template-columns:1fr 1.25fr .9fr;gap:8px;overflow:hidden}
+.comic-panel{position:relative;overflow:hidden;border:3px solid #170e21;isolation:isolate;display:grid;place-items:center;background:repeating-conic-gradient(from 20deg at 50% 54%,#fff3 0deg 3deg,transparent 3deg 16deg),radial-gradient(circle,var(--paper),var(--ink))}
+.comic-panel:before,.comic-reveal:before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(circle,#24102a85 1px,transparent 1.6px) 0 0/6px 6px}
+.comic-panel canvas{width:117%;max-width:410px;height:auto;image-rendering:pixelated;filter:drop-shadow(4px 6px #140914)}
+.comic-opening.play .comic-panel canvas{animation:panel-rush .72s both;animation-delay:var(--beat)}
+.comic-panel b{position:absolute;bottom:6%;background:#fff0c7;border:2px solid #140a1b;color:#1d1120;padding:.19em .4em;font:italic 900 clamp(15px,3.6vw,54px)/.9 var(--headline);transform:rotate(-7deg);box-shadow:3px 3px #150b1a}
+.comic-reveal{position:absolute;inset:clamp(7px,1.3vw,15px);z-index:1;display:grid;place-content:center;text-align:center;isolation:isolate;border:3px solid #140a1b;color:#ffe24c;background:repeating-conic-gradient(from 13deg at 50% 50%,#ffcf5d54 0deg 4deg,transparent 4deg 16deg),radial-gradient(ellipse,#e84656,#951636 72%);transform-origin:right center;font:italic 900 clamp(16px,4vw,44px)/.95 var(--headline);text-shadow:3px 3px #1a0b1e}
+.comic-reveal strong{font-size:clamp(39px,10vw,130px);line-height:.8;letter-spacing:-.045em;display:block;margin:.075em .1em;text-shadow:4px 5px #1a0b1e,7px 8px #1a0b1e}
+.comic-opening.play .comic-reveal{animation:cover-turn 3.8s both}
+.comic-skip{position:absolute;right:clamp(12px,3vw,36px);bottom:clamp(10px,2vw,24px);z-index:3;padding:11px 17px;color:#1b1021;background:#ffe253;border:2px solid #140b1d;box-shadow:3px 3px #090512;font:700 12px var(--display)}
+@keyframes panel-rush{from{transform:scale(1.6) translateX(-9%);opacity:0}to{transform:none;opacity:1}}
+@keyframes cover-turn{0%,35%{visibility:hidden;transform:rotateY(-92deg)}36%{visibility:visible;transform:rotateY(-92deg)}60%,100%{visibility:visible;transform:none}}
+@keyframes open-book{0%{opacity:0;transform:translateY(32px) rotate(-5deg) scale(.93)}14%,84%{opacity:1;transform:none}100%{opacity:0;transform:rotateY(-53deg) translateX(-16%)}}
+@media(max-width:580px){.comic-book{height:min(57vh,430px)}.comic-spread{gap:4px}.comic-panel b{bottom:10%}.intro{flex-direction:row;align-items:center}.intro-replay{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.comic-opening.play .comic-book,.comic-opening.play .comic-reveal,.comic-opening.play .comic-panel canvas{animation:none}}
+
+
+.comic-opening{filter:grayscale(1);background:radial-gradient(ellipse at center,#373737,#090909 72%)}
+.comic-book{perspective:1040px;background:#ebebeb}
+.comic-leaf{position:absolute;inset:clamp(7px,1.3vw,15px);z-index:1;overflow:hidden;display:none;transform-origin:left center;backface-visibility:hidden;border:3px solid #121212;background:radial-gradient(circle,#15151580 1px,transparent 1.5px) 0 0/5px 5px,repeating-conic-gradient(from 8deg at 73% 43%,#dedede 0deg 3deg,#f4f4f4 3deg 14deg);box-shadow:inset 16px 0 32px #2226}
+.comic-leaf canvas{position:absolute;image-rendering:pixelated;width:min(70%,620px);right:-5%;top:43%;transform:translateY(-50%) rotate(-10deg) scale(1.2);filter:contrast(1.55) drop-shadow(5px 6px #080808)}
+.comic-leaf b{position:absolute;left:7%;bottom:17%;transform:rotate(-12deg);font:italic 900 clamp(31px,9vw,118px)/.85 var(--headline);color:#101010;background:#fff;border:3px solid #101010;box-shadow:5px 6px #111;padding:.12em .22em}
+.leaf-two canvas{right:15%;transform:translateY(-50%) scale(1.45)}
+.leaf-three canvas{right:-12%;transform:translateY(-42%) rotate(12deg) scale(1.3)}
+.comic-opening.play .comic-leaf{display:block;animation:leaf-turn .66s both cubic-bezier(.65,0,.8,1);animation-delay:var(--turn)}
+.leaf-one{--turn:.25s;z-index:4}.leaf-two{--turn:.72s;z-index:3}.leaf-three{--turn:1.15s;z-index:2}
+.comic-reveal{z-index:5;color:#fff;background:#151515;box-shadow:inset 0 0 0 6px #eee;transform-origin:center}
+.comic-reveal:before{background:repeating-conic-gradient(from 15deg at center,#383838 0deg 2deg,#101010 2deg 14deg)}
+.comic-opening.play .comic-reveal{animation:ink-title 3.8s both}
+.comic-skip{z-index:10;background:#fff;color:#101010}
+@keyframes leaf-turn{0%,15%{transform:none}100%{transform:rotateY(-105deg);visibility:hidden}}
+@keyframes ink-title{0%,48%{opacity:0;visibility:hidden;transform:scale(1.13)}49%{visibility:visible}68%,100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.comic-opening.play .comic-leaf{display:none}.comic-opening.play .comic-reveal{animation:none}}
+
+.feature-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
+.feature-button{border:2px solid #100a17;background:#ffe05b;color:#1d1223;box-shadow:3px 3px #090611;font:800 14px var(--display);padding:9px 14px;text-align:left}
+.feature-button:hover:not(:disabled){background:#fff0a5}
+.feature-dialog{width:min(92vw,570px);max-height:90dvh;overflow:auto;padding:0;color:#fff1ce;background:#281d38;border:3px solid #0e0914;box-shadow:8px 8px #e22546}
+.feature-dialog::backdrop{background:#090612dc}
+.feature-header{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#9c1839;padding:14px 20px}
+.feature-header h2{margin:0;font:italic 900 34px/.95 var(--headline);text-transform:uppercase}
+.feature-close{border:1px solid #ffe39d;color:#ffe39d;background:transparent;font-size:23px;line-height:1;width:35px;height:35px}
+.feature-body{display:grid;gap:11px;align-items:start;padding:18px 20px 0}
+.feature-body a{color:#ffe05b;width:max-content}
+.feature-meta,.feature-status{font-size:14px;color:#ead1e5;margin:0}
+.feature-status{padding:8px 20px 18px}
+.quiz-question{font-size:21px;margin:0}
+.quiz-options{display:grid;gap:8px}
+.quiz-options button{background:#392a4c;color:#fff1ce;border-color:#5d4770;box-shadow:none}
+.quiz-options button:hover:not(:disabled){background:#55406b}
+.quiz-options button:disabled{cursor:default}
+.quiz-options button.correct{background:#254e3b;border-color:#8bdba8}
+.quiz-options button.incorrect{background:#742e48;border-color:#eb93aa}
+.quiz-score{font:italic 900 43px/1 var(--headline);color:#ffe05b;margin:0}
+.feature-body textarea,.feature-body input{width:100%;background:#170f20;border:1px solid #795483;color:#fff1ce;padding:11px}
+.feature-body textarea{min-height:110px;resize:vertical}
+.story-preview{display:block;width:auto;height:auto;max-width:100%;max-height:55dvh;justify-self:center;object-fit:contain}
+
+.feature-body select{width:100%;background:#170f20;border:1px solid #795483;color:#fff1ce;padding:11px;font:inherit}
+.legacy-four{padding:13px 21px;border-top:1px solid #58416a;color:#fff1cf;font-size:14px}
+.legacy-four summary{cursor:pointer;font-weight:800;color:#ffe05b}
+.legacy-four a{color:#ffe05b}
+.legacy-four li+li{margin-top:5px}
+</style></head><body><div class="wrap">
+<header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><div class="online">TIMELINE ACTIVE</div><div class="local">LOCAL SAVE · ENABLED</div><button class="avatar" id="avatar" aria-label="Edit name and hero"><span class="pixelface">❔</span></button></div></header>
+<main>
+<section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
+<section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
+<nav class="feature-toolbar" aria-label="Readiness activities">
+  <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
+  <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
+  <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
+</nav>
+<section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>THE DOT MOVES AS YOU WATCH · NO SPOILERS</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><div class="dot" id="dot"></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div></section>
+<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">MARVEL MOVIES &amp; SERIES · INCLUDING THE X-MEN SAGA</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><div id="watchlist"></div>
+<details class="legacy-four">
+  <summary>Fantastic Four · Optional viewing</summary>
+  <p>Earlier film versions for a deeper dive. These titles sit outside your readiness score.</p>
+  <ul>
+    <li><a href="https://www.disneyplus.com/browse/entity-d6592baa-0dc6-4549-a0cb-3b93a3b0e260" target="_blank" rel="noopener noreferrer">Fantastic Four (2005)</a></li>
+    <li><a href="https://family.20thcenturystudios.com/movies/fantastic-four-rise-of-the-silver-surfer" target="_blank" rel="noopener noreferrer">Fantastic Four: Rise of the Silver Surfer (2007)</a></li>
+    <li><a href="https://family.20thcenturystudios.com/movies/fantastic-four" target="_blank" rel="noopener noreferrer">Fantastic Four (2015)</a></li>
+  </ul>
+</details><div class="actions"><button class="action" id="addBtn">＋ ADD A TITLE</button><button class="action" id="resetBtn">↻ RESET PROGRESS</button></div></article></div>
+<aside class="side"><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section></main>
+<footer class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · NO CLOUD · YOUR WATCHLIST STAYS HERE</span></footer></div>
+<dialog id="featureDialog" class="feature-dialog" aria-labelledby="featureTitle">
+  <header class="feature-header"><h2 id="featureTitle"></h2><form method="dialog"><button class="feature-close" aria-label="Close">×</button></form></header>
+  <div id="featureBody" class="feature-body"></div>
+  <p id="featureStatus" class="feature-status" role="status"></p>
+</dialog>
+<div class="comic-opening hidden" id="comicOpening" role="dialog" aria-modal="true" aria-label="Doomwatch comic opening">
+  <div class="comic-book" aria-hidden="true">
+    <div class="comic-spread">
+      <div class="comic-panel" style="--paper:#ffe276;--ink:#e54638;--beat:.12s"><canvas width="32" height="32" data-sprite="1"></canvas><b>CLANG!</b></div>
+      <div class="comic-panel" style="--paper:#bcf583;--ink:#29734f;--beat:.43s"><canvas width="32" height="32" data-sprite="12"></canvas><b>DOOM!</b></div>
+      <div class="comic-panel" style="--paper:#a890f9;--ink:#623075;--beat:.75s"><canvas width="32" height="32" data-sprite="4"></canvas><b>SNIKT!</b></div>
+    </div>
+    <div class="comic-leaf leaf-three"><canvas width="32" height="32" data-sprite="4"></canvas><b>SNIKT!</b></div>
+    <div class="comic-leaf leaf-two"><canvas width="32" height="32" data-sprite="12"></canvas><b>DOOM!</b></div>
+    <div class="comic-leaf leaf-one"><canvas width="32" height="32" data-sprite="1"></canvas><b>CLANG!</b></div>
+    <div class="comic-reveal"><div>AVENGERS WATCHLIST<strong>DOOMWATCH</strong></div></div>
+  </div>
+  <button class="comic-skip" id="comicSkip" type="button">Skip opening</button>
+</div>
+<div class="toast" id="toast" role="status"></div><div class="backdrop hidden" id="backdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="step" id="stepLabel">01 / 02 · YOUR CALLSIGN</div><h2 id="modalTitle">Welcome, Agent.</h2><p id="modalCopy">Choose a display name and your hero avatar. Your name and progress stay in this browser. No account needed.</p><label for="nameInput">DISPLAY NAME</label><input id="nameInput" maxlength="24" placeholder="e.g. Earth's Mightiest Fan" autocomplete="nickname"><div id="iconStep" class="hidden"><label>CHOOSE YOUR HERO</label><div class="icon-grid" id="iconGrid"></div></div><div class="modalfoot"><button class="primary" id="saveProfile">NEXT · CHOOSE YOUR HERO ↗</button><button class="secondary hidden" id="cancelModal">CANCEL</button></div></div></div>
+<script>
+(()=>{
+const KEY='doomsday-watch.v2', icons=[['🛡️','Cap'],['🤖','Iron Man'],['⚡','Thor'],['🕶️','Cyclops'],['🐺','Wolverine'],['♟️','Magneto'],['🧬','Mystique'],['🌀','Strange'],['🕷️','Spider-Man'],['💚','Hulk'],['🎯','Hawkeye'],['🪽','Falcon']];
+const palettes = [
+  ['#235fa8','#6eaafd','#f2b082','cap'], ['#9f1936','#ffd054','#ffd054','armor'],
+  ['#647aa5','#deebee','#dfab7e','wings'], ['#245283','#ffc648','#d89968','visor'],
+  ['#1d3563','#ffce42','#dca77b','ears'], ['#882e7f','#de5c99','#d7a280','helmet'],
+  ['#1e5685','#f04e41','#64bcdf','hair'], ['#1f5791','#cc334a','#e1a580','cloak'],
+  ['#b31f37','#f6414c','#dc3044','mask'], ['#39763a','#7fc545','#8bd158','hair'],
+  ['#412762','#ac75db','#dca582','visor'], ['#7b2935','#df6377','#a86c52','wings'],
+  ['#254e3e','#88bb73','#c5d7c8','doom']
+];
+
+function paintHero(canvas, index) {
+  const [shade, light, face, style] = palettes[index];
+  const ctx = canvas.getContext('2d');
+  const ink = '#100b1c';
+  const rect = (color,x,y,w,h) => { ctx.fillStyle=color;ctx.fillRect(x,y,w,h); };
+  ctx.clearRect(0,0,32,32);
+  rect(ink,7,20,18,9); rect(ink,8,27,7,4); rect(ink,18,27,7,4);
+  rect(shade,9,21,14,7); rect(light,12,22,8,3); rect(shade,9,28,5,2); rect(shade,19,28,5,2);
+  rect(ink,6,7,20,13); rect(ink,8,4,16,18);
+  rect(shade,8,7,16,12); rect(shade,10,5,12,15); rect(light,10,7,12,4);
+  rect(face,10,12,12,7); rect(face,12,19,8,2);
+  rect(ink,11,13,3,3); rect(ink,18,13,3,3); rect('#fff9dc',11,13,1,1); rect('#fff9dc',18,13,1,1);
+  rect(shade,15,18,3,1);
+  if (style==='doom') {
+    rect(shade,7,6,3,14);rect(shade,22,6,3,14);rect(light,11,6,10,3);
+    rect(face,12,10,8,3);rect('#415445',12,16,2,4);rect('#415445',18,16,2,4);
+    rect(ink,15,17,2,3);rect(light,6,22,4,5);rect(light,22,22,4,5);
+  }
+  if (style==='cap') { rect('#fff5db',15,7,2,4);rect('#fff5db',14,9,4,1); rect('#d8384a',5,22,8,7);rect('#fff4de',7,23,4,5);rect(shade,8,24,2,3); }
+  if (style==='armor'||style==='visor') { rect(ink,10,12,12,4);rect(style==='visor'?'#ff4546':'#8beaff',11,13,10,1);rect(light,15,23,2,2); }
+  if (style==='ears'||style==='helmet') { rect(ink,6,3,4,10);rect(ink,22,3,4,10);rect(shade,7,5,4,9);rect(shade,21,5,4,9); }
+  if (style==='wings') { rect(light,5,6,4,7);rect(light,23,6,4,7); }
+  if (style==='hair'||style==='cloak') { rect(style==='hair'?ink:'#372535',9,5,14,6);rect(light,10,7,4,2); }
+  if (style==='mask') { rect('#fff8d8',11,12,4,3);rect('#fff8d8',17,12,4,3);rect(ink,15,10,1,10);rect(ink,8,16,16,1); }
+}
+const sprite = index => '<canvas width="32" height="32" aria-hidden="true" data-sprite="'+index+'"></canvas>';
+function drawSprites(root) {
+  root.querySelectorAll('canvas[data-sprite]').forEach(canvas => paintHero(canvas,Number(canvas.dataset.sprite)));
+}
+
+const initial=[
+['captain-america-first','Captain America: The First Avenger','movie','01 · HERO ORIGINS'],['captain-marvel','Captain Marvel','movie','01 · HERO ORIGINS'],['iron-man','Iron Man','movie','01 · HERO ORIGINS'],['avengers','The Avengers','movie','02 · THE AVENGERS'],['winter-soldier','Captain America: The Winter Soldier','movie','02 · THE AVENGERS'],['guardians','Guardians of the Galaxy','movie','02 · THE AVENGERS'],['age-ultron','Avengers: Age of Ultron','movie','02 · THE AVENGERS'],['civil-war','Captain America: Civil War','movie','02 · THE AVENGERS'],['doctor-strange','Doctor Strange','movie','03 · INFINITY SAGA'],['infinity-war','Avengers: Infinity War','movie','03 · INFINITY SAGA'],['endgame','Avengers: Endgame','movie','03 · INFINITY SAGA'],['wandavision','WandaVision','series','04 · MULTIVERSE'],['loki','Loki · Seasons 1–2','series','04 · MULTIVERSE'],['no-way-home','Spider-Man: No Way Home','movie','04 · MULTIVERSE'],['multiverse-madness','Doctor Strange in the Multiverse of Madness','movie','04 · MULTIVERSE'],['deadpool-wolverine','Deadpool & Wolverine','movie','05 · X-MEN & COLLIDING WORLDS'],['xmen-1','X-Men','movie','05A · X-MEN SAGA'],['x2','X2: X-Men United','movie','05A · X-MEN SAGA'],['last-stand','X-Men: The Last Stand','movie','05A · X-MEN SAGA'],['first-class','X-Men: First Class','movie','05A · X-MEN SAGA'],['days-future-past','X-Men: Days of Future Past','movie','05A · X-MEN SAGA'],['apocalypse','X-Men: Apocalypse','movie','05A · X-MEN SAGA'],['dark-phoenix','Dark Phoenix','movie','05A · X-MEN SAGA'],['xmen-origins','X-Men Origins: Wolverine','movie','05A · X-MEN SAGA'],['the-wolverine','The Wolverine','movie','05A · X-MEN SAGA'],['logan','Logan','movie','05A · X-MEN SAGA'],['new-mutants','The New Mutants','movie','05A · X-MEN SAGA'],['xmen-97','X-Men ’97','series','05A · X-MEN SAGA'],['fantastic-four','The Fantastic Four: First Steps','movie','05B · FANTASTIC FOUR'],['thunderbolts','Thunderbolts*','movie','06 · ROAD TO DOOMSDAY']
+].map(([id,title,type,phase])=>({id,title,type,phase}));
+let state={name:'',hero:0,watched:[],custom:[]};try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{};if(!Number.isInteger(state.hero)||!icons[state.hero])state.hero=0;
+const $=id=>document.getElementById(id);let toastTimer,step=1,draftHero=null;function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2100)}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function all(){return [...initial,...(state.custom||[])]}
+function renderList(){let list=all(),done=new Set(state.watched),last='',html='';for(const x of list){if(x.phase!==last){html+=`<div class="phase">${esc(x.phase)}</div>`;last=x.phase}let checked=done.has(x.id);html+=`<div class="item ${checked?'done':''}" data-id="${esc(x.id)}" role="button" tabindex="0" aria-pressed="${checked}"><span class="check">${checked?'✓':''}</span><span class="itemname">${esc(x.title)}</span><span class="kind ${x.type==='series'?'series':''}">${x.type==='series'?'SERIES':'FILM'}</span>${x.custom?'<button class="remove" aria-label="Remove title">×</button>':''}</div>`}$('watchlist').innerHTML=html;document.querySelectorAll('.item').forEach(el=>{el.addEventListener('click',e=>{if(e.target.closest('.remove')){removeTitle(el.dataset.id);return}toggle(el.dataset.id)});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(el.dataset.id)}})});document.querySelectorAll('.remove').forEach(b=>b.addEventListener('click',e=>removeTitle(e.currentTarget.closest('.item').dataset.id)));update()}
+function toggle(id){state.watched=state.watched.includes(id)?state.watched.filter(x=>x!==id):[...state.watched,id];save();renderList()}function removeTitle(id){state.custom=state.custom.filter(x=>x.id!==id);state.watched=state.watched.filter(x=>x!==id);save();renderList();toast('TITLE REMOVED')}
+function update(){let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';$('railFill').style.width=p+'%';$('dot').style.left=p+'%';document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
+function updateProfile(){let hero=icons[state.hero];$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
+function renderIconPicker(){ $('iconGrid').innerHTML=icons.map((x,i)=>`<button class="iconbtn ${i===draftHero?'selected':''}" data-icon="${i}" aria-pressed="${i===draftHero}" aria-label="${x[1]}" title="${x[1]}">${sprite(i)}<small>${x[1]}</small></button>`).join('');drawSprites($('iconGrid'));$('saveProfile').disabled=step===2&&draftHero===null;$('iconGrid').querySelectorAll('.iconbtn').forEach(b=>b.addEventListener('click',()=>{draftHero=Number(b.dataset.icon);renderIconPicker();$('iconGrid').querySelector('[data-icon="'+draftHero+'"]').focus()}))}
+function showModal(){step=1;draftHero=state.name?state.hero:null;$('stepLabel').textContent='01 / 02 · YOUR CALLSIGN';$('modalTitle').textContent=state.name?'Update your profile':'Welcome, Agent.';$('modalCopy').textContent='Choose a display name and your hero avatar. Your profile and watch progress stay in this browser.';$('nameInput').value=state.name;$('iconStep').classList.add('hidden');$('saveProfile').textContent='NEXT · CHOOSE YOUR HERO ↗';$('cancelModal').classList.toggle('hidden',!state.name);renderIconPicker();$('backdrop').classList.remove('hidden');setTimeout(()=>$('nameInput').focus(),80)}function hideModal(){ $('backdrop').classList.add('hidden')}function nextStep(){if(step===1){let name=$('nameInput').value.trim();if(!name){$('nameInput').focus();return}step=2;$('stepLabel').textContent='02 / 02 · SELECT YOUR HERO';$('modalTitle').textContent='Who’s your hero?';$('modalCopy').textContent='Pick a pixel chibi to represent you on the Doomsday watch mission.';$('iconStep').classList.remove('hidden');$('saveProfile').textContent='SAVE MY PROFILE ↗';renderIconPicker();$('iconGrid').querySelector('button').focus()}else{const name=$('nameInput').value.trim();if(!name||draftHero===null)return;state.name=name;state.hero=draftHero;save();updateProfile();hideModal();toast('PROFILE SAVED ON THIS DEVICE')}}
+const releaseTime = Date.parse('2026-12-17T00:00:00+05:30');
+function tick(){let d=Math.max(0,releaseTime-Date.now()),days=Math.floor(d/864e5);d%=864e5;let h=Math.floor(d/36e5);d%=36e5;let m=Math.floor(d/6e4),s=Math.floor(d%6e4/1e3);$('days').textContent=String(days).padStart(3,'0');$('hours').textContent=String(h).padStart(2,'0');$('minutes').textContent=String(m).padStart(2,'0');$('seconds').textContent=String(s).padStart(2,'0')}
+$('avatar').addEventListener('click',showModal);$('saveProfile').addEventListener('click',nextStep);$('cancelModal').addEventListener('click',hideModal);$('backdrop').addEventListener('click',e=>{if(e.target===$('backdrop')&&state.name)hideModal()});$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')nextStep();if(e.key==='Escape'&&state.name)hideModal()});$('resetBtn').addEventListener('click',()=>{if(!state.watched.length){toast('NO WATCH PROGRESS TO RESET');return}if(confirm('Clear all watched progress?')){state.watched=[];save();renderList();toast('WATCH PROGRESS RESET')}});$('addBtn').addEventListener('click',()=>{let title=prompt('Movie or series title to add:');if(!title?.trim())return;let type=(prompt('Type movie or series:','movie')||'movie').toLowerCase().trim()==='series'?'series':'movie';state.custom.push({id:'custom-'+Date.now(),title:title.trim(),type,phase:'07 · YOUR PERSONAL WATCHLIST',custom:true});save();renderList();toast('TITLE ADDED')});const quizQuestions = [
+  ['Doomsday','Who was announced as Victor von Doom in Avengers: Doomsday?','Robert Downey Jr.','Chris Evans','Pedro Pascal','Tom Hiddleston','Downey returns to the MCU in a new role as Victor von Doom.','https://d23.com/marvel-studios-announces-avengers-doomsday-cast/'],
+  ['Doomsday','Which actor from the original X-Men films was announced in the Doomsday cast?','Patrick Stewart','Hugh Jackman','Halle Berry','Famke Janssen','Disney’s cast announcement includes Patrick Stewart.','https://d23.com/marvel-studios-announces-avengers-doomsday-cast/'],
+  ['Avengers','What does Thanos set out to collect in Avengers: Infinity War?','Six Infinity Stones','Five Ten Rings','Three Mother Boxes','Four Cosmic Cubes','Thanos seeks all six Infinity Stones.','https://www.marvel.com/articles/movies/marvel-studios-avengers-infinity-war-opening-on-april-27'],
+  ['Multiverse','Which organization features in Loki?','Time Variance Authority','Damage Control','S.H.I.E.L.D.','Nova Corps','Loki’s timeline adventures bring him into contact with the TVA.','https://www.marvel.com/characters/loki/'],
+  ['Fantastic Four','Who goes by the name Invisible Woman in The Fantastic Four: First Steps?','Sue Storm','Jean Grey','Yelena Belova','Wanda Maximoff','Sue Storm is the Invisible Woman.','https://www.marvel.com/movies/fantastic-four'],
+  ['Fantastic Four','Which member of the Fantastic Four is also called the Thing?','Ben Grimm','Reed Richards','Johnny Storm','Scott Summers','Ben Grimm is the Thing.','https://www.marvel.com/movies/fantastic-four'],
+  ['X-Men','Which X-Men film brings together the original trilogy’s characters and their younger counterparts?','X-Men: Days of Future Past','X2: X-Men United','X-Men: The Last Stand','Logan','The film follows two generations of X-Men across two time periods.','https://www.20thcenturystudios.com/movies/x-men-days-of-future-past'],
+  ['X-Men','What is Cyclops’s real name?','Scott Summers','Alex Summers','Bobby Drake','Hank McCoy','Scott Summers is the mutant known as Cyclops.','https://www.marvel.com/articles/comics/cyclops-x-men-powers-and-origin-story-explained'],
+  ['Thunderbolts','Who is called Red Guardian in Thunderbolts*?','Alexei Shostakov','John Walker','Bucky Barnes','Bob Reynolds','Disney identifies Alexei Shostakov as Red Guardian.','https://movies.disney.com/thunderbolts'],
+  ['Multiverse','Which pair stars in the sitcom-inspired series WandaVision?','Wanda Maximoff and Vision','Natasha Romanoff and Clint Barton','Peggy Carter and Steve Rogers','Jane Foster and Thor','Wanda and Vision are the two leads in the series.','https://press.disneyplus.com/disney-plus/wandavision/images']
+];
+quizQuestions.push(
+  ["Fantastic Four","Who plays Reed Richards in First Steps?","Pedro Pascal","Oscar Isaac","John Krasinski","Miles Teller","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Who plays Sue Storm in First Steps?","Vanessa Kirby","Jessica Alba","Kate Mara","Emily Blunt","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Who plays Johnny Storm in First Steps?","Joseph Quinn","Chris Evans","Michael B. Jordan","Tom Holland","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Who plays Ben Grimm in First Steps?","Ebon Moss-Bachrach","Michael Chiklis","Jamie Bell","David Harbour","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Who directed First Steps?","Matt Shakman","Tim Story","Josh Trank","James Gunn","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Which decade inspires the look of First Steps?","1960s","1940s","1980s","1990s","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Which Fantastic Four member is the Human Torch?","Johnny Storm","Reed Richards","Ben Grimm","Sue Storm","","https://www.marvel.com/movies/fantastic-four"],
+  ["Fantastic Four","Which cosmic being threatens to consume Earth in First Steps?","Galactus","Dormammu","Ego","Kang","","https://d23.com/meet-the-characters-of-marvel-studios-the-fantastic-four-first-steps/"],
+  ["Fantastic Four","Who is the Silver Surfer in First Steps?","Shalla-Bal","Norrin Radd","Frankie Raye","Alicia Masters","","https://d23.com/meet-the-characters-of-marvel-studios-the-fantastic-four-first-steps/"],
+  ["Fantastic Four","What is the name of Shalla-Bal’s home planet?","Zenn-La","Xandar","Sakaar","Knowhere","","https://d23.com/meet-the-characters-of-marvel-studios-the-fantastic-four-first-steps/"],
+  ["Fantastic Four","What name does the Fantastic Four’s small blue-and-white robot go by?","H.E.R.B.I.E.","Ultron","J.A.R.V.I.S.","Dum-E","","https://d23.com/meet-the-characters-of-marvel-studios-the-fantastic-four-first-steps/"],
+  ["Fantastic Four","Who plays Galactus in First Steps?","Ralph Ineson","Josh Brolin","Lee Pace","Mads Mikkelsen","","https://d23.com/meet-the-characters-of-marvel-studios-the-fantastic-four-first-steps/"],
+  ["Fantastic Four","Who plays the Silver Surfer in First Steps?","Julia Garner","Vanessa Kirby","Natasha Lyonne","Elizabeth Olsen","","https://d23.com/meet-the-characters-of-marvel-studios-the-fantastic-four-first-steps/"],
+  ["Fantastic Four","Whose wedding does the Silver Surfer interrupt in the 2007 film?","Reed and Sue’s","Ben and Alicia’s","Johnny and Frankie’s","Scott and Jean’s","","https://family.20thcenturystudios.com/movies/fantastic-four-rise-of-the-silver-surfer"],
+  ["Fantastic Four","Which enemy does the team reluctantly work with in Rise of the Silver Surfer?","Doctor Doom","Annihilus","Mole Man","Ronan","","https://family.20thcenturystudios.com/movies/fantastic-four-rise-of-the-silver-surfer"],
+  ["Fantastic Four","Who directed Rise of the Silver Surfer?","Tim Story","Josh Trank","Matt Shakman","Sam Raimi","","https://family.20thcenturystudios.com/movies/fantastic-four-rise-of-the-silver-surfer"],
+  ["Fantastic Four","Who plays Sue Storm in Rise of the Silver Surfer?","Jessica Alba","Vanessa Kirby","Kate Mara","Jennifer Lawrence","","https://family.20thcenturystudios.com/movies/fantastic-four-rise-of-the-silver-surfer"],
+  ["Fantastic Four","Which year saw the release of Josh Trank’s Fantastic Four?","2015","2005","2007","2025","","https://family.20thcenturystudios.com/movies/fantastic-four"],
+  ["Fantastic Four","Which device sets off the events of the 2015 Fantastic Four?","A portal to another dimension","A gamma reactor","A time machine","A crashed spacecraft","","https://family.20thcenturystudios.com/movies/fantastic-four"],
+  ["Fantastic Four","Who directed the 2015 Fantastic Four?","Josh Trank","Tim Story","Matt Shakman","Jon Watts","","https://family.20thcenturystudios.com/movies/fantastic-four"],
+  ["Doomsday","Which directing duo was announced for Avengers: Doomsday?","Anthony and Joe Russo","James and Peter Gunn","Joe and Anthony Wright","Matt and Ross Duffer","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which actor from the original X-Men films played Magneto and appears in the cast announcement?","Ian McKellen","Michael Fassbender","James McAvoy","Nicholas Hoult","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which actor who played Nightcrawler in X2 is in the Doomsday cast announcement?","Alan Cumming","Kodi Smit-McPhee","James Marsden","Ben Foster","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which actor who played Cyclops in the original X-Men films is in the announced cast?","James Marsden","Tye Sheridan","Shawn Ashmore","Taylor Kitsch","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which actor who played Beast in The Last Stand is listed in the Doomsday announcement?","Kelsey Grammer","Nicholas Hoult","Hugh Jackman","Patrick Wilson","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which Loki lead is listed in the Doomsday cast announcement?","Tom Hiddleston","Owen Wilson","Sophia Di Martino","Ke Huy Quan","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which actor from First Steps plays the Human Torch and was announced for Doomsday?","Joseph Quinn","Chris Evans","Michael B. Jordan","Taron Egerton","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which First Steps lead played the Invisible Woman and was announced for Doomsday?","Vanessa Kirby","Jessica Alba","Kate Mara","January Jones","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which Black Panther star was named in Disney’s Doomsday cast announcement?","Letitia Wright","Lupita Nyong’o","Danai Gurira","Angela Bassett","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Doomsday","Which actor played Gambit in Deadpool & Wolverine and was named in Disney’s cast announcement?","Channing Tatum","Taylor Kitsch","Ryan Reynolds","Dafne Keen","","https://d23.com/marvel-studios-announces-avengers-doomsday-cast/"],
+  ["Avengers","What is the name of the original Iron Man?","Tony Stark","James Rhodes","Bruce Banner","Clint Barton","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","What is the original Captain America’s name?","Steve Rogers","Sam Wilson","Bucky Barnes","John Walker","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","Which later Captain America was previously Falcon?","Sam Wilson","Steve Rogers","Isaiah Bradley","Clint Barton","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","What is Captain Marvel’s civilian name?","Carol Danvers","Hope van Dyne","Pepper Potts","Darcy Lewis","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","What is T’Challa’s hero name?","Black Panther","War Machine","Moon Knight","Hawkeye","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","Which member is known as She-Hulk?","Jennifer Walters","Betty Ross","Natasha Romanoff","Jessica Jones","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","What is the first name of Doctor Strange?","Stephen","Steven","Scott","Samuel","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","Who is Thor’s father, as indicated by his name Thor Odinson?","Odin","Loki","Heimdall","Surtur","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","Which hero is also known as Natasha Romanova in Marvel comics?","Black Widow","Scarlet Witch","Captain Marvel","Wasp","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","Which Ghost Rider appears in Marvel’s Avengers team profile?","Robbie Reyes","Danny Ketch","Johnny Blaze","Carter Slade","","https://www.marvel.com/teams-and-groups/avengers/in-comics"],
+  ["Avengers","Which film follows Infinity War in the main Avengers series?","Avengers: Endgame","Avengers: Age of Ultron","Captain America: Civil War","The Avengers","","https://www.marvel.com/movies/avengers-endgame"],
+  ["Avengers","Who directed Avengers: Endgame?","Anthony and Joe Russo","Joss Whedon","Jon Favreau","James Gunn","","https://www.marvel.com/movies/avengers-endgame"],
+  ["Avengers","What year was Avengers: Endgame released?","2019","2016","2017","2021","","https://www.marvel.com/movies/avengers-endgame"],
+  ["Avengers","Which duo wrote the Endgame screenplay?","Christopher Markus and Stephen McFeely","James Gunn and Nicole Perlman","Jon Watts and Chris McKenna","Joss Whedon and Drew Goddard","","https://www.marvel.com/movies/avengers-endgame"],
+  ["Avengers","Who directed the 2012 Avengers film?","Joss Whedon","Jon Favreau","Joe Russo","Taika Waititi","","https://www.marvel.com/movies/the-avengers"],
+  ["Avengers","Which year did the first MCU Avengers film come out?","2012","2008","2010","2015","","https://www.marvel.com/movies/the-avengers"],
+  ["Avengers","Who plays Bruce Banner in the first Avengers film?","Mark Ruffalo","Edward Norton","Eric Bana","Tim Roth","","https://www.marvel.com/movies/the-avengers"],
+  ["Avengers","Who plays Nick Fury in the first Avengers film?","Samuel L. Jackson","Laurence Fishburne","Don Cheadle","Forest Whitaker","","https://www.marvel.com/movies/the-avengers"],
+  ["X-Men","Who is the founder of the X-Men?","Charles Xavier","Scott Summers","Erik Lehnsherr","Hank McCoy","","https://www.marvel.com/teams-and-groups/x-men/in-comics"],
+  ["X-Men","What is Storm’s real name?","Ororo Munroe","Anna Marie","Kitty Pryde","Raven Darkhölme","","https://www.marvel.com/teams-and-groups/x-men/in-comics"],
+  ["X-Men","Which X-Man is also known as Anna Marie?","Rogue","Jean Grey","Jubilee","Betsy Braddock","","https://www.marvel.com/teams-and-groups/x-men/in-comics"],
+  ["X-Men","Which X-Man goes by the name Hank McCoy?","Beast","Cyclops","Iceman","Colossus","","https://www.marvel.com/teams-and-groups/x-men/in-comics"],
+  ["X-Men","Who is Warren Worthington III?","Angel","Gambit","Bishop","Nightcrawler","","https://www.marvel.com/teams-and-groups/x-men/in-comics"],
+  ["X-Men","Which member was originally given the name Marvel Girl by Xavier?","Jean Grey","Storm","Rogue","Kitty Pryde","","https://www.marvel.com/teams-and-groups/x-men/in-comics"],
+  ["X-Men","Who directed X-Men: Days of Future Past?","Bryan Singer","Matthew Vaughn","James Mangold","Simon Kinberg","","https://www.20thcenturystudios.com/movies/x-men-days-of-future-past"],
+  ["X-Men","Which film introduced the younger team that appears in Days of Future Past?","X-Men: First Class","Logan","The New Mutants","X-Men: The Last Stand","","https://www.20thcenturystudios.com/movies/x-men-days-of-future-past"],
+  ["X-Men","When was Days of Future Past first released?","2014","2009","2011","2017","","https://www.20thcenturystudios.com/movies/x-men-days-of-future-past"],
+  ["X-Men","Who directed Logan?","James Mangold","Bryan Singer","James Gunn","Matthew Vaughn","","https://www.20thcenturystudios.com/movies/logan"],
+  ["X-Men","Who plays Logan in the 2017 film?","Hugh Jackman","Patrick Stewart","Boyd Holbrook","Liev Schreiber","","https://www.20thcenturystudios.com/movies/logan"],
+  ["X-Men","Who plays the young mutant opposite Hugh Jackman in Logan?","Dafne Keen","Millie Bobby Brown","Sadie Sink","Isabela Merced","","https://www.20thcenturystudios.com/movies/logan"],
+  ["Multiverse","Which actor plays Mobius in Loki?","Owen Wilson","Luke Wilson","Tom Hiddleston","Richard E. Grant","","https://www.marvel.com/tv-shows/loki/1/episode-2/"],
+  ["Multiverse","What is the setting called in the Loki behind-the-scenes feature Journey to the End of the Timeline?","The Citadel","The Sanctum","The Triskelion","The Raft","","https://www.marvel.com/tv-shows/loki/1/episode-2/"],
+  ["Multiverse","Who plays Wanda Maximoff in WandaVision?","Elizabeth Olsen","Scarlett Johansson","Florence Pugh","Brie Larson","","https://press.disneyplus.com/disney-plus/wandavision/images"],
+  ["Multiverse","Who plays Vision in WandaVision?","Paul Bettany","Benedict Cumberbatch","Paul Rudd","Anthony Mackie","","https://press.disneyplus.com/disney-plus/wandavision/images"],
+  ["Multiverse","What television format does WandaVision blend with MCU storytelling?","Classic sitcoms","Sports broadcasts","Reality competitions","Nature documentaries","","https://press.disneyplus.com/disney-plus/wandavision/images"],
+  ["Multiverse","Who directed Doctor Strange in the Multiverse of Madness?","Sam Raimi","Scott Derrickson","Jon Watts","Matt Shakman","","https://www.marvel.com/movies/doctor-strange-in-the-multiverse-of-madness"],
+  ["Multiverse","Who plays America Chavez in Multiverse of Madness?","Xochitl Gomez","Iman Vellani","Hailee Steinfeld","Kathryn Newton","","https://www.marvel.com/movies/doctor-strange-in-the-multiverse-of-madness"],
+  ["Multiverse","Which actor returns as Stephen Strange in Multiverse of Madness?","Benedict Cumberbatch","Benedict Wong","Chiwetel Ejiofor","Mads Mikkelsen","","https://www.marvel.com/movies/doctor-strange-in-the-multiverse-of-madness"],
+  ["Multiverse","In which year was Multiverse of Madness released?","2022","2016","2019","2024","","https://www.marvel.com/movies/doctor-strange-in-the-multiverse-of-madness"],
+  ["Multiverse","Who directed Deadpool & Wolverine?","Shawn Levy","David Leitch","Tim Miller","James Mangold","","https://www.marvel.com/movies/deadpool-and-wolverine"],
+  ["Multiverse","Which actor plays Deadpool in Deadpool & Wolverine?","Ryan Reynolds","Hugh Jackman","Josh Brolin","Rob Delaney","","https://www.marvel.com/movies/deadpool-and-wolverine"],
+  ["Multiverse","Which actor plays Wolverine in Deadpool & Wolverine?","Hugh Jackman","Ryan Reynolds","Channing Tatum","Chris Evans","","https://www.marvel.com/movies/deadpool-and-wolverine"],
+  ["Multiverse","Which year saw the release of Deadpool & Wolverine?","2024","2018","2021","2025","","https://www.marvel.com/movies/deadpool-and-wolverine"],
+  ["Thunderbolts","Who plays Yelena Belova in Thunderbolts*?","Florence Pugh","Scarlett Johansson","Hailee Steinfeld","Elizabeth Olsen","","https://movies.disney.com/thunderbolts"],
+  ["Thunderbolts","Who plays John Walker in Thunderbolts*?","Wyatt Russell","Sebastian Stan","Lewis Pullman","David Harbour","","https://movies.disney.com/thunderbolts"],
+  ["Thunderbolts","Who plays Ghost in Thunderbolts*?","Hannah John-Kamen","Olga Kurylenko","Rachel Weisz","Julia Louis-Dreyfus","","https://movies.disney.com/thunderbolts"],
+  ["Thunderbolts","Who plays Red Guardian in Thunderbolts*?","David Harbour","Wyatt Russell","Winston Duke","Kelsey Grammer","","https://movies.disney.com/thunderbolts"],
+  ["Thunderbolts","Who directed Thunderbolts*?","Jake Schreier","Matt Shakman","Cate Shortland","Destin Daniel Cretton","","https://movies.disney.com/thunderbolts"],
+  ["Avengers","Who directed the first Iron Man film?","Jon Favreau","Kenneth Branagh","Joe Johnston","Shane Black","","https://www.marvel.com/movies/iron-man"],
+  ["Avengers","Who plays Pepper Potts in Iron Man?","Gwyneth Paltrow","Rebecca Hall","Emily VanCamp","Leslie Bibb","","https://www.marvel.com/movies/iron-man"],
+  ["Avengers","Who plays Obadiah Stane in Iron Man?","Jeff Bridges","Sam Rockwell","Guy Pearce","Mickey Rourke","","https://www.marvel.com/movies/iron-man"],
+  ["Avengers","Which year saw the release of the first Iron Man film?","2008","2006","2010","2012","","https://www.marvel.com/movies/iron-man"],
+  ["Avengers","Who plays the Winter Soldier in the second Captain America film?","Sebastian Stan","Anthony Mackie","Chris Evans","Frank Grillo","","https://www.marvel.com/movies/captain-america-the-winter-soldier"],
+  ["Avengers","Which future Captain America makes his MCU debut in The Winter Soldier?","Sam Wilson","John Walker","Isaiah Bradley","Steve Rogers","","https://www.marvel.com/movies/captain-america-the-winter-soldier"],
+  ["Avengers","Which actor plays Alexander Pierce in The Winter Soldier?","Robert Redford","William Hurt","Michael Douglas","Tommy Lee Jones","","https://www.marvel.com/movies/captain-america-the-winter-soldier"],
+  ["Avengers","Which year saw the release of The Winter Soldier?","2014","2011","2016","2018","","https://www.marvel.com/movies/captain-america-the-winter-soldier"],
+  ["Avengers","Who directed the first Guardians of the Galaxy film?","James Gunn","Taika Waititi","Peyton Reed","Jon Favreau","","https://www.marvel.com/movies/guardians-of-the-galaxy"],
+  ["Avengers","What is Star-Lord’s real name?","Peter Quill","Richard Rider","Adam Warlock","Peter Parker","","https://www.marvel.com/movies/guardians-of-the-galaxy"],
+  ["Avengers","Which villain seeks the orb in the first Guardians of the Galaxy film?","Ronan","Ego","Hela","Malekith","","https://www.marvel.com/movies/guardians-of-the-galaxy"],
+  ["Avengers","Who voices Rocket in the first Guardians of the Galaxy film?","Bradley Cooper","Vin Diesel","Sean Gunn","Dave Bautista","","https://www.marvel.com/movies/guardians-of-the-galaxy"],
+  ["Avengers","Who plays Gamora in the first Guardians of the Galaxy film?","Zoe Saldaña","Karen Gillan","Pom Klementieff","Elizabeth Debicki","","https://www.marvel.com/movies/guardians-of-the-galaxy"],
+  ["Avengers","Which hero leads the team opposing Tony Stark in Civil War?","Captain America","Thor","Black Panther","Vision","","https://www.marvel.com/movies/captain-america-civil-war"],
+  ["Avengers","Which actor plays Black Panther in Civil War?","Chadwick Boseman","Michael B. Jordan","Winston Duke","Anthony Mackie","","https://www.marvel.com/movies/captain-america-civil-war"],
+  ["Avengers","What is the full title of the third Captain America film?","Captain America: Civil War","Captain America: The Winter Soldier","Captain America: Brave New World","Captain America: The First Avenger","","https://www.marvel.com/movies/captain-america-civil-war"],
+  ["Avengers","Which film introduces the villain Ultron to the Avengers movie series?","Avengers: Age of Ultron","Avengers: Infinity War","Avengers: Endgame","The Avengers","","https://www.marvel.com/movies/avengers-age-of-ultron"],
+  ["Avengers","Who directed Avengers: Age of Ultron?","Joss Whedon","Anthony and Joe Russo","Jon Favreau","Peyton Reed","","https://www.marvel.com/movies/avengers-age-of-ultron"],
+  ["Avengers","Who plays Ultron in Age of Ultron?","James Spader","Paul Bettany","Andy Serkis","Josh Brolin","","https://www.marvel.com/movies/avengers-age-of-ultron"],
+  ["Fantastic Four","Where does the accident that transforms the team happen in Fantastic Four (2005)?","In space","In the Quantum Realm","In a desert laboratory","At the bottom of the ocean","","https://www.disneyplus.com/browse/entity-d6592baa-0dc6-4549-a0cb-3b93a3b0e260"],
+  ["Fantastic Four","Which villain opposes the team in Fantastic Four (2005)?","Doctor Doom","Silver Surfer","Galactus","Annihilus","","https://www.disneyplus.com/browse/entity-d6592baa-0dc6-4549-a0cb-3b93a3b0e260"],
+  ["Fantastic Four","Who plays Reed Richards in Fantastic Four (2005)?","Ioan Gruffudd","Pedro Pascal","Miles Teller","John Krasinski","","https://www.disneyplus.com/browse/entity-d6592baa-0dc6-4549-a0cb-3b93a3b0e260"],
+  ["Fantastic Four","Who directed Fantastic Four (2005)?","Tim Story","Matt Shakman","Josh Trank","Jon Favreau","","https://www.disneyplus.com/browse/entity-d6592baa-0dc6-4549-a0cb-3b93a3b0e260"]
+);
+const featureDialog = $('featureDialog');
+const featureTitle = $('featureTitle');
+const featureBody = $('featureBody');
+const featureStatus = $('featureStatus');
+
+function openFeature(title) {
+  featureTitle.textContent = title;
+  featureBody.replaceChildren();
+  featureStatus.textContent = '';
+  if (!featureDialog.open) featureDialog.showModal();
+}
+
+function featureElement(tag, text, className) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  if (className) element.className = className;
+  return element;
+}
+
+function featureButton(text, action) {
+  const button = featureElement('button', text, 'feature-button');
+  button.type = 'button';
+  button.addEventListener('click', action);
+  return button;
+}
+
+function shuffled(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function showQuizMenu() {
+  openFeature('Multiverse Trials');
+  featureBody.append(featureElement('p', quizQuestions.length + ' questions in the archive. Pick a topic for a round of up to 10 questions, or try the full archive.', 'feature-meta'));
+  const category = document.createElement('select');
+  category.setAttribute('aria-label', 'Quiz topic');
+  category.append(new Option('All topics (' + quizQuestions.length + ')', ''));
+  for (const topic of [...new Set(quizQuestions.map(question => question[0]))].sort()) {
+    const count = quizQuestions.filter(question => question[0] === topic).length;
+    category.append(new Option(topic + ' (' + count + ')', topic));
+  }
+  featureBody.append(category, featureButton('Start quick round', () => startQuiz(category.value, 10)),
+    featureButton('Play full archive', () => startQuiz('', quizQuestions.length)));
+}
+
+function startQuiz(topic, limit) {
+  const pool = topic ? quizQuestions.filter(question => question[0] === topic) : quizQuestions;
+  const questions = shuffled(pool).slice(0, limit);
+  let current = 0;
+  let score = 0;
+  const review = [];
+  function nextQuestion() {
+    openFeature('Multiverse Trials');
+    if (current === questions.length) {
+      featureBody.append(featureElement('p', score + ' / ' + questions.length + ' correct', 'quiz-score'));
+      const missed = review.filter(result => !result.correct);
+      if (missed.length) {
+        const list = document.createElement('ul');
+        missed.forEach(result => list.append(featureElement('li', result.question + ' — ' + result.answer)));
+        featureBody.append(list);
+      }
+      featureBody.append(featureButton('Choose another round', showQuizMenu));
+      return;
+    }
+    const [topic, question, answer, ...rest] = questions[current];
+    const [wrongA, wrongB, wrongC, explanation, url] = rest;
+    featureBody.append(featureElement('p', (current + 1) + ' / ' + questions.length + ' · ' + topic, 'feature-meta'));
+    const prompt = featureElement('h3', question, 'quiz-question');
+    prompt.tabIndex = -1;
+    featureBody.append(prompt);
+    const options = document.createElement('div');
+    options.className = 'quiz-options';
+    shuffled([answer, wrongA, wrongB, wrongC]).forEach(choice => {
+      const button = featureButton(choice, () => {
+        const correct = choice === answer;
+        if (correct) score++;
+        review.push({correct, question, answer});
+        for (const option of options.children) {
+          option.disabled = true;
+          if (option.textContent === answer) option.classList.add('correct');
+        }
+        if (!correct) button.classList.add('incorrect');
+        featureStatus.textContent = (correct ? 'Correct. ' : 'Correct answer: ' + answer + '. ') + (explanation || 'See the source for context.');
+        const source = featureElement('a', 'Read the source');
+        source.href = url;
+        source.target = '_blank';
+        source.rel = 'noopener noreferrer';
+        const next = featureButton(current + 1 === questions.length ? 'See score' : 'Next question', () => {
+          current++;
+          nextQuestion();
+        });
+        featureBody.append(source, next);
+        next.focus();
+      });
+      options.append(button);
+    });
+    featureBody.append(options);
+    prompt.focus();
+  }
+  nextQuestion();
+}
+
+function readinessSnapshot() {
+  const titles = all();
+  const watched = new Set(state.watched);
+  return {name: state.name || 'Marvel fan', hero: state.hero, watched: titles.filter(title => watched.has(title.id)).length, total: titles.length};
+}
+
+function readinessPercent(snapshot) {
+  return Math.round(snapshot.watched / snapshot.total * 100);
+}
+
+function shareUrl(snapshot) {
+  if (!/^https?:$/.test(location.protocol) || /^(localhost|127\.|\[::1\])/.test(location.hostname)) return '';
+  const url = new URL(location.pathname, location.origin);
+  url.hash = new URLSearchParams({readiness: JSON.stringify(snapshot)}).toString();
+  return url.href;
+}
+
+async function copyText(field) {
+  try {
+    await navigator.clipboard.writeText(field.value);
+    featureStatus.textContent = 'Copied.';
+  } catch {
+    field.focus();
+    field.select();
+    if (document.execCommand('copy')) featureStatus.textContent = 'Copied.';
+    else featureStatus.textContent = 'Text selected. Use Ctrl+C or your device’s Copy command.';
+  }
+}
+
+function shareProgress() {
+  openFeature('Send a Signal');
+  const snapshot = readinessSnapshot();
+  const url = shareUrl(snapshot);
+  const text = snapshot.name + ' is ' + readinessPercent(snapshot) + '% ready for Avengers: Doomsday! ' +
+    snapshot.watched + '/' + snapshot.total + ' titles watched · Hero: ' + icons[snapshot.hero][1];
+  const field = document.createElement('textarea');
+  field.readOnly = true;
+  field.setAttribute('aria-label', 'Progress message');
+  field.value = text + (url ? '\n' + url : '');
+  featureBody.append(field, featureButton('Copy post', () => copyText(field)));
+  if (url) {
+    const linkField = document.createElement('input');
+    linkField.readOnly = true;
+    linkField.value = url;
+    linkField.setAttribute('aria-label', 'Readiness link');
+    featureBody.append(linkField, featureButton('Copy link', () => copyText(linkField)));
+  } else {
+    featureBody.append(featureElement('p', 'Progress links are available when the tracker is hosted online.', 'feature-meta'));
+  }
+  if (typeof navigator.share === 'function') {
+    featureBody.append(featureButton('Share…', async () => {
+      try { await navigator.share(url ? {text, url} : {text}); }
+      catch (error) { if (error.name !== 'AbortError') featureStatus.textContent = 'Copy the post and paste it into your app.'; }
+    }));
+  }
+}
+
+function showSharedReadiness() {
+  try {
+    const raw = new URLSearchParams(location.hash.slice(1)).get('readiness');
+    if (!raw || raw.length > 600) return false;
+    const snapshot = JSON.parse(raw);
+    if (!snapshot || typeof snapshot.name !== 'string' || !Number.isInteger(snapshot.hero) || !icons[snapshot.hero] ||
+        !Number.isSafeInteger(snapshot.total) || snapshot.total < 1 || !Number.isSafeInteger(snapshot.watched) ||
+        snapshot.watched < 0 || snapshot.watched > snapshot.total) return false;
+    snapshot.name = snapshot.name.slice(0, 24);
+    showStory(snapshot, true);
+    return true;
+  } catch { return false; }
+}
+
+function createStory(snapshot) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1080;
+  canvas.height = 1920;
+  canvas.setAttribute('role', 'img');
+  canvas.setAttribute('aria-label', snapshot.name + ' is ' + readinessPercent(snapshot) + '% ready for Doomsday');
+  const ctx = canvas.getContext('2d');
+  const box = (color, x, y, width, height) => { ctx.fillStyle = color; ctx.fillRect(x, y, width, height); };
+  const line = (text, y, size, color, italic = true, maxWidth = 900) => {
+    ctx.fillStyle = color;
+    ctx.font = (italic ? 'italic ' : '') + '900 ' + size + 'px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(text, 540, y, maxWidth);
+  };
+  box('#241631', 0, 0, 1080, 1920);
+  ctx.fillStyle = '#543557';
+  for (let y = 16; y < 1920; y += 22) for (let x = 16; x < 1080; x += 22) {
+    ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+  }
+  line('AVENGERS WATCHLIST', 207, 40, '#fff1ce', false);
+  line('DOOMWATCH', 355, 126, '#ffdf47');
+  box('#0f0916', 165, 568, 780, 897);
+  box('#fff1cf', 140, 540, 780, 897);
+  box('#140c19', 178, 578, 704, 656);
+  box('#b71e42', 189, 589, 682, 634);
+  ctx.save();
+  ctx.beginPath(); ctx.rect(189, 589, 682, 634); ctx.clip();
+  ctx.translate(530, 900);
+  for (let i = 0; i < 18; i++) {
+    ctx.rotate(Math.PI / 9);
+    ctx.fillStyle = '#f35252';
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(660, 0); ctx.lineTo(660, 85); ctx.fill();
+  }
+  ctx.restore();
+  const hero = document.createElement('canvas');
+  hero.width = hero.height = 32;
+  paintHero(hero, snapshot.hero);
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(hero, 300, 667, 460, 460);
+  line(snapshot.name, 1326, 65, '#241631', true, 670);
+  line(icons[snapshot.hero][1].toUpperCase(), 1383, 32, '#7f1736', false, 680);
+  line(readinessPercent(snapshot) + '% READY', 1650, 130, '#ffdf47');
+  line(snapshot.watched + ' / ' + snapshot.total + ' TITLES WATCHED', 1758, 44, '#fff1ce', false);
+  return canvas;
+}
+
+function showStory(snapshot, incoming = false) {
+  openFeature(incoming ? snapshot.name + '’s readiness' : 'Your Hero Cover');
+  const canvas = createStory(snapshot);
+  canvas.className = 'story-preview';
+  featureBody.append(canvas, featureButton('Download Hero Cover', () => {
+    canvas.toBlob(blob => {
+      if (!blob) { featureStatus.textContent = 'Couldn’t create the PNG.'; return; }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'doomwatch-hero-cover.png';
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+    }, 'image/png');
+  }));
+  if (incoming) {
+    const start = featureButton('Track my readiness', () => featureDialog.close());
+    featureBody.append(start);
+    featureDialog.addEventListener('close', () => { if (!state.name) showModal(); }, {once:true});
+  }
+}
+
+$('openQuiz').addEventListener('click', showQuizMenu);
+$('shareProgress').addEventListener('click', shareProgress);
+$('openStory').addEventListener('click', () => showStory(readinessSnapshot()));
+
+const opening = $('comicOpening');
+const comicBook = opening.querySelector('.comic-book');
+const tracker = document.querySelector('.wrap');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let introTimeout;
+let replaying = false;
+
+function finishOpening() {
+  if (opening.classList.contains('hidden')) return;
+  clearTimeout(introTimeout);
+  opening.classList.add('hidden');
+  opening.classList.remove('play');
+  tracker.inert = false;
+  document.body.style.overflow = '';
+  if (replaying) $('introReplay').focus();
+  else if (!state.name) showModal();
+  else document.querySelector('.cover-title').focus({preventScroll:true});
+}
+
+function playOpening(replay = false) {
+  replaying = replay;
+  opening.classList.remove('hidden');
+  tracker.inert = true;
+  document.body.style.overflow = 'hidden';
+  opening.classList.add('play');
+  $('comicSkip').focus({preventScroll:true});
+  introTimeout = setTimeout(finishOpening, reduceMotion.matches ? 1600 : 4100);
+}
+
+comicBook.addEventListener('animationend', event => {
+  if (event.target === comicBook && event.animationName === 'open-book') finishOpening();
+});
+$('comicSkip').addEventListener('click', finishOpening);
+$('introReplay').addEventListener('click', () => playOpening(true));
+opening.addEventListener('keydown', event => {
+  if (event.key === 'Escape') finishOpening();
+  if (event.key === 'Tab') event.preventDefault();
+});
+drawSprites(document);
+updateProfile();
+renderList();
+tick();
+setInterval(tick,1000);
+if (!showSharedReadiness()) {
+  if (!reduceMotion.matches) playOpening();
+  else if (!state.name) showModal();
+}
+})();
+</script></body></html>
