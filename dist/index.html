@@ -135,6 +135,19 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .legacy-four li{padding-block:2px}
 .legacy-four li>.watch-link,.legacy-four li>[data-optional-watch]{margin-left:5px}
 @media(max-width:420px){.item-wrap{padding-right:5px}.item-wrap>.item{padding-left:11px;padding-right:4px}.watch-link>span{max-width:71px}.provider-icon{width:21px;height:21px}}
+
+.timeline{overflow:hidden}
+.timeline .rail{height:165px;margin:6px 17px 0}
+.timeline .railbase,.timeline .railfill{top:auto;bottom:41px}
+.timeline .milestone{top:auto;bottom:24px}
+.timeline .milestone:before{top:-9px}
+.hero-effects{position:absolute;inset:0 -17px;width:calc(100% + 34px);height:100%;pointer-events:none;z-index:2}
+.timeline-hero{position:absolute;left:0;bottom:39px;width:54px;height:54px;transform:translateX(-50%);pointer-events:none;z-index:3;--hero-aura:#ffdf47}
+.timeline-hero canvas{position:absolute;width:54px;height:54px;inset:0;image-rendering:pixelated;transform-origin:center;filter:drop-shadow(0 0 4px var(--hero-aura)) drop-shadow(1px 2px #160d22)}
+.hero-shadow{position:absolute;left:50%;bottom:0;width:24px;height:5px;transform:translateX(-50%);border-radius:50%;background:var(--hero-aura);opacity:.65;box-shadow:0 0 9px var(--hero-aura)}
+.timeline-companion{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #71517b;padding:7px 0 4px;color:#ffe8bb;font-weight:700}
+.timeline-companion .feature-button{font-size:11px;padding:5px 9px}
+@media(max-width:580px){.timeline .rail{margin-inline:14px}.hero-effects{inset-inline:-14px;width:calc(100% + 28px)}.timeline-hero,.timeline-hero canvas{width:46px;height:46px}.timeline-companion{font-size:12px}}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
@@ -145,7 +158,10 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
   <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
 </nav>
-<section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>THE DOT MOVES AS YOU WATCH · NO SPOILERS</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><div class="dot" id="dot"></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div></section>
+<section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>MARK TITLES WATCHED TO MOVE YOUR HERO</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><canvas id="timelineEffects" class="hero-effects" aria-hidden="true"></canvas>
+<div id="timelineHero" class="timeline-hero" aria-hidden="true"><span class="hero-shadow"></span><canvas id="timelineSprite" width="32" height="32"></canvas></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div>
+<div class="timeline-companion"><span id="timelineHeroName"></span><button type="button" id="timelinePower" class="feature-button">Replay power</button></div>
+</section>
 <section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">MARVEL MOVIES &amp; SERIES · INCLUDING THE X-MEN SAGA</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title for spoilers. On touchscreens, tap its info icon.</p><div class="watch-region">WHERE TO WATCH · INDIA</div><div id="watchlist"></div>
 <details class="legacy-four">
   <summary>Fantastic Four · Optional viewing</summary>
@@ -339,8 +355,185 @@ $('spoilerToggle').addEventListener('click', () => {
   renderList();
 });
 function toggle(id){state.watched=state.watched.includes(id)?state.watched.filter(x=>x!==id):[...state.watched,id];save();renderList()}function removeTitle(id){state.custom=state.custom.filter(x=>x.id!==id);state.watched=state.watched.filter(x=>x!==id);save();renderList();toast('TITLE REMOVED')}
-function update(){let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';$('railFill').style.width=p+'%';$('dot').style.left=p+'%';document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
-function updateProfile(){let hero=icons[state.hero];$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
+const heroMoves = [
+  {label:'Shield charge', effect:'shield', color:'#70b9ff', lift:12, angle:8},
+  {label:'Repulsor flight', effect:'jet', color:'#71f7ff', lift:57, angle:17},
+  {label:'Thunder leap', effect:'bolt', color:'#c6c5ff', lift:49, angle:15},
+  {label:'Optic blast', effect:'beam', color:'#ff566c', lift:10, angle:3},
+  {label:'Claw dash', effect:'claws', color:'#ffe076', lift:18, angle:14},
+  {label:'Magnetic levitation', effect:'magnet', color:'#ff76e2', lift:48, angle:5},
+  {label:'Shapeshift sprint', effect:'shift', color:'#65bafa', lift:11, angle:9},
+  {label:'Portal step', effect:'portal', color:'#ffab46', lift:24, angle:5},
+  {label:'Web swing', effect:'web', color:'#edfbff', lift:63, angle:27},
+  {label:'Hulk leap', effect:'smash', color:'#a6f06b', lift:69, angle:13},
+  {label:'Grapple arrow', effect:'arrow', color:'#d4afff', lift:30, angle:16},
+  {label:'Wing glide', effect:'wings', color:'#ff8d7c', lift:54, angle:10}
+];
+const heroRunner = $('timelineHero');
+const runnerSprite = $('timelineSprite');
+const runnerEffects = $('timelineEffects');
+const runnerPower = $('timelinePower');
+const runnerName = $('timelineHeroName');
+const runnerRail = heroRunner.parentElement;
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+const fx = runnerEffects.getContext('2d');
+let runnerPosition = null;
+let runnerTarget = 0;
+let runnerHero = null;
+let runnerFrame = 0;
+let motion = null;
+let fxWidth = 0;
+let fxHeight = 0;
+
+function sizeRunnerEffects() {
+  const bounds = runnerEffects.getBoundingClientRect();
+  const density = Math.min(devicePixelRatio || 1, 2);
+  fxWidth = bounds.width;
+  fxHeight = bounds.height;
+  runnerEffects.width = Math.round(fxWidth * density);
+  runnerEffects.height = Math.round(fxHeight * density);
+  fx.setTransform(density, 0, 0, density, 0, 0);
+}
+
+function drawTrail(effect, color, x, y, direction, time) {
+  fx.save();
+  fx.translate(x, y);
+  fx.scale(direction, 1);
+  fx.strokeStyle = color;
+  fx.fillStyle = color;
+  fx.lineWidth = 2;
+  fx.shadowColor = color;
+  fx.shadowBlur = 8;
+  const line = (...points) => {
+    fx.beginPath();
+    fx.moveTo(points[0][0], points[0][1]);
+    for (const [px, py] of points.slice(1)) fx.lineTo(px, py);
+    fx.stroke();
+  };
+  const ring = (px, py, radius, vertical = radius) => {
+    fx.beginPath(); fx.ellipse(px, py, radius, vertical, 0, 0, Math.PI * 2); fx.stroke();
+  };
+  switch (effect) {
+    case 'web':
+      line([-4,-7], [13 - 37*time,-42 - 8*Math.sin(time*Math.PI)]);
+      line([-4,-7], [11 - 37*time,-41 - 8*Math.sin(time*Math.PI)]);
+      break;
+    case 'jet':
+      for (const offset of [-7,2,11]) line([-12,offset], [-25,offset+4], [-38+8*Math.sin(time*29),offset+4]);
+      break;
+    case 'bolt':
+      line([4,-41], [-3,-24], [6,-22], [-3,-7]);
+      line([-19,11], [-31,17], [-46,14]);
+      break;
+    case 'beam':
+      fx.lineWidth = 3; line([3,-5], [33+6*Math.sin(time*12),-5]);
+      break;
+    case 'claws':
+      for (const offset of [-6,0,6]) line([7,offset+6], [28,offset-10]);
+      break;
+    case 'magnet':
+      ring(0,10,22,5); ring(0,14+3*Math.sin(time*22),30,8);
+      break;
+    case 'shift':
+      for (let i=0;i<9;i++) fx.fillRect(-10-i*4, Math.sin(i*3+time*22)*12, 3, 3);
+      break;
+    case 'portal':
+      ring(-15,0,9,22); ring(14,0,9,22);
+      break;
+    case 'smash':
+      if (time > .76) {
+        const radius = 5 + (time-.76)*170;
+        ring(0,10,radius,6); ring(0,10,radius*.68,4);
+        line([-4,10], [-12,14], [-20,12]); line([7,10], [15,15], [25,12]);
+      } else {
+        line([-14,8], [-30,18]); line([-19,0], [-36,10]);
+      }
+      break;
+    case 'arrow':
+      line([7,-6], [31,-24], [39,-27]); line([32,-29], [39,-27], [36,-20]);
+      break;
+    case 'wings':
+      line([-4,0], [-15,-14], [-31,-10], [-21,1], [-12,7]);
+      line([-6,2], [-17,1], [-30,7], [-16,10]);
+      break;
+    case 'shield':
+      ring(12,0,9,11); ring(12,0,5,7);
+      line([-19,0], [-34,0]); line([-16,7], [-26,7]);
+      break;
+  }
+  fx.restore();
+}
+
+function placeHero(position, lift = 0, tilt = 0, direction = 1, scale = 1) {
+  runnerPosition = position;
+  heroRunner.style.left = position + '%';
+  runnerSprite.style.transform = 'translateY(' + (-lift) + 'px) rotate(' + tilt + 'deg) scale(' + direction*scale + ',' + scale + ')';
+}
+
+function finishHeroMovement() {
+  cancelAnimationFrame(runnerFrame);
+  motion = null;
+  placeHero(runnerTarget);
+  fx.clearRect(0, 0, fxWidth, fxHeight);
+}
+
+function runHeroFrame(now) {
+  const {from, to, start, duration, move} = motion;
+  const t = Math.min((now - start) / duration, 1);
+  if (t >= 1) { finishHeroMovement(); return; }
+  const direction = Math.sign(to - from) || (to < 70 ? 1 : -1);
+  const pace = t*t*(3-2*t);
+  const air = Math.sin(Math.PI*t);
+  const lift = move.lift * (move.effect === 'smash' ? Math.pow(air, .65) : air);
+  const drift = from === to ? direction * Math.min(5, direction > 0 ? 100-to : to) * air : 0;
+  const x = from + (to-from)*pace + drift;
+  const lean = direction * move.angle * Math.sin(2*Math.PI*t);
+  placeHero(x, lift, lean, direction, move.effect === 'shift' ? 1 + .14*Math.sin(t*24) : 1);
+  fx.clearRect(0, 0, fxWidth, fxHeight);
+  fx.globalAlpha = Math.min(t*9, (1-t)*6, 1);
+  const padding = (fxWidth - runnerRail.clientWidth) / 2;
+  drawTrail(move.effect, move.color, padding + runnerRail.clientWidth*x/100, fxHeight-65-lift, direction, t);
+  fx.globalAlpha = 1;
+  runnerFrame = requestAnimationFrame(runHeroFrame);
+}
+
+function moveTimelineHero(target, replay = false) {
+  const hadPosition = runnerPosition !== null;
+  const switched = runnerHero !== state.hero;
+  const unchanged = runnerTarget === target;
+  if (unchanged && !switched && !replay && hadPosition) return;
+  runnerTarget = target;
+  if (switched) {
+    runnerHero = state.hero;
+    const move = heroMoves[runnerHero];
+    paintHero(runnerSprite, runnerHero);
+    runnerName.textContent = icons[runnerHero][1] + ' · ' + move.label;
+    runnerPower.setAttribute('aria-label', 'Replay ' + icons[runnerHero][1] + '’s ' + move.label);
+    heroRunner.style.setProperty('--hero-aura', move.color);
+  }
+  if (!hadPosition || switched || motionPreference.matches) {
+    finishHeroMovement();
+    return;
+  }
+  cancelAnimationFrame(runnerFrame);
+  sizeRunnerEffects();
+  motion = {
+    from: runnerPosition, to: target, start: performance.now(),
+    duration: Math.min(1500, 760 + Math.abs(target-runnerPosition)*7),
+    move: heroMoves[runnerHero]
+  };
+  runnerFrame = requestAnimationFrame(runHeroFrame);
+}
+
+runnerPower.addEventListener('click', () => moveTimelineHero(runnerTarget, true));
+motionPreference.addEventListener('change', () => {
+  if (motionPreference.matches) finishHeroMovement();
+  runnerPower.hidden = motionPreference.matches;
+});
+runnerPower.hidden = motionPreference.matches;
+
+function update(){let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';const exactProgress=list.length?n/list.length*100:0;$('railFill').style.width=exactProgress+'%';moveTimelineHero(exactProgress);document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
+function updateProfile(){if(runnerPosition!==null)moveTimelineHero(runnerTarget);$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
 function renderIconPicker(){ $('iconGrid').innerHTML=icons.map((x,i)=>`<button class="iconbtn ${i===draftHero?'selected':''}" data-icon="${i}" aria-pressed="${i===draftHero}" aria-label="${x[1]}" title="${x[1]}">${sprite(i)}<small>${x[1]}</small></button>`).join('');drawSprites($('iconGrid'));$('saveProfile').disabled=step===2&&draftHero===null;$('iconGrid').querySelectorAll('.iconbtn').forEach(b=>b.addEventListener('click',()=>{draftHero=Number(b.dataset.icon);renderIconPicker();$('iconGrid').querySelector('[data-icon="'+draftHero+'"]').focus()}))}
 function showModal() {
   step = 1;
