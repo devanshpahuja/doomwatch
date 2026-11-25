@@ -90,18 +90,33 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .legacy-four summary{cursor:pointer;font-weight:800;color:#ffe05b}
 .legacy-four a{color:#ffe05b}
 .legacy-four li+li{margin-top:5px}
+
+.spoiler-help{padding:12px 20px;margin:0;background:#392647;color:#f6dcbd;font-size:13px}
+.item-wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:stretch}
+.item-wrap>.item{width:100%;margin:0;background:none;text-align:left;border:0;border-top:1px solid #473552}
+.item-wrap:nth-of-type(even){background:#ffffff05}
+.item-wrap>.item:hover{background:#412947}
+.item-remove{background:#312244;border:1px solid #604b71;padding:0 12px}
+.spoiler-detail summary{font:700 12px var(--display);color:#ffe05b;cursor:pointer;padding:15px 8px}
+.spoiler-context{display:none;position:absolute;z-index:4;left:16px;right:16px;top:calc(100% - 2px);padding:13px;border:2px solid #0b0711;background:#3e264c;box-shadow:4px 4px #100913;color:#fff1ce;font-size:14px;line-height:1.45;margin:0;pointer-events:none}
+.spoiler-detail[open] + .spoiler-context{display:block;position:static;pointer-events:auto}
+.item-wrap:has(.spoiler-detail[open]){grid-template-columns:minmax(0,1fr)}
+.item-wrap:focus-within .spoiler-context{display:block}
+@media(hover:hover){.item-wrap:hover .spoiler-context{display:block}}
+#spoilerToggle[aria-pressed="true"]{background:#f05163}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><div class="online">TIMELINE ACTIVE</div><div class="local">LOCAL SAVE · ENABLED</div><button class="avatar" id="avatar" aria-label="Edit name and hero"><span class="pixelface">❔</span></button></div></header>
 <main>
 <section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
 <section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
 <nav class="feature-toolbar" aria-label="Readiness activities">
+  <button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button>
   <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
   <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
   <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
 </nav>
 <section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>THE DOT MOVES AS YOU WATCH · NO SPOILERS</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><div class="dot" id="dot"></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div></section>
-<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">MARVEL MOVIES &amp; SERIES · INCLUDING THE X-MEN SAGA</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><div id="watchlist"></div>
+<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">MARVEL MOVIES &amp; SERIES · INCLUDING THE X-MEN SAGA</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title or open its Why it matters note. Notes include spoilers for earlier releases and explain connections without revealing the Doomsday plot.</p><div id="watchlist"></div>
 <details class="legacy-four">
   <summary>Fantastic Four · Optional viewing</summary>
   <p>Earlier film versions for a deeper dive. These titles sit outside your readiness score.</p>
@@ -181,7 +196,84 @@ const initial=[
 ].map(([id,title,type,phase])=>({id,title,type,phase}));
 let state={name:'',hero:0,watched:[],custom:[]};try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{};if(!Number.isInteger(state.hero)||!icons[state.hero])state.hero=0;
 const $=id=>document.getElementById(id);let toastTimer,step=1,draftHero=null;function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2100)}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function all(){return [...initial,...(state.custom||[])]}
-function renderList(){let list=all(),done=new Set(state.watched),last='',html='';for(const x of list){if(x.phase!==last){html+=`<div class="phase">${esc(x.phase)}</div>`;last=x.phase}let checked=done.has(x.id);html+=`<div class="item ${checked?'done':''}" data-id="${esc(x.id)}" role="button" tabindex="0" aria-pressed="${checked}"><span class="check">${checked?'✓':''}</span><span class="itemname">${esc(x.title)}</span><span class="kind ${x.type==='series'?'series':''}">${x.type==='series'?'SERIES':'FILM'}</span>${x.custom?'<button class="remove" aria-label="Remove title">×</button>':''}</div>`}$('watchlist').innerHTML=html;document.querySelectorAll('.item').forEach(el=>{el.addEventListener('click',e=>{if(e.target.closest('.remove')){removeTitle(el.dataset.id);return}toggle(el.dataset.id)});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(el.dataset.id)}})});document.querySelectorAll('.remove').forEach(b=>b.addEventListener('click',e=>removeTitle(e.currentTarget.closest('.item').dataset.id)));update()}
+const spoilerNotes = {
+  "captain-america-first": "Steve Rogers becomes Captain America, and the Tesseract links his origin to the wider Avengers saga. This sets up the legacy Sam Wilson later inherits.",
+  "captain-marvel": "Carol Danvers helps shape Nick Fury’s idea for the Avengers Initiative. The film also shows how the Tesseract moved through an earlier chapter of MCU history.",
+  "iron-man": "Tony Stark’s origin explains why the announced casting of Robert Downey Jr. as Victor von Doom is such a reversal for MCU viewers. Tony and Victor are different characters.",
+  "avengers": "Thor, Loki, and the original Avengers collide over the Tesseract. The Battle of New York later becomes the point where Loki’s TV timeline branches.",
+  "winter-soldier": "Bucky is revealed as the Winter Soldier, and Sam Wilson debuts as Falcon. Their history with Steve Rogers frames their later roles on different teams.",
+  "guardians": "The Orb is revealed to contain the Power Stone. This gives the Infinity Saga its cosmic backdrop and introduces the Guardians before their Avengers crossover.",
+  "age-ultron": "Wanda joins the Avengers, Vision is created, and Sokovia is devastated. Those events set up both WandaVision and the rift in Civil War.",
+  "civil-war": "The Sokovia Accords split the Avengers, and Bucky’s past drives Steve and Tony further apart. It shows how fragile an Avengers alliance can be.",
+  "doctor-strange": "Strange uses the Time Stone to trap Dormammu in a loop. It establishes the MCU’s rules for sorcery, dimensions, and risky manipulation of time.",
+  "infinity-war": "Thanos assembles all six Infinity Stones and erases half of life. The Avengers’ defeat sets up the time travel that later branches Loki’s story.",
+  "endgame": "The Time Heist creates Loki’s escape, Tony dies, and Steve hands his shield to Sam. These are major turning points for the MCU going into Doomsday.",
+  "wandavision": "Wanda creates Westview’s sitcom reality and becomes the Scarlet Witch. Her grief and early use of the Darkhold carry into Multiverse of Madness.",
+  "loki": "The TVA reveals how timelines branch, and Loki ultimately holds those branches together. This is key background for how the MCU depicts the multiverse.",
+  "no-way-home": "A spell brings Spider-Men and villains from other film universes into the MCU. It’s a clear example of characters crossing between screen continuities.",
+  "multiverse-madness": "America Chavez can travel between universes, and the film introduces incursions. Its alternate Professor X and Reed Richards are separate versions from their other screen appearances.",
+  "deadpool-wolverine": "The TVA, the Void, and an alternate Wolverine bring Fox-era Marvel characters into an MCU multiverse story. This demonstrates how earlier franchises can intersect.",
+  "xmen-1": "Patrick Stewart’s Xavier and Ian McKellen’s Magneto establish their opposing visions for mutantkind. Both actors were announced for Doomsday.",
+  "x2": "Nightcrawler joins the story and Wolverine confronts Weapon X. Alan Cumming’s Nightcrawler is a particularly relevant introduction given his announced return.",
+  "last-stand": "This film introduces Kelsey Grammer’s Beast and brings the original team into conflict over a mutant cure and Jean’s Phoenix powers.",
+  "first-class": "Young Charles Xavier and Erik Lehnsherr begin as allies and end up on different sides. It explains the friendship beneath the original team’s rivalry.",
+  "days-future-past": "Wolverine changes the past to stop the Sentinel future. The film connects both X-Men casts and shows how history in that franchise can be rewritten.",
+  "apocalypse": "The younger Scott Summers, Jean Grey, and other mutants come together against Apocalypse. It gives context for their relationships in the revised Fox timeline.",
+  "dark-phoenix": "The younger Jean’s powers escalate after a space mission. This is an alternate screen take on the Phoenix story from The Last Stand.",
+  "xmen-origins": "Logan’s relationship with Victor Creed and his adamantium procedure explain this version of his backstory. The film’s Wade Wilson is a different take from the later Deadpool.",
+  "the-wolverine": "Logan deals with Jean’s death after The Last Stand. The credits scene reunites him with Xavier and Magneto, setting up Days of Future Past.",
+  "logan": "Logan dies protecting Laura. Deadpool & Wolverine revisits that legacy while using a Wolverine from another universe.",
+  "new-mutants": "A group of young mutants discover their powers inside a facility run by Essex Corporation. It’s supplemental Fox-era worldbuilding, with no confirmed Doomsday connection.",
+  "xmen-97": "The animated team explores what happens when Magneto takes charge in Xavier’s absence. It gives character context for several returning names in a separate continuity.",
+  "fantastic-four": "Reed, Sue, Johnny, and Ben confront Galactus and Shalla-Bal. It introduces the versions of the Fantastic Four whose actors were announced for Doomsday.",
+  "thunderbolts": "Yelena and the team stop Bob’s Void, then are presented as the New Avengers. That sets up a second group using the Avengers name before Doomsday."
+};
+function renderList() {
+  const watched = new Set(state.watched);
+  const list = $('watchlist');
+  const previous = document.activeElement?.dataset?.watchId;
+  let lastPhase = '';
+  let rows = '';
+  for (const entry of all()) {
+    if (entry.phase !== lastPhase) {
+      rows += '<div class="phase">' + esc(entry.phase) + '</div>';
+      lastPhase = entry.phase;
+    }
+    const checked = watched.has(entry.id);
+    const id = esc(entry.id);
+    const note = state.spoilers === true
+      ? (spoilerNotes[entry.id] || 'This is a personal watchlist entry. Doomwatch does not have a Doomsday connection for this title.')
+      : '';
+    rows += '<div class="item-wrap"><button class="item' + (checked ? ' done' : '') +
+      '" type="button" data-watch-id="' + id + '" aria-pressed="' + checked + '"' +
+      (note ? ' aria-describedby="note-' + id + '"' : '') +
+      '><span class="check" aria-hidden="true">' + (checked ? '✓' : '') +
+      '</span><span class="itemname">' + esc(entry.title) +
+      '</span><span class="kind' + (entry.type === 'series' ? ' series">SERIES' : '">FILM') + '</span></button>' +
+      (entry.custom ? '<button type="button" class="item-remove" data-remove-id="' + id + '" aria-label="Remove title">×</button>' : '') +
+      (note ? '<details class="spoiler-detail"><summary>Why it matters</summary></details><p id="note-' + id +
+        '" class="spoiler-context">' + esc(note) + '</p>' : '') + '</div>';
+  }
+  list.innerHTML = rows;
+  for (const button of list.querySelectorAll('[data-watch-id]')) {
+    button.addEventListener('click', () => toggle(button.dataset.watchId));
+    if (button.dataset.watchId === previous) button.focus({preventScroll:true});
+  }
+  for (const button of list.querySelectorAll('[data-remove-id]')) {
+    button.addEventListener('click', () => removeTitle(button.dataset.removeId));
+  }
+  const spoilerToggle = $('spoilerToggle');
+  const enabled = state.spoilers === true;
+  spoilerToggle.textContent = enabled ? 'Spoilers: On' : 'Spoilers: Off';
+  spoilerToggle.setAttribute('aria-pressed', String(enabled));
+  $('spoilerHelp').hidden = !enabled;
+  update();
+}
+$('spoilerToggle').addEventListener('click', () => {
+  state.spoilers = state.spoilers !== true;
+  save();
+  renderList();
+});
 function toggle(id){state.watched=state.watched.includes(id)?state.watched.filter(x=>x!==id):[...state.watched,id];save();renderList()}function removeTitle(id){state.custom=state.custom.filter(x=>x.id!==id);state.watched=state.watched.filter(x=>x!==id);save();renderList();toast('TITLE REMOVED')}
 function update(){let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';$('railFill').style.width=p+'%';$('dot').style.left=p+'%';document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
 function updateProfile(){let hero=icons[state.hero];$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
@@ -449,16 +541,18 @@ function shareProgress() {
   field.readOnly = true;
   field.setAttribute('aria-label', 'Progress message');
   field.value = text + (url ? '\n' + url : '');
-  featureBody.append(field, featureButton('Copy post', () => copyText(field)));
   if (url) {
     const linkField = document.createElement('input');
     linkField.readOnly = true;
     linkField.value = url;
     linkField.setAttribute('aria-label', 'Readiness link');
-    featureBody.append(linkField, featureButton('Copy link', () => copyText(linkField)));
+    const copyLink = featureButton('Copy live progress link', () => copyText(linkField));
+    featureBody.append(copyLink, linkField);
+    copyLink.focus();
   } else {
     featureBody.append(featureElement('p', 'Progress links are available when the tracker is hosted online.', 'feature-meta'));
   }
+  featureBody.append(field, featureButton('Copy post text', () => copyText(field)));
   if (typeof navigator.share === 'function') {
     featureBody.append(featureButton('Share…', async () => {
       try { await navigator.share(url ? {text, url} : {text}); }
