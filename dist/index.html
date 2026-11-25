@@ -100,9 +100,9 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .spoiler-detail summary{font:700 12px var(--display);color:#ffe05b;cursor:pointer;padding:15px 8px}
 .spoiler-context{display:none;position:absolute;z-index:4;left:16px;right:16px;top:calc(100% - 2px);padding:13px;border:2px solid #0b0711;background:#3e264c;box-shadow:4px 4px #100913;color:#fff1ce;font-size:14px;line-height:1.45;margin:0;pointer-events:none}
 .spoiler-detail[open] + .spoiler-context{display:block;position:static;pointer-events:auto}
-.item-wrap:has(.spoiler-detail[open]){grid-template-columns:minmax(0,1fr)}
+.item-wrap:has(.spoiler-detail[open]) .spoiler-context{grid-column:1/-1}
 .item-wrap:has(>.item:focus-visible) .spoiler-context{display:block}
-@media(hover:hover){.item-wrap:hover .spoiler-context{display:block}}
+@media(hover:hover){.item-wrap:has(>.item:hover) .spoiler-context{display:block}.item-wrap>.spoiler-detail{display:none}}
 #spoilerToggle[aria-pressed="true"]{background:#f05163}
 
 .topright{gap:10px}
@@ -113,6 +113,28 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .modal .spoiler-options label{display:flex;align-items:center;gap:9px;min-height:34px;margin:0;font:600 14px var(--display);letter-spacing:normal;cursor:pointer}
 .modal .spoiler-options input{width:auto;margin:0;accent-color:#ffe05b}
 @media(max-width:420px){.top .brand{gap:6px;font-size:12px}.top .brandmark{font-size:12px;padding-inline:4px}.topright{gap:7px}.topright #spoilerToggle{padding-inline:7px}}
+
+.watch-region{padding:9px 20px;background:#2c213a;color:#e6cde8;font:10px var(--mono);letter-spacing:.08em}
+.item-wrap{display:flex;flex-wrap:wrap;align-items:center;padding-right:10px;border-top:1px solid #473552}
+.item-wrap>.item{flex:1 1 120px;min-width:0;width:auto;border:0}
+.item-wrap>.spoiler-context{left:10px;right:10px}
+.item-wrap:has(.spoiler-detail[open])>.spoiler-context{flex:0 0 100%;margin:0 0 8px}
+.spoiler-detail summary{display:grid;place-items:center;list-style:none;min-width:34px;min-height:43px;padding:0;font-size:17px}
+.spoiler-detail summary::-webkit-details-marker{display:none}
+.watch-link{display:inline-flex;align-items:center;min-height:42px;text-decoration:none;padding:4px}
+.watch-link>span{display:flex;flex-wrap:wrap;gap:4px;max-width:95px}
+.provider-icon{display:grid;place-items:center;width:25px;height:25px;border:1px solid #ffe5ff42;border-radius:6px;background:#38304d;color:#fff;font:800 10px var(--display)}
+.provider-hotstar{background:linear-gradient(145deg,#281771,#a91c94);font-size:17px}
+.provider-vi{background:#86152e;color:#ffe649;font-size:13px}
+.provider-sony{background:linear-gradient(120deg,#7145b3,#9a241d,#344366)}
+.provider-zee{background:#1d1c21;border-color:#bd76f0}
+.provider-apple{background:#111;color:#fff;font-size:13px}
+.provider-prime{background:#1e80bb}
+.provider-guide{background:#4b3823;color:#ffe05b;font-size:15px}
+.watch-link:hover .provider-icon{border-color:#ffdf47}
+.legacy-four li{padding-block:2px}
+.legacy-four li>.watch-link,.legacy-four li>[data-optional-watch]{margin-left:5px}
+@media(max-width:420px){.item-wrap{padding-right:5px}.item-wrap>.item{padding-left:11px;padding-right:4px}.watch-link>span{max-width:71px}.provider-icon{width:21px;height:21px}}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
@@ -124,15 +146,10 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
 </nav>
 <section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>THE DOT MOVES AS YOU WATCH · NO SPOILERS</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><div class="dot" id="dot"></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div></section>
-<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">MARVEL MOVIES &amp; SERIES · INCLUDING THE X-MEN SAGA</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title or open its Why it matters note. Notes include spoilers for earlier releases and explain connections without revealing the Doomsday plot.</p><div id="watchlist"></div>
+<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">MARVEL MOVIES &amp; SERIES · INCLUDING THE X-MEN SAGA</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title for spoilers. On touchscreens, tap its info icon.</p><div class="watch-region">WHERE TO WATCH · INDIA</div><div id="watchlist"></div>
 <details class="legacy-four">
   <summary>Fantastic Four · Optional viewing</summary>
-  <p>Earlier film versions for a deeper dive. These titles sit outside your readiness score.</p>
-  <ul>
-    <li><a href="https://www.disneyplus.com/browse/entity-d6592baa-0dc6-4549-a0cb-3b93a3b0e260" target="_blank" rel="noopener noreferrer">Fantastic Four (2005)</a></li>
-    <li><a href="https://family.20thcenturystudios.com/movies/fantastic-four-rise-of-the-silver-surfer" target="_blank" rel="noopener noreferrer">Fantastic Four: Rise of the Silver Surfer (2007)</a></li>
-    <li><a href="https://family.20thcenturystudios.com/movies/fantastic-four" target="_blank" rel="noopener noreferrer">Fantastic Four (2015)</a></li>
-  </ul>
+  <p>Earlier film versions sit outside your readiness score.</p><ul><li><span>Fantastic Four (2005)</span><span data-optional-watch="ff-2005"></span></li><li><span>Fantastic Four: Rise of the Silver Surfer (2007)</span><span data-optional-watch="ff-2007"></span></li><li><span>Fantastic Four (2015)</span><span data-optional-watch="ff-2015"></span></li></ul>
 </details><div class="actions"><button class="action" id="addBtn">＋ ADD A TITLE</button><button class="action" id="resetBtn">↻ RESET PROGRESS</button></div></article></div>
 <aside class="side"><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section></main>
 <footer class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · NO CLOUD · YOUR WATCHLIST STAYS HERE</span></footer></div>
@@ -242,6 +259,37 @@ const spoilerNotes = {
   "fantastic-four": "Reed, Sue, Johnny, and Ben confront Galactus and Shalla-Bal. It introduces the versions of the Fantastic Four whose actors were announced for Doomsday.",
   "thunderbolts": "Yelena and the team stop Bob’s Void, then are presented as the New Avengers. That sets up a second group using the Avengers name before Doomsday."
 };
+const indiaWatch = {"captain-marvel":["movie/captain-marvel","hotstar","vi"],"civil-war":["movie/captain-america-civil-war","hotstar"],"avengers":["movie/the-avengers","hotstar","vi"],"guardians":["movie/guardians-of-the-galaxy","hotstar"],"captain-america-first":["movie/captain-america-the-first-avenger","hotstar"],"age-ultron":["movie/avengers-age-of-ultron","hotstar","vi"],"winter-soldier":["movie/captain-america-the-winter-soldier","hotstar"],"iron-man":["movie/iron-man","hotstar"],"deadpool-wolverine":["movie/deadpool-3","hotstar"],"multiverse-madness":["movie/doctor-strange-in-the-multiverse-of-madness","hotstar","vi"],"endgame":["movie/avengers-endgame","hotstar","vi"],"no-way-home":["movie/spider-man-no-way-home","hotstar","sony","zee","apple","prime"],"infinity-war":["movie/avengers-infinity-war","hotstar","vi"],"doctor-strange":["movie/doctor-strange"],"loki":["tv-show/loki","hotstar","vi"],"wandavision":["tv-show/wandavision","hotstar","vi"],"first-class":["movie/x-men-first-class","hotstar"],"xmen-origins":["movie/x-men-origins-wolverine","hotstar","vi"],"apocalypse":["movie/x-men-apocalypse","hotstar"],"x2":["movie/x2","hotstar"],"dark-phoenix":["movie/dark-phoenix","hotstar","vi"],"days-future-past":["movie/x-men-days-of-future-past","hotstar"],"xmen-1":["movie/x-men","hotstar","vi"],"last-stand":["movie/x-men-the-last-stand","hotstar","vi"],"fantastic-four":["movie/the-fantastic-four","hotstar"],"new-mutants":["movie/the-new-mutants","hotstar"],"thunderbolts":["movie/thunderbolts","hotstar"],"ff-2005":["movie/fantastic-four-2005","hotstar","vi"],"the-wolverine":["movie/the-wolverine","hotstar"],"ff-2007":["movie/fantastic-4-rise-of-the-silver-surfer","hotstar","vi"],"logan":["movie/logan","hotstar"],"xmen-97":["tv-show/x-men-97","hotstar"],"ff-2015":["movie/fantastic-four","hotstar","vi"]};
+const platformIcons = {
+  hotstar: ['✦', 'JioHotstar'],
+  vi: ['Vi', 'Vi Movies & TV'],
+  sony: ['LIV', 'Sony LIV'],
+  zee: ['Z5', 'ZEE5'],
+  apple: ['tv', 'Apple TV Store'],
+  prime: ['▶', 'Amazon Video'],
+  guide: ['↗', 'Streaming guide']
+};
+
+function watchLink(id, title) {
+  const match = indiaWatch[id];
+  const url = match ? 'https://www.justwatch.com/in/' + match[0] :
+    'https://www.justwatch.com/in/search?q=' + encodeURIComponent(title);
+  const providers = match?.slice(1) || [];
+  const label = 'Where to watch ' + title + ' in India';
+  const names = providers.map(provider => platformIcons[provider][1]).join(', ');
+  const labelWithNames = label + (names ? ' · ' + names : '') + ' · opens JustWatch';
+  const icons = (providers.length ? providers : ['guide']).map(provider => {
+    const [glyph, name] = platformIcons[provider];
+    return '<span class="provider-icon provider-' + provider + '" title="' + esc(name) + '">' + glyph + '</span>';
+  }).join('');
+  return '<a class="watch-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' +
+    esc(labelWithNames) + '" title="' + esc(labelWithNames) + '"><span aria-hidden="true">' + icons + '</span></a>';
+}
+
+for (const placeholder of document.querySelectorAll('[data-optional-watch]')) {
+  placeholder.innerHTML = watchLink(placeholder.dataset.optionalWatch, placeholder.previousElementSibling.textContent);
+}
+
 function renderList() {
   const watched = new Set(state.watched);
   const list = $('watchlist');
@@ -265,7 +313,9 @@ function renderList() {
       '</span><span class="itemname">' + esc(entry.title) +
       '</span><span class="kind' + (entry.type === 'series' ? ' series">SERIES' : '">FILM') + '</span></button>' +
       (entry.custom ? '<button type="button" class="item-remove" data-remove-id="' + id + '" aria-label="Remove title">×</button>' : '') +
-      (note ? '<details class="spoiler-detail"><summary>Why it matters</summary></details><p id="note-' + id +
+      watchLink(entry.id, entry.title) +
+      (note ? '<details class="spoiler-detail"><summary aria-label="Spoiler note for ' + esc(entry.title) +
+        '" aria-controls="note-' + id + '"><span aria-hidden="true">ⓘ</span></summary></details><p id="note-' + id +
         '" class="spoiler-context">' + esc(note) + '</p>' : '') + '</div>';
   }
   list.innerHTML = rows;
