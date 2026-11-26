@@ -163,8 +163,12 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 @keyframes dust-drift{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(80deg)}}
 @media(max-width:580px){.doom-pet,.snap-dust{width:46px;height:46px}}
 @media(prefers-reduced-motion:reduce){.doom-pet.arrive,.timeline-hero.snapped,.snap-dust i{animation:none}.timeline-hero.snapped{opacity:0}.snap-dust{display:none}}
+.topright #musicToggle{white-space:nowrap;padding:8px 10px;font-size:12px;min-height:38px}
+.topright #musicToggle[aria-pressed="true"]{background:#f05163}
+.ticket-button{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+@media(max-width:520px){.topright{gap:5px}.topright #musicToggle,.topright #spoilerToggle{padding:6px;font-size:10px;min-height:34px}.topright .avatar{width:34px;height:34px}.brandmark{display:none}}
 </style></head><body><div class="wrap">
-<header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
+<header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Original hero theme; begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
 <section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
 <section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
@@ -172,6 +176,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
   <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
   <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
+  <a class="feature-button ticket-button" href="https://www.district.in/movies/avengers-doomsday-movie-tickets-MV176735" target="_blank" rel="noopener noreferrer" aria-label="Book Avengers Doomsday tickets on District">🎟 Book Doomsday Tickets</a>
 </nav>
 <section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>MARK TITLES WATCHED TO MOVE YOUR HERO</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><canvas id="timelineEffects" class="hero-effects" aria-hidden="true"></canvas>
 <div id="timelineHero" class="timeline-hero" aria-hidden="true"><span class="hero-shadow"></span><canvas id="timelineSprite" width="32" height="32"></canvas></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div>
@@ -181,7 +186,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 <details class="legacy-four">
   <summary>Fantastic Four · Optional viewing</summary>
   <p>Earlier film versions sit outside your readiness score.</p><ul><li><span>Fantastic Four (2005)</span><span data-optional-watch="ff-2005"></span></li><li><span>Fantastic Four: Rise of the Silver Surfer (2007)</span><span data-optional-watch="ff-2007"></span></li><li><span>Fantastic Four (2015)</span><span data-optional-watch="ff-2015"></span></li></ul>
-</details><div class="actions"><button class="action" id="addBtn">＋ ADD A TITLE</button><button class="action" id="resetBtn">↻ RESET PROGRESS</button></div></article></div>
+</details><div class="actions"><button class="action" id="resetBtn">↻ RESET PROGRESS</button></div></article></div>
 <aside class="side"><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section></main>
 <footer class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · NO CLOUD · YOUR WATCHLIST STAYS HERE</span></footer></div>
 <dialog id="featureDialog" class="feature-dialog" aria-labelledby="featureTitle">
@@ -258,6 +263,71 @@ const initial=[
 ].map(([id,title,type,phase])=>({id,title,type,phase}));
 let state={name:'',hero:0,watched:[],custom:[],spoilers:false};try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{};if(!Number.isInteger(state.hero)||!icons[state.hero])state.hero=0;
 const $=id=>document.getElementById(id);let toastTimer,step=1,draftHero=null;function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2100)}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function all(){return [...initial,...(state.custom||[])]}
+// Original, synthesized hero motifs. Audio starts only after a user gesture.
+const heroThemes = [
+  {notes:[0,4,7,12,null,7,4,9,7,4,2,0],root:48,type:'triangle',pace:240},
+  {notes:[0,7,12,7,5,12,15,12,7,5,3,7],root:45,type:'sawtooth',pace:195},
+  {notes:[0,null,7,12,10,7,null,15,12,10,7,5],root:43,type:'triangle',pace:270},
+  {notes:[0,7,10,7,null,5,7,12,10,7,3,null],root:48,type:'square',pace:200},
+  {notes:[0,3,7,3,0,3,10,7,5,3,0,null],root:45,type:'sawtooth',pace:175},
+  {notes:[0,6,12,9,6,3,0,6,15,12,9,6],root:42,type:'sine',pace:250},
+  {notes:[0,5,7,12,7,5,3,5,10,7,5,null],root:50,type:'sine',pace:230},
+  {notes:[0,2,7,14,12,7,5,2,9,7,2,null],root:47,type:'sine',pace:255},
+  {notes:[0,4,7,12,9,7,4,7,14,12,7,4],root:53,type:'triangle',pace:170},
+  {notes:[0,null,0,3,0,null,7,5,3,0,null,0],root:40,type:'square',pace:290},
+  {notes:[0,3,7,null,10,7,3,0,5,7,3,null],root:50,type:'triangle',pace:205},
+  {notes:[0,5,9,12,9,5,7,9,14,12,9,5],root:52,type:'sine',pace:190}
+];
+let musicContext=null,musicTimer=null,musicStep=0,musicStarted=false;
+const musicButton=$('musicToggle');
+function updateMusicButton(){
+  const muted=state.musicMuted===true;
+  musicButton.textContent=muted?'Music: Off':'Music: On';
+  musicButton.setAttribute('aria-pressed',String(muted));
+  musicButton.setAttribute('aria-label',muted?'Unmute hero music':'Mute hero music');
+  musicButton.title=(muted?'Unmute':'Mute')+' original '+icons[state.hero][1]+' theme';
+}
+function playHeroNote(){
+  if(!musicContext || state.musicMuted || document.hidden)return;
+  const theme=heroThemes[state.hero],note=theme.notes[musicStep%theme.notes.length];
+  if(note!==null){
+    const now=musicContext.currentTime,oscillator=musicContext.createOscillator(),volume=musicContext.createGain();
+    oscillator.type=theme.type;
+    oscillator.frequency.value=440*Math.pow(2,(theme.root+note-69)/12);
+    volume.gain.setValueAtTime(0.0001,now);
+    volume.gain.exponentialRampToValueAtTime(theme.type==='sawtooth'||theme.type==='square'?0.012:0.025,now+0.025);
+    volume.gain.exponentialRampToValueAtTime(0.0001,now+Math.min(theme.pace/1000*0.83,0.24));
+    oscillator.connect(volume).connect(musicContext.destination);
+    oscillator.start(now);
+    oscillator.stop(now+Math.min(theme.pace/1000*0.85,0.25));
+  }
+  musicStep++;
+}
+function stopMusic(){clearInterval(musicTimer);musicTimer=null}
+function startMusic(){
+  if(state.musicMuted || !state.name || document.hidden || musicTimer)return;
+  const AudioEngine=window.AudioContext||window.webkitAudioContext;
+  if(!AudioEngine){musicButton.disabled=true;musicButton.title='Audio is unavailable in this browser';return}
+  try{
+    musicContext ||= new AudioEngine();
+    musicContext.resume().then(()=>{
+      if(state.musicMuted || !state.name || document.hidden || musicTimer)return;
+      musicStarted=true;
+      playHeroNote();
+      musicTimer=setInterval(playHeroNote,heroThemes[state.hero].pace);
+    }).catch(()=>{});
+  }catch{}
+}
+musicButton.addEventListener('click',()=>{
+  state.musicMuted=!state.musicMuted;
+  save();
+  updateMusicButton();
+  if(state.musicMuted)stopMusic();else startMusic();
+});
+document.addEventListener('pointerdown',()=>{if(state.name && !musicStarted)startMusic()},{once:true});
+document.addEventListener('keydown',()=>{if(state.name && !musicStarted)startMusic()},{once:true});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopMusic();else if(musicStarted)startMusic()});
+updateMusicButton();
 const spoilerNotes = {
   "captain-america-first": "Steve Rogers becomes Captain America, and the Tesseract links his origin to the wider Avengers saga. This sets up the legacy Sam Wilson later inherits.",
   "captain-marvel": "Carol Danvers helps shape Nick Fury’s idea for the Avengers Initiative. The film also shows how the Tesseract moved through an earlier chapter of MCU history.",
@@ -637,7 +707,7 @@ update = function () {
   }
   wasComplete = complete;
 };
-function updateProfile(){if(runnerPosition!==null)moveTimelineHero(runnerTarget);$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
+function updateProfile(){if(runnerPosition!==null)moveTimelineHero(runnerTarget);$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));updateMusicButton();$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();musicStep=0;stopMusic();if(musicStarted)startMusic();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
 function renderIconPicker(){ $('iconGrid').innerHTML=icons.map((x,i)=>`<button class="iconbtn ${i===draftHero?'selected':''}" data-icon="${i}" aria-pressed="${i===draftHero}" aria-label="${x[1]}" title="${x[1]}">${sprite(i)}<small>${x[1]}</small></button>`).join('');drawSprites($('iconGrid'));$('saveProfile').disabled=step===2&&draftHero===null;$('iconGrid').querySelectorAll('.iconbtn').forEach(b=>b.addEventListener('click',()=>{draftHero=Number(b.dataset.icon);renderIconPicker();$('iconGrid').querySelector('[data-icon="'+draftHero+'"]').focus()}))}
 function showModal() {
   step = 1;
@@ -696,16 +766,19 @@ function nextStep() {
   }
   state.name = name;
   state.hero = draftHero;
+  musicStep=0;
+  stopMusic();
   state.spoilers = $('setupSpoilersOn').checked;
   save();
   updateProfile();
   renderList();
   hideModal();
+  startMusic();
   toast('PROFILE SAVED ON THIS DEVICE');
 }
 const releaseTime = Date.parse('2026-12-17T00:00:00+05:30');
 function tick(){let d=Math.max(0,releaseTime-Date.now()),days=Math.floor(d/864e5);d%=864e5;let h=Math.floor(d/36e5);d%=36e5;let m=Math.floor(d/6e4),s=Math.floor(d%6e4/1e3);$('days').textContent=String(days).padStart(3,'0');$('hours').textContent=String(h).padStart(2,'0');$('minutes').textContent=String(m).padStart(2,'0');$('seconds').textContent=String(s).padStart(2,'0')}
-$('avatar').addEventListener('click',showModal);$('saveProfile').addEventListener('click',nextStep);$('cancelModal').addEventListener('click',hideModal);$('backdrop').addEventListener('click',e=>{if(e.target===$('backdrop')&&state.name)hideModal()});$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')nextStep();if(e.key==='Escape'&&state.name)hideModal()});$('resetBtn').addEventListener('click',()=>{if(!state.watched.length){toast('NO WATCH PROGRESS TO RESET');return}if(confirm('Clear all watched progress?')){state.watched=[];save();renderList();toast('WATCH PROGRESS RESET')}});$('addBtn').addEventListener('click',()=>{let title=prompt('Movie or series title to add:');if(!title?.trim())return;let type=(prompt('Type movie or series:','movie')||'movie').toLowerCase().trim()==='series'?'series':'movie';state.custom.push({id:'custom-'+Date.now(),title:title.trim(),type,phase:'07 · YOUR PERSONAL WATCHLIST',custom:true});save();renderList();toast('TITLE ADDED')});const quizQuestions = [
+$('avatar').addEventListener('click',showModal);$('saveProfile').addEventListener('click',nextStep);$('cancelModal').addEventListener('click',hideModal);$('backdrop').addEventListener('click',e=>{if(e.target===$('backdrop')&&state.name)hideModal()});$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')nextStep();if(e.key==='Escape'&&state.name)hideModal()});$('resetBtn').addEventListener('click',()=>{if(!state.watched.length){toast('NO WATCH PROGRESS TO RESET');return}if(confirm('Clear all watched progress?')){state.watched=[];save();renderList();toast('WATCH PROGRESS RESET')}});const quizQuestions = [
   ['Doomsday','Who was announced as Victor von Doom in Avengers: Doomsday?','Robert Downey Jr.','Chris Evans','Pedro Pascal','Tom Hiddleston','Downey returns to the MCU in a new role as Victor von Doom.','https://d23.com/marvel-studios-announces-avengers-doomsday-cast/'],
   ['Doomsday','Which actor from the original X-Men films was announced in the Doomsday cast?','Patrick Stewart','Hugh Jackman','Halle Berry','Famke Janssen','Disney’s cast announcement includes Patrick Stewart.','https://d23.com/marvel-studios-announces-avengers-doomsday-cast/'],
   ['Avengers','What does Thanos set out to collect in Avengers: Infinity War?','Six Infinity Stones','Five Ten Rings','Three Mother Boxes','Four Cosmic Cubes','Thanos seeks all six Infinity Stones.','https://www.marvel.com/articles/movies/marvel-studios-avengers-infinity-war-opening-on-april-27'],
