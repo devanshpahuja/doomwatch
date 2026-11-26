@@ -148,6 +148,10 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .timeline-companion{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #71517b;padding:7px 0 4px;color:#ffe8bb;font-weight:700}
 .timeline-companion .feature-button{font-size:11px;padding:5px 9px}
 @media(max-width:580px){.timeline .rail{margin-inline:14px}.hero-effects{inset-inline:-14px;width:calc(100% + 28px)}.timeline-hero,.timeline-hero canvas{width:46px;height:46px}.timeline-companion{font-size:12px}}
+.phase{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.phase-select{background:transparent;border:1px solid #ffe281;color:#ffe281;padding:6px 9px;min-height:32px;font:700 11px var(--display);letter-spacing:0;white-space:nowrap}
+.phase-select:hover,.phase-select:focus-visible{background:#ffe281;color:#201329}
+@media(max-width:420px){.phase{padding-right:10px}.phase-select{font-size:10px}}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
@@ -310,11 +314,20 @@ function renderList() {
   const watched = new Set(state.watched);
   const list = $('watchlist');
   const previous = document.activeElement?.dataset?.watchId;
+  const previousPhase = document.activeElement?.dataset?.phase;
+  const entries = all();
+  const phaseEntries = new Map();
+  for (const entry of entries) {
+    if (!phaseEntries.has(entry.phase)) phaseEntries.set(entry.phase, []);
+    phaseEntries.get(entry.phase).push(entry);
+  }
   let lastPhase = '';
   let rows = '';
-  for (const entry of all()) {
+  for (const entry of entries) {
     if (entry.phase !== lastPhase) {
-      rows += '<div class="phase">' + esc(entry.phase) + '</div>';
+      const group = phaseEntries.get(entry.phase);
+      const complete = group.every(title => watched.has(title.id));
+      rows += '<div class="phase"><span>' + esc(entry.phase) + '</span><button type="button" class="phase-select" data-phase="' + esc(entry.phase) + '" aria-label="' + (complete ? 'Clear' : 'Select all') + ' ' + esc(entry.phase) + '">' + (complete ? 'Clear category' : 'Select all') + '</button></div>';
       lastPhase = entry.phase;
     }
     const checked = watched.has(entry.id);
@@ -341,6 +354,21 @@ function renderList() {
   }
   for (const button of list.querySelectorAll('[data-remove-id]')) {
     button.addEventListener('click', () => removeTitle(button.dataset.removeId));
+  }
+  for (const button of list.querySelectorAll('[data-phase]')) {
+    button.addEventListener('click', () => {
+      const group = phaseEntries.get(button.dataset.phase);
+      const selected = new Set(state.watched);
+      const complete = group.every(title => selected.has(title.id));
+      for (const title of group) {
+        if (complete) selected.delete(title.id);
+        else selected.add(title.id);
+      }
+      state.watched = [...selected];
+      save();
+      renderList();
+    });
+    if (button.dataset.phase === previousPhase) button.focus({preventScroll:true});
   }
   const spoilerToggle = $('spoilerToggle');
   const enabled = state.spoilers === true;
