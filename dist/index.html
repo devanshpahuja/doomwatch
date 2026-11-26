@@ -152,6 +152,17 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .phase-select{background:transparent;border:1px solid #ffe281;color:#ffe281;padding:6px 9px;min-height:32px;font:700 11px var(--display);letter-spacing:0;white-space:nowrap}
 .phase-select:hover,.phase-select:focus-visible{background:#ffe281;color:#201329}
 @media(max-width:420px){.phase{padding-right:10px}.phase-select{font-size:10px}}
+.doom-pet{position:absolute;z-index:5;left:100%;bottom:39px;width:54px;height:54px;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 12px #a4ff78)}
+.doom-pet canvas{width:100%;height:100%;image-rendering:pixelated}
+.doom-pet.arrive{animation:doom-drop .9s cubic-bezier(.2,.75,.25,1.2) both}
+.timeline-hero.snapped{animation:snap-away .95s steps(10,end) forwards}
+.snap-dust{position:absolute;z-index:6;left:100%;bottom:43px;transform:translateX(-50%);width:54px;height:54px;pointer-events:none}
+.snap-dust i{position:absolute;left:var(--x);top:var(--y);width:4px;height:4px;background:var(--c);animation:dust-drift .8s ease-out both;animation-delay:var(--delay)}
+@keyframes doom-drop{0%{transform:translate(-50%,-210px) rotate(-12deg);opacity:0}55%{opacity:1}75%{transform:translate(-50%,10px) rotate(4deg)}100%{transform:translate(-50%,0) rotate(0)}}
+@keyframes snap-away{0%,16%{opacity:1;filter:none;clip-path:inset(0 0 0 0)}45%{opacity:.82;clip-path:polygon(0 0,100% 0,100% 23%,67% 32%,100% 42%,80% 55%,100% 68%,70% 78%,100% 100%,0 100%)}100%{opacity:0;filter:blur(5px);clip-path:polygon(0 0,8% 0,0 10%)}}
+@keyframes dust-drift{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(80deg)}}
+@media(max-width:580px){.doom-pet,.snap-dust{width:46px;height:46px}}
+@media(prefers-reduced-motion:reduce){.doom-pet.arrive,.timeline-hero.snapped,.snap-dust i{animation:none}.timeline-hero.snapped{opacity:0}.snap-dust{display:none}}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
@@ -561,6 +572,71 @@ motionPreference.addEventListener('change', () => {
 runnerPower.hidden = motionPreference.matches;
 
 function update(){let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';const exactProgress=list.length?n/list.length*100:0;$('railFill').style.width=exactProgress+'%';moveTimelineHero(exactProgress);document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
+const updateProgress = update;
+let wasComplete = null;
+let completionTimers = [];
+const doomPet = document.createElement('div');
+doomPet.className = 'doom-pet hidden';
+doomPet.setAttribute('aria-hidden', 'true');
+const doomCanvas = document.createElement('canvas');
+doomCanvas.width = doomCanvas.height = 32;
+doomPet.append(doomCanvas);
+runnerRail.append(doomPet);
+paintHero(doomCanvas, 12);
+const dust = document.createElement('div');
+dust.className = 'snap-dust hidden';
+dust.setAttribute('aria-hidden', 'true');
+runnerRail.append(dust);
+function clearCompletionTimers() {
+  for (const timer of completionTimers) clearTimeout(timer);
+  completionTimers = [];
+}
+function showDoomCompletion(animate) {
+  clearCompletionTimers();
+  doomPet.classList.remove('hidden', 'arrive');
+  dust.classList.add('hidden');
+  dust.replaceChildren();
+  heroRunner.classList.remove('snapped');
+  if (!animate || motionPreference.matches) {
+    heroRunner.classList.add('snapped');
+    return;
+  }
+  doomPet.classList.add('hidden');
+  completionTimers.push(setTimeout(() => {
+    doomPet.classList.remove('hidden');
+    void doomPet.offsetWidth;
+    doomPet.classList.add('arrive');
+  }, 760));
+  completionTimers.push(setTimeout(() => {
+    heroRunner.classList.add('snapped');
+    dust.classList.remove('hidden');
+    const palette = ['#ffe38b', '#f1c8b2', '#9dc9f4', '#d9a0f2'];
+    for (let i = 0; i < 34; i++) {
+      const pixel = document.createElement('i');
+      pixel.style.setProperty('--x', ((i * 37) % 82 + 9) + '%');
+      pixel.style.setProperty('--y', ((i * 19) % 78 + 11) + '%');
+      pixel.style.setProperty('--dx', (20 + (i * 17) % 100) + 'px');
+      pixel.style.setProperty('--dy', (-50 + (i * 29) % 100) + 'px');
+      pixel.style.setProperty('--delay', (i % 7 * 35) + 'ms');
+      pixel.style.setProperty('--c', palette[i % palette.length]);
+      dust.append(pixel);
+    }
+  }, 1420));
+  completionTimers.push(setTimeout(() => dust.classList.add('hidden'), 2600));
+}
+update = function () {
+  updateProgress();
+  const complete = Number($('doneCount').textContent) === Number($('totalCount').textContent);
+  if (complete && wasComplete !== true) showDoomCompletion(wasComplete === false);
+  if (!complete && wasComplete === true) {
+    clearCompletionTimers();
+    doomPet.classList.add('hidden');
+    dust.classList.add('hidden');
+    dust.replaceChildren();
+    heroRunner.classList.remove('snapped');
+  }
+  wasComplete = complete;
+};
 function updateProfile(){if(runnerPosition!==null)moveTimelineHero(runnerTarget);$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
 function renderIconPicker(){ $('iconGrid').innerHTML=icons.map((x,i)=>`<button class="iconbtn ${i===draftHero?'selected':''}" data-icon="${i}" aria-pressed="${i===draftHero}" aria-label="${x[1]}" title="${x[1]}">${sprite(i)}<small>${x[1]}</small></button>`).join('');drawSprites($('iconGrid'));$('saveProfile').disabled=step===2&&draftHero===null;$('iconGrid').querySelectorAll('.iconbtn').forEach(b=>b.addEventListener('click',()=>{draftHero=Number(b.dataset.icon);renderIconPicker();$('iconGrid').querySelector('[data-icon="'+draftHero+'"]').focus()}))}
 function showModal() {
