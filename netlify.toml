@@ -1,0 +1,10 @@
+[build]
+publish = "dist/client"
+
+[functions]
+directory = "netlify/functions"
+
+[[redirects]]
+from = "/connections"
+to = "/connections.html"
+status = 200
