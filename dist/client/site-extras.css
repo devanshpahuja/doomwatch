@@ -3,8 +3,15 @@
 .credits-footer{margin-top:26px;border-top:1px solid #60466b;padding-top:12px}
 .credits-footer .footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:0;padding:0;border:0;color:#dac3dc;font:500 .75rem 'DM Mono',monospace}
 .credits-links{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
-.credits-links a{display:inline-flex;align-items:center;min-height:40px;padding:4px 10px;border:1px solid #60466b;border-radius:4px;color:#ffe6ab;font:700 .875rem 'Space Grotesk',sans-serif;text-underline-offset:3px}
-.credits-links a:hover,.credits-links a:focus-visible{border-color:#ffe16d}
+.creator-credit{margin:14px 0 0;color:#fff0dc;font:700 1rem 'Space Grotesk',sans-serif}
+.credits-links a{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;min-width:135px;min-height:43px;padding:6px 11px;border:1px solid #60466b;border-radius:5px;color:#ffe6ab;font:700 .875rem 'Space Grotesk',sans-serif;text-underline-offset:3px}
+.credits-links a::before{content:"";position:absolute;z-index:-1;inset:0;opacity:0;background:var(--hero-art) center/cover no-repeat;transition:opacity .18s}
+.credits-links a:hover,.credits-links a:focus-visible{border-color:#ffe16d;color:#fff2df;outline-offset:3px}
+.credits-links a:hover::before,.credits-links a:focus-visible::before{opacity:1}
+.credits-links .social-x{--hero-art:url("./footer-art/spider-man.png")}
+.credits-links .social-linkedin{--hero-art:url("./footer-art/captain-america.png")}
+.credits-links .social-github{--hero-art:url("./footer-art/hulk.png")}
+@media(prefers-reduced-motion:reduce){.credits-links a::before{transition:none}}
 .credits-footer.connection-footer{width:min(100% - 40px,1500px);margin:0 auto 28px}
 .footer-spider-track{position:relative;margin-top:11px;height:38px;overflow:hidden}
 .footer-spider-track::before{content:"";position:absolute;top:50%;left:0;right:0;border-top:1px dotted #785f82}
