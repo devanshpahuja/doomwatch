@@ -18,13 +18,15 @@
   const mapStatus = byId('mapStatus');
   const threadBody = byId('threadBody');
   const clearSelection = byId('clearSelection');
+  const spoilerButton = byId('spoilerMode');
+  const profileKey = 'doomsday-watch.v2';
   const width = 1600, height = 1085;
   const dpi = Math.min(window.devicePixelRatio || 1, 2);
   let scale = 1;
   let selection = null;
   let spoilers = false;
   let drag = null;
-  try { spoilers = JSON.parse(localStorage.getItem('doomsday-watch.v2') || '{}').spoilers === true; } catch {}
+  try { spoilers = JSON.parse(localStorage.getItem(profileKey) || '{}')?.spoilers === true; } catch {}
   canvas.width = width * dpi;
   canvas.height = height * dpi;
   canvas.style.width = width + 'px';
@@ -93,6 +95,8 @@
   }
 
   function renderInspector() {
+    spoilerButton.textContent = spoilers ? 'Spoilers: On' : 'Spoilers: Off';
+    spoilerButton.setAttribute('aria-pressed', String(spoilers));
     const node = nodes.get(selection);
     clearSelection.hidden = !node;
     byId('threadTitle').textContent = node?.title ?? 'Follow a thread';
@@ -209,6 +213,23 @@
   byId('zoomFit').addEventListener('click', () => applyScale(
     Math.min(atlas.clientWidth / width, atlas.clientHeight / height), [width / 2, height / 2]
   ));
+  spoilerButton.addEventListener('click', () => {
+    spoilers = !spoilers;
+    try {
+      const profile = JSON.parse(localStorage.getItem(profileKey) || '{}');
+      localStorage.setItem(profileKey, JSON.stringify({...profile, spoilers}));
+    } catch {}
+    renderInspector();
+  });
+  window.addEventListener('storage', event => {
+    if (event.key !== profileKey && event.key !== null) return;
+    try {
+      const preference = JSON.parse(localStorage.getItem(profileKey) || '{}')?.spoilers === true;
+      if (preference === spoilers) return;
+      spoilers = preference;
+      renderInspector();
+    } catch {}
+  });
   renderInspector();
   drawEdges();
   applyScale(Math.min(.82, Math.max(.57, atlas.clientWidth / width)), [width / 2, height / 2]);

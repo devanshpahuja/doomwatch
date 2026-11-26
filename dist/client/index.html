@@ -219,10 +219,13 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .doom-tabs a:focus-visible{outline:2px solid #fff;outline-offset:3px}
 #watchlist{scroll-margin-top:16px}
 .provider-netflix{background:#950d2a;color:#fff}
+#spoilerToggle{white-space:nowrap;min-height:38px;padding:8px 10px;font-size:12px}
+#spoilerToggle[aria-pressed="true"]{background:#f05163}
+@media(max-width:520px){#spoilerToggle{padding:6px;font-size:10px;min-height:34px}}
 </style><link rel="stylesheet" href="/cookie-notice.css">
 <script src="/cookie-notice.js" defer></script>
 </head><body><div class="wrap">
-<header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="avatar" id="avatar" aria-label="Change hero"><span class="pixelface">❔</span></button></div></header>
+<header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-label="Show spoilers" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Change hero"><span class="pixelface">❔</span></button></div></header>
 <main>
 <section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
 <section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
@@ -579,9 +582,27 @@ function renderList() {
     });
     if (button.dataset.phase === previousPhase) button.focus({preventScroll:true});
   }
-  $('spoilerHelp').hidden = state.spoilers !== true;
+  const spoilers = state.spoilers === true;
+  const spoilerButton = $('spoilerToggle');
+  spoilerButton.textContent = spoilers ? 'Spoilers: On' : 'Spoilers: Off';
+  spoilerButton.setAttribute('aria-pressed', String(spoilers));
+  $('spoilerHelp').hidden = !spoilers;
   update();
 }
+$('spoilerToggle').addEventListener('click', () => {
+  state.spoilers = state.spoilers !== true;
+  save();
+  renderList();
+});
+window.addEventListener('storage', event => {
+  if (event.key !== KEY && event.key !== null) return;
+  try {
+    const preference = JSON.parse(localStorage.getItem(KEY) || '{}')?.spoilers === true;
+    if (preference === state.spoilers) return;
+    state.spoilers = preference;
+    renderList();
+  } catch {}
+});
 function toggle(id){state.watched=state.watched.includes(id)?state.watched.filter(x=>x!==id):[...state.watched,id];save();renderList()}function removeTitle(id){state.custom=state.custom.filter(x=>x.id!==id);state.watched=state.watched.filter(x=>x!==id);save();renderList();toast('TITLE REMOVED')}
 const heroMoves = [
   {label:'Shield charge', effect:'shield', color:'#70b9ff', lift:12, angle:8},
@@ -903,7 +924,8 @@ function showModal() {
   $('nameInput').classList.remove('hidden');
   $('nameLabel').classList.remove('hidden');
   $('iconStep').classList.add('hidden');
-  $('setupSpoilersOff').checked = true;
+  $('setupSpoilersOff').checked = state.spoilers !== true;
+  $('setupSpoilersOn').checked = state.spoilers === true;
   $('saveProfile').textContent = 'Next: choose your hero';
   $('saveProfile').disabled = false;
   $('nameInput').focus();
