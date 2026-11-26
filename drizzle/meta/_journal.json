@@ -22,6 +22,20 @@
       "when": 1795711200000,
       "tag": "0002_clear_signature_wall",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1795733100000,
+      "tag": "0003_signature_earth",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1795733100001,
+      "tag": "0004_reset_signature_wall",
+      "breakpoints": true
     }
   ]
 }

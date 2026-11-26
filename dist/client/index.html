@@ -211,6 +211,11 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .wall-cell strong{font:700 1.13rem/1.05 'Dancing Script','Segoe Script',cursive;overflow-wrap:anywhere}
 .wall-cell small{margin-top:3px;color:#454545;font-size:.7rem;line-height:1.1}
 .wall-actions .feature-button:disabled{cursor:default}
+.wall-sign-control{position:relative}
+.wall-invitation{visibility:hidden;position:absolute;z-index:2;top:100%;right:0;width:max-content;max-width:min(220px,70vw);padding:8px 10px;border:1px solid #ffdf47;background:#20162c;color:#fff0db;font-size:.82rem}
+.wall-invitation:empty{display:none}
+.wall-sign-control:hover .wall-invitation,.wall-sign-control:focus-within .wall-invitation{visibility:visible}
+.wall-cell .wall-earth{color:#262626;font:700 .69rem var(--mono)}
 
 .doom-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
 .doom-tabs a{padding:10px 16px;border:1px solid #72557e;border-radius:4px;color:#fff0da;font:700 .9rem var(--display);text-decoration:none}
@@ -272,7 +277,11 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   <header class="wall-heading">
     <div><h2 id="wallHeading">Signature wall</h2><p>One signature per browser. Sign with your display name and hero.</p></div>
     <div class="wall-actions"><span class="wall-count" id="wallCount">— / 100</span>
-      <button class="feature-button" id="signWall" type="button" disabled>Sign the wall</button></div>
+      <div class="wall-sign-control">
+        <button class="feature-button" id="signWall" type="button" aria-describedby="wallInvitation" disabled>Sign the wall</button>
+        <span class="wall-invitation" id="wallInvitation" role="tooltip"></span>
+      </div>
+    </div>
   </header>
   <div class="wall-scroll" tabindex="0" role="region" aria-label="10 by 10 signature wall">
     <ul class="wall-grid" id="wallGrid" aria-label="Signatures"></ul>
@@ -926,6 +935,7 @@ function showModal() {
   $('spoilerStep').classList.add('hidden');
   $('cancelModal').classList.toggle('hidden', !editingHero);
   $('backdrop').classList.remove('hidden');
+  tracker.inert = true;
   if (editingHero) {
     showHeroPicker();
     return;
@@ -945,6 +955,7 @@ function showModal() {
 }
 function hideModal() {
   $('backdrop').classList.add('hidden');
+  tracker.inert = false;
   $('avatar').focus();
 }
 function nextStep() {
@@ -966,17 +977,42 @@ function nextStep() {
     $('spoilerStep').querySelector('input:checked').focus();
     return;
   }
-  if (!editingHero) {
+  const firstSetup = !editingHero;
+  if (firstSetup) {
     state.name = name;
     state.spoilers = $('setupSpoilersOn').checked;
   }
   state.hero = draftHero;
   save();
   updateProfile();
-  if (!editingHero) renderList();
+  if (firstSetup) renderList();
   hideModal();
   startMusic();
-  toast(editingHero ? 'HERO UPDATED' : 'PROFILE SAVED ON THIS DEVICE');
+  if (firstSetup) {
+    $('openGuide').click();
+    const guide = document.querySelector('.help-tour[open]');
+    if (guide) guide.addEventListener('close', completeWelcome, { once: true });
+    else completeWelcome();
+  } else {
+    toast('HERO UPDATED');
+  }
+}
+
+function completeWelcome() {
+  const url = new URL(location.href);
+  const destination = url.searchParams.get('setupReturn');
+  if (destination) {
+    try {
+      const target = new URL(destination, url.origin);
+      const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+      if (saved?.name && target.origin === url.origin &&
+          ['/connections', '/connections.html'].includes(target.pathname)) {
+        location.replace(target.href);
+        return;
+      }
+    } catch {}
+  }
+  showSharedReadiness();
 }
 const releaseTime = Date.parse('2026-12-17T00:00:00+05:30');
 function tick(){updateBingeCountdown();let d=Math.max(0,releaseTime-Date.now()),days=Math.floor(d/864e5);d%=864e5;let h=Math.floor(d/36e5);d%=36e5;let m=Math.floor(d/6e4),s=Math.floor(d%6e4/1e3);$('days').textContent=String(days).padStart(3,'0');$('hours').textContent=String(h).padStart(2,'0');$('minutes').textContent=String(m).padStart(2,'0');$('seconds').textContent=String(s).padStart(2,'0')}
@@ -1443,11 +1479,17 @@ let wallReady = false;
 let viewerSigned = false;
 let wallRequestPending = false;
 let newestVisibleSignature = -1;
+let wallCheckpoint = -1;
+let nextSignature = 1;
+let wallLoad = null;
+const ordinals = new Intl.PluralRules('en', { type: 'ordinal' });
+const ordinalSuffix = { one: 'st', two: 'nd', few: 'rd', other: 'th' };
 
 function renderWall(signatures, checkpoint = 0) {
   const newest = Math.max(checkpoint, ...signatures.map(entry => entry.sequence));
   if (newest <= newestVisibleSignature) return;
   newestVisibleSignature = newest;
+  nextSignature = newest - checkpoint + 1;
   const occupied = new Map(signatures.map(entry => [entry.slot, entry]));
   const grid = document.createDocumentFragment();
   for (let slot = 0; slot < wallSize; slot++) {
@@ -1463,7 +1505,11 @@ function renderWall(signatures, checkpoint = 0) {
       name.textContent = entry.name;
       const hero = document.createElement('small');
       hero.textContent = heroName;
-      tile.append(wallPortrait(entry.hero), name, hero);
+      const earth = document.createElement('small');
+      earth.className = 'wall-earth';
+      earth.textContent = 'Earth-' + entry.earth;
+      tile.title += ' · ' + earth.textContent;
+      tile.append(wallPortrait(entry.hero), name, hero, earth);
     } else {
       tile.setAttribute('aria-hidden', 'true');
     }
@@ -1476,16 +1522,27 @@ function renderWall(signatures, checkpoint = 0) {
 function updateSignButton() {
   signButton.disabled = !wallReady || viewerSigned || wallRequestPending;
   signButton.textContent = wallRequestPending ? 'Signing…' : viewerSigned ? 'Already signed' : 'Sign the wall';
+  $('wallInvitation').textContent = signButton.disabled ? '' :
+    'Be the ' + nextSignature + ordinalSuffix[ordinals.select(nextSignature)] + ' person to sign the wall';
 }
 
 function showWall(data) {
+  if (data.checkpoint < wallCheckpoint) return;
+  if (data.checkpoint > wallCheckpoint) viewerSigned = false;
+  wallCheckpoint = data.checkpoint;
   renderWall(data.signatures, data.checkpoint);
   viewerSigned ||= data.signed === true;
   wallReady = true;
   updateSignButton();
 }
 
-async function loadWall() {
+function loadWall() {
+  if (!wallLoad && !wallRequestPending) {
+    wallLoad = fetchWall().finally(() => { wallLoad = null; });
+  }
+}
+
+async function fetchWall() {
   try {
     const response = await fetch('/api/signatures');
     if (!response.ok) throw new Error();
@@ -1536,6 +1593,8 @@ async function signWall() {
 renderWall([]);
 loadWall();
 signButton.addEventListener('click', signWall);
+signButton.addEventListener('pointerenter', loadWall);
+signButton.addEventListener('focus', loadWall);
 setInterval(() => { if (!document.hidden && !wallRequestPending) loadWall(); }, 30000);
 
 drawSprites(document);
@@ -1543,9 +1602,7 @@ updateProfile();
 renderList();
 tick();
 setInterval(tick,1000);
-if (!showSharedReadiness()) {
-  if (!reduceMotion.matches) playOpening();
-  else if (!state.name) showModal();
-}
+if (!state.name) showModal();
+else if (!showSharedReadiness() && !reduceMotion.matches) playOpening();
 })();
 </script></body></html>

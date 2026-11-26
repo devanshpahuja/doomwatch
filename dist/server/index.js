@@ -1,4 +1,4 @@
-const SIGNATURES = 'SELECT slot, sequence, name, hero FROM signatures ORDER BY slot';
+const SIGNATURES = 'SELECT slot, sequence, name, hero, earth FROM signatures ORDER BY slot';
 const CHECKPOINT = 'SELECT sequence FROM signature_wall_checkpoint WHERE id = 1';
 const VISITOR = 'SELECT sequence FROM signature_visitors WHERE visitor = ?';
 const REMEMBER = `
@@ -9,14 +9,14 @@ const REMEMBER = `
 const COOKIE = '__Host-doomwatch-wall';
 const UUID = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 const SIGN = `
-  INSERT INTO signatures (slot, sequence, token, name, hero)
+  INSERT INTO signatures (slot, sequence, token, name, hero, earth)
   SELECT (COALESCE(latest.sequence, checkpoint.sequence) - checkpoint.sequence) % 100,
-    COALESCE(latest.sequence, checkpoint.sequence) + 1, ?1, ?2, ?3
+    COALESCE(latest.sequence, checkpoint.sequence) + 1, ?1, ?2, ?3, 100 + abs(random() % 900)
   FROM signature_wall_checkpoint AS checkpoint
   CROSS JOIN (SELECT MAX(sequence) AS sequence FROM signatures) AS latest
   WHERE checkpoint.id = 1 AND NOT EXISTS (SELECT 1 FROM signature_visitors WHERE visitor = ?1)
   ON CONFLICT(slot) DO UPDATE SET sequence = excluded.sequence, token = excluded.token,
-    name = excluded.name, hero = excluded.hero
+    name = excluded.name, hero = excluded.hero, earth = excluded.earth
 `;
 
 function json(value, status = 200, headers = {}) {

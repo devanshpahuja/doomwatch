@@ -26,7 +26,16 @@
   let selection = null;
   let spoilers = false;
   let drag = null;
-  try { spoilers = JSON.parse(localStorage.getItem(profileKey) || '{}')?.spoilers === true; } catch {}
+  try {
+    const profile = JSON.parse(localStorage.getItem(profileKey) || '{}');
+    if (!profile?.name) {
+      const setup = new URL('/', location.origin);
+      setup.searchParams.set('setupReturn', location.pathname + location.search + location.hash);
+      location.replace(setup.href);
+      return;
+    }
+    spoilers = profile.spoilers === true;
+  } catch {}
   canvas.width = width * dpi;
   canvas.height = height * dpi;
   canvas.style.width = width + 'px';
