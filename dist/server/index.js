@@ -1,15 +1,44 @@
 const SIGNATURES = 'SELECT slot, sequence, name, hero FROM signatures ORDER BY slot';
+const VISITOR = 'SELECT sequence FROM signature_visitors WHERE visitor = ?';
+const REMEMBER = `
+  INSERT INTO signature_visitors (visitor, sequence)
+  SELECT token, sequence FROM signatures WHERE token = ?1
+  ON CONFLICT(visitor) DO NOTHING
+`;
+const COOKIE = '__Host-doomwatch-wall';
+const UUID = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 const SIGN = `
   INSERT INTO signatures (slot, sequence, token, name, hero)
   SELECT COALESCE(MAX(sequence), 0) % 100, COALESCE(MAX(sequence), 0) + 1, ?1, ?2, ?3
   FROM signatures
-  HAVING NOT EXISTS (SELECT 1 FROM signatures WHERE token = ?1)
+  HAVING NOT EXISTS (SELECT 1 FROM signature_visitors WHERE visitor = ?1)
   ON CONFLICT(slot) DO UPDATE SET sequence = excluded.sequence, token = excluded.token,
     name = excluded.name, hero = excluded.hero
 `;
 
-function json(value, status = 200) {
-  return Response.json(value, { status, headers: { 'Cache-Control': 'no-store' } });
+function json(value, status = 200, headers = {}) {
+  return Response.json(value, { status, headers: { 'Cache-Control': 'no-store', ...headers } });
+}
+
+function wallVisitor(request) {
+  const cookies = request.headers.get('Cookie')?.split(';') ?? [];
+  const value = cookies.map(cookie => cookie.trim())
+    .find(cookie => cookie.startsWith(COOKIE + '='))?.slice(COOKIE.length + 1);
+  return UUID.test(value ?? '') ? value : null;
+}
+
+async function readWall(request, db) {
+  const visitor = wallVisitor(request);
+  if (!visitor) {
+    const { results } = await db.prepare(SIGNATURES).all();
+    return json({ signatures: results, signed: false }, 200, {
+      'Set-Cookie': COOKIE + '=' + crypto.randomUUID() + '; Max-Age=34560000; Path=/; Secure; HttpOnly; SameSite=Lax'
+    });
+  }
+  const [{ results }, { results: matches }] = await db.batch([
+    db.prepare(SIGNATURES), db.prepare(VISITOR).bind(visitor)
+  ]);
+  return json({ signatures: results, signed: matches.length > 0 });
 }
 
 async function sign(request, db) {
@@ -30,14 +59,18 @@ async function sign(request, db) {
   }
   const name = typeof entry?.name === 'string' ? entry.name.trim() : '';
   const hero = entry?.hero;
-  const token = entry?.token;
   if (!name || name.length > 24 || /[\u0000-\u001f\u007f]/u.test(name) ||
-      !Number.isInteger(hero) || hero < 0 || hero >= 12 ||
-      typeof token !== 'string' || !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(token)) {
+      !Number.isInteger(hero) || hero < 0 || hero >= 12) {
     return json({ error: 'A display name and hero are required.' }, 400);
   }
-  const [, { results }] = await db.batch([db.prepare(SIGN).bind(token, name, hero), db.prepare(SIGNATURES)]);
-  return json({ signatures: results });
+  const visitor = wallVisitor(request);
+  if (!visitor) return json({ error: 'Load the wall and enable cookies before signing.' }, 409);
+  const [, , { results }] = await db.batch([
+    db.prepare(SIGN).bind(visitor, name, hero),
+    db.prepare(REMEMBER).bind(visitor),
+    db.prepare(SIGNATURES)
+  ]);
+  return json({ signatures: results, signed: true });
 }
 
 export default {
@@ -47,8 +80,7 @@ export default {
 
     try {
       if (request.method === 'GET') {
-        const { results } = await env.DB.prepare(SIGNATURES).all();
-        return json({ signatures: results });
+        return await readWall(request, env.DB);
       }
       if (request.method === 'POST') return await sign(request, env.DB);
       return json({ error: 'Method unavailable.' }, 405);
