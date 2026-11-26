@@ -1,0 +1,11 @@
+.cookie-notice{
+  position:fixed;z-index:4;inset:auto max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+  display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:700px;margin-inline:auto;
+  padding:14px 16px;color:#fff0dc;background:#2a1e37;border:1px solid #ad84b7;border-radius:7px;
+  box-shadow:0 6px 26px #09060ea0;font:1rem/1.35 'Space Grotesk',sans-serif;
+}
+.cookie-notice p{margin:2px 0 0;color:#f0d9ec;font-size:.9rem}
+.cookie-notice button{flex:none;min-height:42px;padding:7px 13px;border:1px solid #ffdc76;border-radius:4px;background:#ffdc76;color:#231827;font:700 .9rem 'Space Grotesk',sans-serif;cursor:pointer}
+.cookie-notice button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+body:has(.cookie-notice){padding-bottom:112px}
+@media(max-width:450px){.cookie-notice{gap:10px;padding:11px}.cookie-notice p{font-size:.84rem}}
