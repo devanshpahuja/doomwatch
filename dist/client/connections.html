@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#15121c">
+  <meta name="description" content="Explore the connections between the films and series on the Doomwatch watchlist.">
+  <title>Connections | Doomwatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/connections.css">
+  <script src="/watchlist-data.js" defer></script>
+  <script src="/connections-data.js" defer></script>
+  <script src="/connections.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">Doomwatch</a>
+    <nav aria-label="Doomwatch views">
+      <a href="/#watchlist">Watchlist</a>
+      <a href="/connections" aria-current="page">Connections</a>
+    </nav>
+  </header>
+  <main>
+    <header class="intro">
+      <div>
+        <h1>Connection web</h1>
+        <p id="mapInstructions">Select a title to follow its links. Drag the map to explore.</p>
+      </div>
+      <div class="map-actions">
+        <form id="titleSearch" role="search">
+          <label class="sr-only" for="findTitle">Find a title</label>
+          <input id="findTitle" type="search" list="titleOptions" placeholder="Find a title" autocomplete="off">
+          <datalist id="titleOptions"></datalist>
+          <button type="submit">Find</button>
+        </form>
+        <button id="spoilerMode" type="button" aria-pressed="false">Spoilers off</button>
+      </div>
+    </header>
+    <div class="controls">
+      <div id="relationControls" role="group" aria-label="Connection types"></div>
+      <div class="zoom" role="group" aria-label="Map zoom">
+        <button id="zoomOut" type="button" aria-label="Zoom out">−</button>
+        <button id="zoomFit" type="button" aria-label="Fit map">Fit</button>
+        <button id="zoomIn" type="button" aria-label="Zoom in">+</button>
+      </div>
+    </div>
+    <p id="mapStatus" class="sr-only" role="status"></p>
+    <div class="explorer">
+      <div class="atlas" id="atlas" role="region" aria-label="Scrollable title map" aria-describedby="mapInstructions" tabindex="0">
+        <div id="mapSizer">
+          <div id="mapWorld">
+            <span class="zone zone-mutant">X-Men</span>
+            <span class="zone zone-team">Avengers</span>
+            <span class="zone zone-cosmic">Cosmic MCU</span>
+            <span class="zone zone-worlds">Alternate worlds</span>
+            <canvas id="webLines" aria-hidden="true"></canvas>
+            <div id="mapNodes"></div>
+          </div>
+        </div>
+      </div>
+      <aside class="inspector" aria-labelledby="threadTitle">
+        <header>
+          <div>
+            <p class="thread-meta" id="threadMeta"></p>
+            <h2 id="threadTitle">Follow a thread</h2>
+          </div>
+          <button type="button" id="clearSelection" hidden>Clear</button>
+        </header>
+        <div id="threadBody"></div>
+      </aside>
+    </div>
+    <details class="title-index">
+      <summary>Browse all titles</summary>
+      <div id="titleIndex"></div>
+    </details>
+  </main>
+</body>
+</html>

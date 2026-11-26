@@ -1,4 +1,5 @@
 const SIGNATURES = 'SELECT slot, sequence, name, hero FROM signatures ORDER BY slot';
+const CHECKPOINT = 'SELECT sequence FROM signature_wall_checkpoint WHERE id = 1';
 const VISITOR = 'SELECT sequence FROM signature_visitors WHERE visitor = ?';
 const REMEMBER = `
   INSERT INTO signature_visitors (visitor, sequence)
@@ -9,9 +10,11 @@ const COOKIE = '__Host-doomwatch-wall';
 const UUID = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 const SIGN = `
   INSERT INTO signatures (slot, sequence, token, name, hero)
-  SELECT COALESCE(MAX(sequence), 0) % 100, COALESCE(MAX(sequence), 0) + 1, ?1, ?2, ?3
-  FROM signatures
-  HAVING NOT EXISTS (SELECT 1 FROM signature_visitors WHERE visitor = ?1)
+  SELECT (COALESCE(latest.sequence, checkpoint.sequence) - checkpoint.sequence) % 100,
+    COALESCE(latest.sequence, checkpoint.sequence) + 1, ?1, ?2, ?3
+  FROM signature_wall_checkpoint AS checkpoint
+  CROSS JOIN (SELECT MAX(sequence) AS sequence FROM signatures) AS latest
+  WHERE checkpoint.id = 1 AND NOT EXISTS (SELECT 1 FROM signature_visitors WHERE visitor = ?1)
   ON CONFLICT(slot) DO UPDATE SET sequence = excluded.sequence, token = excluded.token,
     name = excluded.name, hero = excluded.hero
 `;
@@ -30,15 +33,15 @@ function wallVisitor(request) {
 async function readWall(request, db) {
   const visitor = wallVisitor(request);
   if (!visitor) {
-    const { results } = await db.prepare(SIGNATURES).all();
-    return json({ signatures: results, signed: false }, 200, {
+    const [{ results }, { results: [checkpoint] }] = await db.batch([db.prepare(SIGNATURES), db.prepare(CHECKPOINT)]);
+    return json({ signatures: results, signed: false, checkpoint: checkpoint.sequence }, 200, {
       'Set-Cookie': COOKIE + '=' + crypto.randomUUID() + '; Max-Age=34560000; Path=/; Secure; HttpOnly; SameSite=Lax'
     });
   }
-  const [{ results }, { results: matches }] = await db.batch([
-    db.prepare(SIGNATURES), db.prepare(VISITOR).bind(visitor)
+  const [{ results }, { results: matches }, { results: [checkpoint] }] = await db.batch([
+    db.prepare(SIGNATURES), db.prepare(VISITOR).bind(visitor), db.prepare(CHECKPOINT)
   ]);
-  return json({ signatures: results, signed: matches.length > 0 });
+  return json({ signatures: results, signed: matches.length > 0, checkpoint: checkpoint.sequence });
 }
 
 async function sign(request, db) {
@@ -65,12 +68,12 @@ async function sign(request, db) {
   }
   const visitor = wallVisitor(request);
   if (!visitor) return json({ error: 'Load the wall and enable cookies before signing.' }, 409);
-  const [, , { results }] = await db.batch([
+  const [, , { results }, { results: [checkpoint] }] = await db.batch([
     db.prepare(SIGN).bind(visitor, name, hero),
     db.prepare(REMEMBER).bind(visitor),
-    db.prepare(SIGNATURES)
+    db.prepare(SIGNATURES), db.prepare(CHECKPOINT)
   ]);
-  return json({ signatures: results, signed: true });
+  return json({ signatures: results, signed: true, checkpoint: checkpoint.sequence });
 }
 
 export default {

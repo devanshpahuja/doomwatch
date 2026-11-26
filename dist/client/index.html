@@ -202,7 +202,6 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 
 
 .watch-region{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;font-size:.78rem}
-.official-watchlist{display:inline-flex;align-items:center;min-height:32px;color:#ffe05b;font:700 .875rem var(--display);text-underline-offset:3px}
 .phase h3{margin:0;font:inherit;font-size:.875rem}
 .phase[data-group="Canon"]{background:#514025;color:#ffecae}
 .phase[data-group="Optional"]{color:#eedaf5}
@@ -215,11 +214,22 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .wall-cell small{margin-top:3px;color:#454545;font-size:.7rem;line-height:1.1}
 .wall-actions .feature-button:disabled{cursor:default}
 
+.doom-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.doom-tabs a{padding:10px 16px;border:1px solid #72557e;border-radius:4px;color:#fff0da;font:700 .9rem var(--display);text-decoration:none}
+.doom-tabs a[aria-current]{color:#251931;background:#ffe16d;border-color:#ffe16d}
+.doom-tabs a:hover{border-color:#ffe16d}
+.doom-tabs a:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#watchlist{scroll-margin-top:16px}
+.provider-netflix{background:#950d2a;color:#fff}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
 <section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
 <section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
+<nav class="doom-tabs" aria-label="Doomwatch views">
+  <a href="#watchlist" aria-current="page">Watchlist</a>
+  <a href="/connections">Connections</a>
+</nav>
 <nav class="feature-toolbar" aria-label="Readiness activities">
   <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
   <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
@@ -233,7 +243,6 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 </section>
 <section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">CANON · BUILD-UP · OPTIONAL</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title for spoilers. On touchscreens, tap its info icon.</p><div class="watch-region">
   <span>Where to watch · India</span>
-  <a class="official-watchlist" href="https://www.hotstar.com/in/browse/editorial/countdown-to-avengers-doomsday/1271685083" target="_blank" rel="noopener noreferrer">Official JioHotstar watchlist</a>
 </div><div id="watchlist"></div>
 <details class="legacy-four">
   <summary>Optional · Earlier Fantastic Four films</summary>
@@ -290,6 +299,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
     <label><input id="setupSpoilersOn" name="setupSpoilers" type="radio" value="on"> Show watchlist spoilers</label>
   </fieldset>
   <div class="modalfoot"><button class="primary" id="saveProfile">NEXT · CHOOSE YOUR HERO ↗</button><button class="secondary hidden" id="cancelModal">CANCEL</button></div></div></div>
+<script src="/watchlist-data.js"></script>
 <script>
 (()=>{
 const KEY='doomsday-watch.v2', icons=[['🛡️','Cap'],['🤖','Iron Man'],['⚡','Thor'],['🕶️','Cyclops'],['🐺','Wolverine'],['♟️','Magneto'],['🧬','Mystique'],['🌀','Strange'],['🕷️','Spider-Man'],['💚','Hulk'],['🎯','Hawkeye'],['🪽','Falcon']];
@@ -334,6 +344,7 @@ function drawSprites(root) {
 }
 
 const runtimes = {
+  'brand-new-day':145, 'visionquest':429, 'the-marvels':105, 'ms-marvel':275,
   'wakanda-forever':161, 'brave-new-world':118,
   'captain-america-first':124, 'captain-marvel':124, 'iron-man':126, avengers:143,
   'winter-soldier':136, guardians:122, 'age-ultron':141, 'civil-war':147,
@@ -344,42 +355,7 @@ const runtimes = {
   'the-wolverine':126, logan:137, 'new-mutants':94, 'xmen-97':621,
   'fantastic-four':114, thunderbolts:127, 'ff-2005':106, 'ff-2007':92, 'ff-2015':100
 };
-const initial = [
-  ["xmen-1","X-Men","movie","Canon"],
-  ["x2","X2: X-Men United","movie","Canon"],
-  ["captain-america-first","Captain America: The First Avenger","movie","Canon"],
-  ["avengers","The Avengers","movie","Canon"],
-  ["infinity-war","Avengers: Infinity War","movie","Canon"],
-  ["endgame","Avengers: Endgame","movie","Canon"],
-  ["loki","Loki · Seasons 1–2","series","Canon"],
-  ["shang-chi","Shang-Chi and the Legend of the Ten Rings","movie","Canon"],
-  ["wakanda-forever","Black Panther: Wakanda Forever","movie","Canon"],
-  ["brave-new-world","Captain America: Brave New World","movie","Canon"],
-  ["deadpool-wolverine","Deadpool & Wolverine","movie","Canon"],
-  ["multiverse-madness","Doctor Strange in the Multiverse of Madness","movie","Canon"],
-  ["thunderbolts","Thunderbolts*","movie","Canon"],
-  ["fantastic-four","The Fantastic Four: First Steps","movie","Canon"],
-  ["captain-marvel","Captain Marvel","movie","Build-up"],
-  ["iron-man","Iron Man","movie","Build-up"],
-  ["winter-soldier","Captain America: The Winter Soldier","movie","Build-up"],
-  ["guardians","Guardians of the Galaxy","movie","Build-up"],
-  ["age-ultron","Avengers: Age of Ultron","movie","Build-up"],
-  ["civil-war","Captain America: Civil War","movie","Build-up"],
-  ["doctor-strange","Doctor Strange","movie","Build-up"],
-  ["wandavision","WandaVision","series","Build-up"],
-  ["no-way-home","Spider-Man: No Way Home","movie","Build-up"],
-  ["last-stand","X-Men: The Last Stand","movie","Build-up"],
-  ["first-class","X-Men: First Class","movie","Build-up"],
-  ["days-future-past","X-Men: Days of Future Past","movie","Build-up"],
-  ["apocalypse","X-Men: Apocalypse","movie","Build-up"],
-  ["dark-phoenix","Dark Phoenix","movie","Build-up"],
-  ["logan","Logan","movie","Build-up"],
-  ["inhumans","Marvel’s Inhumans","series","Optional"],
-  ["xmen-origins","X-Men Origins: Wolverine","movie","Optional"],
-  ["the-wolverine","The Wolverine","movie","Optional"],
-  ["new-mutants","The New Mutants","movie","Optional"],
-  ["xmen-97","X-Men ’97 · Seasons 1–2","series","Optional"],
-].map(([id, title, type, phase]) => ({ id, title, type, phase }));
+const initial = doomwatchTitles;
 let state={name:'',hero:0,watched:[],custom:[],spoilers:false};try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{};if(!Number.isInteger(state.hero)||!icons[state.hero])state.hero=0;
 const $=id=>document.getElementById(id);let toastTimer,step=1,draftHero=null;function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2100)}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function all(){return [...initial,...(state.custom||[]).map(entry=>({...entry,phase:'Optional'}))]}
 const avengersTheme = ["avengers","The Avengers Theme"];
@@ -469,6 +445,10 @@ document.addEventListener('visibilitychange', () => {
 });
 updateMusicButton();
 const spoilerNotes = {
+  "brand-new-day": "Peter begins a new chapter after the spell in No Way Home leaves him starting over on his own.",
+  "visionquest": "After Westview, White Vision searches for an identity of his own and faces the return of Ultron.",
+  "the-marvels": "Carol Danvers, Monica Rambeau, and Kamala Khan swap places when they use their powers. Monica becomes stranded in another universe.",
+  "ms-marvel": "Kamala Khan learns to use her light-based powers and discovers a family history tied to her bangle.",
   "wakanda-forever": "Shuri takes up the Black Panther mantle and reaches a truce with Namor, whose underwater kingdom Talokan enters the MCU.",
   "brave-new-world": "Sam Wilson confronts President Ross after Ross transforms into the Red Hulk, and the discovery of adamantium raises new stakes for the MCU.",
   "shang-chi": "Shang-Chi takes possession of the Ten Rings. Wong, Bruce Banner, and Carol Danvers investigate the signal they emit.",
@@ -504,8 +484,9 @@ const spoilerNotes = {
   "fantastic-four": "Reed, Sue, Johnny, and Ben confront Galactus and Shalla-Bal. It introduces the versions of the Fantastic Four whose actors were announced for Doomsday.",
   "thunderbolts": "Yelena and the team stop Bob’s Void, then are presented as the New Avengers. That sets up a second group using the Avengers name before Doomsday."
 };
-const indiaWatch = {"wakanda-forever":["movie/black-panther-ii","hotstar","vi"],"brave-new-world":["movie/captain-america-new-world-order","hotstar"],"shang-chi":["movie/shang-chi-and-the-legend-of-the-ten-rings","hotstar"],"inhumans":["tv-show/marvels-inhumans","hotstar","vi"],"captain-marvel":["movie/captain-marvel","hotstar","vi"],"civil-war":["movie/captain-america-civil-war","hotstar"],"avengers":["movie/the-avengers","hotstar","vi"],"guardians":["movie/guardians-of-the-galaxy","hotstar"],"captain-america-first":["movie/captain-america-the-first-avenger","hotstar"],"age-ultron":["movie/avengers-age-of-ultron","hotstar","vi"],"winter-soldier":["movie/captain-america-the-winter-soldier","hotstar"],"iron-man":["movie/iron-man","hotstar"],"deadpool-wolverine":["movie/deadpool-3","hotstar"],"multiverse-madness":["movie/doctor-strange-in-the-multiverse-of-madness","hotstar","vi"],"endgame":["movie/avengers-endgame","hotstar","vi"],"no-way-home":["movie/spider-man-no-way-home","hotstar","sony","zee","apple","prime"],"infinity-war":["movie/avengers-infinity-war","hotstar","vi"],"doctor-strange":["movie/doctor-strange-2016","hotstar"],"loki":["tv-show/loki","hotstar","vi"],"wandavision":["tv-show/wandavision","hotstar","vi"],"first-class":["movie/x-men-first-class","hotstar"],"xmen-origins":["movie/x-men-origins-wolverine","hotstar","vi"],"apocalypse":["movie/x-men-apocalypse","hotstar"],"x2":["movie/x2","hotstar"],"dark-phoenix":["movie/dark-phoenix","hotstar","vi"],"days-future-past":["movie/x-men-days-of-future-past","hotstar"],"xmen-1":["movie/x-men","hotstar","vi"],"last-stand":["movie/x-men-the-last-stand","hotstar","vi"],"fantastic-four":["movie/the-fantastic-four","hotstar"],"new-mutants":["movie/the-new-mutants","hotstar"],"thunderbolts":["movie/thunderbolts","hotstar"],"ff-2005":["movie/fantastic-four-2005","hotstar","vi"],"the-wolverine":["movie/the-wolverine","hotstar"],"ff-2007":["movie/fantastic-4-rise-of-the-silver-surfer","hotstar","vi"],"logan":["movie/logan","hotstar"],"xmen-97":["tv-show/x-men-97","hotstar"],"ff-2015":["movie/fantastic-four","hotstar","vi"]};
+const indiaWatch = {"brand-new-day":["movie/spider-man-brand-new-day","netflix","zee","prime","apple"],"visionquest":["tv-show/visionquest","hotstar"],"the-marvels":["movie/the-marvels","hotstar","vi"],"ms-marvel":["tv-show/ms-marvel","hotstar"],"wakanda-forever":["movie/black-panther-ii","hotstar","vi"],"brave-new-world":["movie/captain-america-new-world-order","hotstar"],"shang-chi":["movie/shang-chi-and-the-legend-of-the-ten-rings","hotstar"],"inhumans":["tv-show/marvels-inhumans","hotstar","vi"],"captain-marvel":["movie/captain-marvel","hotstar","vi"],"civil-war":["movie/captain-america-civil-war","hotstar"],"avengers":["movie/the-avengers","hotstar","vi"],"guardians":["movie/guardians-of-the-galaxy","hotstar"],"captain-america-first":["movie/captain-america-the-first-avenger","hotstar"],"age-ultron":["movie/avengers-age-of-ultron","hotstar","vi"],"winter-soldier":["movie/captain-america-the-winter-soldier","hotstar"],"iron-man":["movie/iron-man","hotstar"],"deadpool-wolverine":["movie/deadpool-3","hotstar"],"multiverse-madness":["movie/doctor-strange-in-the-multiverse-of-madness","hotstar","vi"],"endgame":["movie/avengers-endgame","hotstar","vi"],"no-way-home":["movie/spider-man-no-way-home","hotstar","sony","zee","apple","prime"],"infinity-war":["movie/avengers-infinity-war","hotstar","vi"],"doctor-strange":["movie/doctor-strange-2016","hotstar"],"loki":["tv-show/loki","hotstar","vi"],"wandavision":["tv-show/wandavision","hotstar","vi"],"first-class":["movie/x-men-first-class","hotstar"],"xmen-origins":["movie/x-men-origins-wolverine","hotstar","vi"],"apocalypse":["movie/x-men-apocalypse","hotstar"],"x2":["movie/x2","hotstar"],"dark-phoenix":["movie/dark-phoenix","hotstar","vi"],"days-future-past":["movie/x-men-days-of-future-past","hotstar"],"xmen-1":["movie/x-men","hotstar","vi"],"last-stand":["movie/x-men-the-last-stand","hotstar","vi"],"fantastic-four":["movie/the-fantastic-four","hotstar"],"new-mutants":["movie/the-new-mutants","hotstar"],"thunderbolts":["movie/thunderbolts","hotstar"],"ff-2005":["movie/fantastic-four-2005","hotstar","vi"],"the-wolverine":["movie/the-wolverine","hotstar"],"ff-2007":["movie/fantastic-4-rise-of-the-silver-surfer","hotstar","vi"],"logan":["movie/logan","hotstar"],"xmen-97":["tv-show/x-men-97","hotstar"],"ff-2015":["movie/fantastic-four","hotstar","vi"]};
 const platformIcons = {
+  netflix: ['N', 'Netflix'],
   hotstar: ['✦', 'JioHotstar'],
   vi: ['Vi', 'Vi Movies & TV'],
   sony: ['LIV', 'Sony LIV'],
@@ -1433,8 +1414,8 @@ let viewerSigned = false;
 let wallRequestPending = false;
 let newestVisibleSignature = -1;
 
-function renderWall(signatures) {
-  const newest = Math.max(0, ...signatures.map(entry => entry.sequence));
+function renderWall(signatures, checkpoint = 0) {
+  const newest = Math.max(checkpoint, ...signatures.map(entry => entry.sequence));
   if (newest <= newestVisibleSignature) return;
   newestVisibleSignature = newest;
   const occupied = new Map(signatures.map(entry => [entry.slot, entry]));
@@ -1468,7 +1449,7 @@ function updateSignButton() {
 }
 
 function showWall(data) {
-  renderWall(data.signatures);
+  renderWall(data.signatures, data.checkpoint);
   viewerSigned ||= data.signed === true;
   wallReady = true;
   updateSignButton();
