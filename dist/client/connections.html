@@ -15,6 +15,8 @@
   <script src="/connections.js" defer></script>
 <link rel="stylesheet" href="/cookie-notice.css">
 <script src="/cookie-notice.js" defer></script>
+<link rel="stylesheet" href="/site-extras.css">
+<script src="/site-extras.js" defer></script>
 </head>
 <body>
   <header class="top">
@@ -22,6 +24,7 @@
     <nav aria-label="Doomwatch views">
       <a href="/#watchlist">Watchlist</a>
       <a href="/connections" aria-current="page">Connections</a>
+      <button class="guide-launch" id="openGuide" type="button" aria-haspopup="dialog">Help</button>
     </nav>
   </header>
   <main>
@@ -78,5 +81,13 @@
       <div id="titleIndex"></div>
     </details>
   </main>
+<footer class="credits-footer connection-footer">
+  <nav class="credits-links" aria-label="Creator profiles">
+    <a href="https://x.com/ashvend" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+    <a href="https://www.linkedin.com/in/devanshpahuja/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/devanshpahuja" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <div class="footer-spider-track" aria-hidden="true"><canvas class="footer-spider" width="37" height="33"></canvas></div>
+</footer>
 </body>
 </html>

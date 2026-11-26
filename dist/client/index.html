@@ -224,6 +224,8 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 @media(max-width:520px){#spoilerToggle{padding:6px;font-size:10px;min-height:34px}}
 </style><link rel="stylesheet" href="/cookie-notice.css">
 <script src="/cookie-notice.js" defer></script>
+<link rel="stylesheet" href="/site-extras.css">
+<script src="/site-extras.js" defer></script>
 </head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-label="Show spoilers" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Change hero"><span class="pixelface">❔</span></button></div></header>
 <main>
@@ -232,6 +234,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 <nav class="doom-tabs" aria-label="Doomwatch views">
   <a href="#watchlist" aria-current="page">Watchlist</a>
   <a href="/connections">Connections</a>
+  <button class="guide-launch" id="openGuide" type="button" aria-haspopup="dialog">Help</button>
 </nav>
 <nav class="feature-toolbar" aria-label="Readiness activities">
   <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
@@ -275,7 +278,14 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   <p class="wall-status" id="wallStatus" role="status"></p>
 </section>
 </main>
-<footer class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · YOUR WATCH PROGRESS STAYS ON THIS DEVICE</span></footer></div>
+<footer class="credits-footer"><div class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · YOUR WATCH PROGRESS STAYS ON THIS DEVICE</span></div>
+  <nav class="credits-links" aria-label="Creator profiles">
+    <a href="https://x.com/ashvend" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+    <a href="https://www.linkedin.com/in/devanshpahuja/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/devanshpahuja" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <div class="footer-spider-track" aria-hidden="true"><canvas class="footer-spider" width="37" height="33"></canvas></div>
+</footer></div>
 <dialog id="featureDialog" class="feature-dialog" aria-labelledby="featureTitle">
   <header class="feature-header"><h2 id="featureTitle"></h2><form method="dialog"><button class="feature-close" aria-label="Close">×</button></form></header>
   <div id="featureBody" class="feature-body"></div>
