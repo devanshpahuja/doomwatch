@@ -18,7 +18,6 @@
   const mapStatus = byId('mapStatus');
   const threadBody = byId('threadBody');
   const clearSelection = byId('clearSelection');
-  const spoilerButton = byId('spoilerMode');
   const width = 1600, height = 1085;
   const dpi = Math.min(window.devicePixelRatio || 1, 2);
   let scale = 1;
@@ -93,11 +92,6 @@
     }
   }
 
-  function updateSpoilerButton() {
-    spoilerButton.textContent = spoilers ? 'Spoilers on' : 'Spoilers off';
-    spoilerButton.setAttribute('aria-pressed', String(spoilers));
-  }
-
   function renderInspector() {
     const node = nodes.get(selection);
     clearSelection.hidden = !node;
@@ -116,7 +110,7 @@
       threadBody.append(make('p', 'thread-lead','No connections of the selected types.'));
       return;
     }
-    threadBody.append(make('p', 'thread-lead', spoilers ? threads.length + ' connected titles' : 'Turn spoilers on to read the connection notes.'));
+    threadBody.append(make('p', 'thread-lead', spoilers ? threads.length + ' connected titles' : 'Plot details are hidden by your spoiler preference.'));
     const list = make('ul', 'thread-list');
     for (const edge of threads) {
       const otherId = edge.a === node.id ? edge.b : edge.a;
@@ -215,29 +209,6 @@
   byId('zoomFit').addEventListener('click', () => applyScale(
     Math.min(atlas.clientWidth / width, atlas.clientHeight / height), [width / 2, height / 2]
   ));
-  spoilerButton.addEventListener('click', () => {
-    spoilers = !spoilers;
-    updateSpoilerButton();
-    renderInspector();
-  });
-
-  atlas.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'mouse' || event.button !== 0 || event.target.closest('button')) return;
-    drag = {x:event.clientX, y:event.clientY, left:atlas.scrollLeft, top:atlas.scrollTop};
-    atlas.classList.add('is-dragging');
-    atlas.setPointerCapture(event.pointerId);
-  });
-  atlas.addEventListener('pointermove', event => {
-    if (!drag) return;
-    atlas.scrollLeft = drag.left + drag.x - event.clientX;
-    atlas.scrollTop = drag.top + drag.y - event.clientY;
-  });
-  atlas.addEventListener('lostpointercapture', () => {
-    drag = null;
-    atlas.classList.remove('is-dragging');
-  });
-
-  updateSpoilerButton();
   renderInspector();
   drawEdges();
   applyScale(Math.min(.82, Math.max(.57, atlas.clientWidth / width)), [width / 2, height / 2]);
