@@ -167,6 +167,39 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .topright #musicToggle[aria-pressed="true"]{background:#f05163}
 .ticket-button{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
 @media(max-width:520px){.topright{gap:5px}.topright #musicToggle,.topright #spoilerToggle{padding:6px;font-size:10px;min-height:34px}.topright .avatar{width:34px;height:34px}.brandmark{display:none}}
+
+.runtime{flex:none;white-space:nowrap;color:#ffe6ab;font:500 .78rem var(--mono)}
+.item.done .runtime{color:#c3abc8}
+.legacy-four .runtime{margin-left:7px}
+.binge-card{grid-column:1/-1}
+.binge-body{padding:16px 18px}
+.binge-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.binge-metric{display:grid;align-content:space-between;gap:6px;padding:10px;background:#271d33;border:1px solid #554160;border-radius:6px}
+.binge-metric span,.binge-total{font-size:.875rem;color:#f1d8ed}
+.binge-metric strong{font-size:clamp(.95rem,2vw,1.25rem);line-height:1.15;color:#fff0d8;font-variant-numeric:tabular-nums}
+.binge-total{margin:12px 0 0}
+.binge-note{margin:8px 0 0;font-size:.875rem;color:#d7ff8c}
+.binge-note[data-short="true"]{color:#ffc5bb}
+.signature-wall{margin:26px 0;scroll-margin-top:14px}
+.wall-heading{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px}
+.wall-heading h2{margin:0;color:#fff0d8;font-size:1.125rem}
+.wall-heading p{margin:5px 0 0;color:#f1d8ed;font-size:.875rem}
+.wall-actions{display:flex;align-items:center;gap:10px}
+.wall-actions .feature-button{min-height:42px}
+.wall-actions .feature-button:disabled{cursor:wait;opacity:.65}
+.wall-count{color:#ffe6ab;font:500 .875rem var(--mono)}
+.wall-scroll{overflow-x:auto;padding:4px 18px 12px}
+.wall-grid{min-width:740px;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;list-style:none;margin:0;padding:0}
+.wall-cell{min-height:72px;display:grid;justify-items:center;align-content:center;gap:1px;padding:4px 2px;text-align:center;border:1px solid #473552;border-radius:5px;background:#21192c;color:#fff0db}
+.wall-cell.is-signed{background:radial-gradient(ellipse at 50% 8%,#614376,#30213d 75%);border-color:#a176ad}
+.wall-cell.is-newest{border-color:#d7ff8c}
+.wall-cell canvas{display:block;width:27px;height:27px;image-rendering:pixelated}
+.wall-cell strong,.wall-cell small{width:100%;overflow-wrap:anywhere;line-height:1.12}
+.wall-cell strong{font-size:.79rem}
+.wall-cell small{font-size:.72rem;color:#f2d1dd}
+.wall-status{min-height:1.2em;margin:0;padding:0 18px 13px;color:#f1d8ed;font-size:.875rem}
+@media(max-width:650px){.runtime{font-size:.72rem}.item .kind{display:none}.wall-scroll{padding-inline:12px}.wall-heading{padding-inline:12px}}
+
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Edit profile and spoiler preference"><span class="pixelface">❔</span></button></div></header>
 <main>
@@ -175,6 +208,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 <nav class="feature-toolbar" aria-label="Readiness activities">
   <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
   <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
+  <a class="feature-button" href="#signatureWall">Signature wall</a>
   <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
   <a class="feature-button ticket-button" href="https://www.district.in/movies/avengers-doomsday-movie-tickets-MV176735" target="_blank" rel="noopener noreferrer" aria-label="Book Avengers Doomsday tickets on District">🎟 Book Doomsday Tickets</a>
 </nav>
@@ -187,8 +221,30 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   <summary>Fantastic Four · Optional viewing</summary>
   <p>Earlier film versions sit outside your readiness score.</p><ul><li><span>Fantastic Four (2005)</span><span data-optional-watch="ff-2005"></span></li><li><span>Fantastic Four: Rise of the Silver Surfer (2007)</span><span data-optional-watch="ff-2007"></span></li><li><span>Fantastic Four (2015)</span><span data-optional-watch="ff-2015"></span></li></ul>
 </details><div class="actions"><button class="action" id="resetBtn">↻ RESET PROGRESS</button></div></article></div>
-<aside class="side"><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section></main>
-<footer class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · NO CLOUD · YOUR WATCHLIST STAYS HERE</span></footer></div>
+<aside class="side"><article class="card binge-card" aria-labelledby="bingeHeading">
+  <div class="sidehead"><h2 id="bingeHeading">Binge time</h2></div>
+  <div class="binge-body">
+    <div class="binge-metrics">
+      <div class="binge-metric"><span>Time until Doomsday</span><strong id="timeLeft">—</strong></div>
+      <div class="binge-metric"><span>Time needed to finish</span><strong id="timeNeeded">—</strong></div>
+    </div>
+    <p class="binge-total" id="timeTotal"></p>
+    <p class="binge-note" id="bingeNote"></p>
+  </div>
+</article><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section>
+<section class="card signature-wall" id="signatureWall" aria-labelledby="wallHeading">
+  <header class="wall-heading">
+    <div><h2 id="wallHeading">Signature wall</h2><p>Post your display name and hero silhouette on the shared wall.</p></div>
+    <div class="wall-actions"><span class="wall-count" id="wallCount">— / 100</span>
+      <button class="feature-button" id="signWall" type="button">Sign the wall</button></div>
+  </header>
+  <div class="wall-scroll" tabindex="0" role="region" aria-label="10 by 10 signature wall">
+    <ul class="wall-grid" id="wallGrid" aria-label="Signatures"></ul>
+  </div>
+  <p class="wall-status" id="wallStatus" role="status"></p>
+</section>
+</main>
+<footer class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · YOUR WATCH PROGRESS STAYS ON THIS DEVICE</span></footer></div>
 <dialog id="featureDialog" class="feature-dialog" aria-labelledby="featureTitle">
   <header class="feature-header"><h2 id="featureTitle"></h2><form method="dialog"><button class="feature-close" aria-label="Close">×</button></form></header>
   <div id="featureBody" class="feature-body"></div>
@@ -208,7 +264,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
   </div>
   <button class="comic-skip" id="comicSkip" type="button">Skip opening</button>
 </div>
-<div class="toast" id="toast" role="status"></div><div class="backdrop hidden" id="backdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="step" id="stepLabel">01 / 03 · YOUR CALLSIGN</div><h2 id="modalTitle">Welcome, Agent.</h2><p id="modalCopy">Choose a display name and your hero avatar. Your name and progress stay in this browser. No account needed.</p><label for="nameInput" id="nameLabel">DISPLAY NAME</label><input id="nameInput" maxlength="24" placeholder="e.g. Earth's Mightiest Fan" autocomplete="nickname"><div id="iconStep" class="hidden"><label>CHOOSE YOUR HERO</label><div class="icon-grid" id="iconGrid"></div></div>
+<div class="toast" id="toast" role="status"></div><div class="backdrop hidden" id="backdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="step" id="stepLabel">01 / 03 · YOUR CALLSIGN</div><h2 id="modalTitle">Welcome, Agent.</h2><p id="modalCopy">Choose a display name and your hero avatar. Your watch progress stays in this browser. You can post your display name on the shared wall.</p><label for="nameInput" id="nameLabel">DISPLAY NAME</label><input id="nameInput" maxlength="24" placeholder="e.g. Earth's Mightiest Fan" autocomplete="nickname"><div id="iconStep" class="hidden"><label>CHOOSE YOUR HERO</label><div class="icon-grid" id="iconGrid"></div></div>
   <fieldset id="spoilerStep" class="spoiler-options hidden">
     <legend>Spoiler preference</legend>
     <label><input id="setupSpoilersOff" name="setupSpoilers" type="radio" value="off" checked> Keep spoilers off</label>
@@ -258,8 +314,18 @@ function drawSprites(root) {
   root.querySelectorAll('canvas[data-sprite]').forEach(canvas => paintHero(canvas,Number(canvas.dataset.sprite)));
 }
 
+const runtimes = {
+  'captain-america-first':124, 'captain-marvel':124, 'iron-man':126, avengers:143,
+  'winter-soldier':136, guardians:122, 'age-ultron':141, 'civil-war':147,
+  'doctor-strange':115, 'infinity-war':149, endgame:181, 'shang-chi':132,
+  wandavision:321, loki:594, inhumans:340, 'no-way-home':148, 'multiverse-madness':126,
+  'deadpool-wolverine':128, 'xmen-1':104, x2:134, 'last-stand':104, 'first-class':132,
+  'days-future-past':132, apocalypse:144, 'dark-phoenix':114, 'xmen-origins':107,
+  'the-wolverine':126, logan:137, 'new-mutants':94, 'xmen-97':621,
+  'fantastic-four':114, thunderbolts:127, 'ff-2005':106, 'ff-2007':92, 'ff-2015':100
+};
 const initial=[
-['captain-america-first','Captain America: The First Avenger','movie','01 · HERO ORIGINS'],['captain-marvel','Captain Marvel','movie','01 · HERO ORIGINS'],['iron-man','Iron Man','movie','01 · HERO ORIGINS'],['avengers','The Avengers','movie','02 · THE AVENGERS'],['winter-soldier','Captain America: The Winter Soldier','movie','02 · THE AVENGERS'],['guardians','Guardians of the Galaxy','movie','02 · THE AVENGERS'],['age-ultron','Avengers: Age of Ultron','movie','02 · THE AVENGERS'],['civil-war','Captain America: Civil War','movie','02 · THE AVENGERS'],['doctor-strange','Doctor Strange','movie','03 · INFINITY SAGA'],['infinity-war','Avengers: Infinity War','movie','03 · INFINITY SAGA'],['endgame','Avengers: Endgame','movie','03 · INFINITY SAGA'],['wandavision','WandaVision','series','04 · MULTIVERSE'],['loki','Loki · Seasons 1–2','series','04 · MULTIVERSE'],['no-way-home','Spider-Man: No Way Home','movie','04 · MULTIVERSE'],['multiverse-madness','Doctor Strange in the Multiverse of Madness','movie','04 · MULTIVERSE'],['deadpool-wolverine','Deadpool & Wolverine','movie','05 · X-MEN & COLLIDING WORLDS'],['xmen-1','X-Men','movie','05A · X-MEN SAGA'],['x2','X2: X-Men United','movie','05A · X-MEN SAGA'],['last-stand','X-Men: The Last Stand','movie','05A · X-MEN SAGA'],['first-class','X-Men: First Class','movie','05A · X-MEN SAGA'],['days-future-past','X-Men: Days of Future Past','movie','05A · X-MEN SAGA'],['apocalypse','X-Men: Apocalypse','movie','05A · X-MEN SAGA'],['dark-phoenix','Dark Phoenix','movie','05A · X-MEN SAGA'],['xmen-origins','X-Men Origins: Wolverine','movie','05A · X-MEN SAGA'],['the-wolverine','The Wolverine','movie','05A · X-MEN SAGA'],['logan','Logan','movie','05A · X-MEN SAGA'],['new-mutants','The New Mutants','movie','05A · X-MEN SAGA'],['xmen-97','X-Men ’97','series','05A · X-MEN SAGA'],['fantastic-four','The Fantastic Four: First Steps','movie','05B · FANTASTIC FOUR'],['thunderbolts','Thunderbolts*','movie','06 · ROAD TO DOOMSDAY']
+['captain-america-first','Captain America: The First Avenger','movie','01 · HERO ORIGINS'],['captain-marvel','Captain Marvel','movie','01 · HERO ORIGINS'],['iron-man','Iron Man','movie','01 · HERO ORIGINS'],['avengers','The Avengers','movie','02 · THE AVENGERS'],['winter-soldier','Captain America: The Winter Soldier','movie','02 · THE AVENGERS'],['guardians','Guardians of the Galaxy','movie','02 · THE AVENGERS'],['age-ultron','Avengers: Age of Ultron','movie','02 · THE AVENGERS'],['civil-war','Captain America: Civil War','movie','02 · THE AVENGERS'],['doctor-strange','Doctor Strange','movie','03 · INFINITY SAGA'],['infinity-war','Avengers: Infinity War','movie','03 · INFINITY SAGA'],['endgame','Avengers: Endgame','movie','03 · INFINITY SAGA'],['shang-chi','Shang-Chi and the Legend of the Ten Rings','movie','04 · MULTIVERSE'],['inhumans','Marvel’s Inhumans','series','04 · MULTIVERSE'],['wandavision','WandaVision','series','04 · MULTIVERSE'],['loki','Loki · Seasons 1–2','series','04 · MULTIVERSE'],['no-way-home','Spider-Man: No Way Home','movie','04 · MULTIVERSE'],['multiverse-madness','Doctor Strange in the Multiverse of Madness','movie','04 · MULTIVERSE'],['deadpool-wolverine','Deadpool & Wolverine','movie','05 · X-MEN & COLLIDING WORLDS'],['xmen-1','X-Men','movie','05A · X-MEN SAGA'],['x2','X2: X-Men United','movie','05A · X-MEN SAGA'],['last-stand','X-Men: The Last Stand','movie','05A · X-MEN SAGA'],['first-class','X-Men: First Class','movie','05A · X-MEN SAGA'],['days-future-past','X-Men: Days of Future Past','movie','05A · X-MEN SAGA'],['apocalypse','X-Men: Apocalypse','movie','05A · X-MEN SAGA'],['dark-phoenix','Dark Phoenix','movie','05A · X-MEN SAGA'],['xmen-origins','X-Men Origins: Wolverine','movie','05A · X-MEN SAGA'],['the-wolverine','The Wolverine','movie','05A · X-MEN SAGA'],['logan','Logan','movie','05A · X-MEN SAGA'],['new-mutants','The New Mutants','movie','05A · X-MEN SAGA'],['xmen-97','X-Men ’97 · Seasons 1–2','series','05A · X-MEN SAGA'],['fantastic-four','The Fantastic Four: First Steps','movie','05B · FANTASTIC FOUR'],['thunderbolts','Thunderbolts*','movie','06 · ROAD TO DOOMSDAY']
 ].map(([id,title,type,phase])=>({id,title,type,phase}));
 let state={name:'',hero:0,watched:[],custom:[],spoilers:false};try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{};if(!Number.isInteger(state.hero)||!icons[state.hero])state.hero=0;
 const $=id=>document.getElementById(id);let toastTimer,step=1,draftHero=null;function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2100)}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function all(){return [...initial,...(state.custom||[])]}
@@ -350,6 +416,8 @@ document.addEventListener('visibilitychange', () => {
 });
 updateMusicButton();
 const spoilerNotes = {
+  "shang-chi": "Shang-Chi takes possession of the Ten Rings. Wong, Bruce Banner, and Carol Danvers investigate the signal they emit.",
+  "inhumans": "A coup forces Black Bolt and members of Attilan’s royal family to flee to Earth. This series introduces a version of Black Bolt ahead of his alternate-universe appearance in Doctor Strange in the Multiverse of Madness.",
   "captain-america-first": "Steve Rogers becomes Captain America, and the Tesseract links his origin to the wider Avengers saga. This sets up the legacy Sam Wilson later inherits.",
   "captain-marvel": "Carol Danvers helps shape Nick Fury’s idea for the Avengers Initiative. The film also shows how the Tesseract moved through an earlier chapter of MCU history.",
   "iron-man": "Tony Stark’s origin explains why the announced casting of Robert Downey Jr. as Victor von Doom is such a reversal for MCU viewers. Tony and Victor are different characters.",
@@ -381,7 +449,7 @@ const spoilerNotes = {
   "fantastic-four": "Reed, Sue, Johnny, and Ben confront Galactus and Shalla-Bal. It introduces the versions of the Fantastic Four whose actors were announced for Doomsday.",
   "thunderbolts": "Yelena and the team stop Bob’s Void, then are presented as the New Avengers. That sets up a second group using the Avengers name before Doomsday."
 };
-const indiaWatch = {"captain-marvel":["movie/captain-marvel","hotstar","vi"],"civil-war":["movie/captain-america-civil-war","hotstar"],"avengers":["movie/the-avengers","hotstar","vi"],"guardians":["movie/guardians-of-the-galaxy","hotstar"],"captain-america-first":["movie/captain-america-the-first-avenger","hotstar"],"age-ultron":["movie/avengers-age-of-ultron","hotstar","vi"],"winter-soldier":["movie/captain-america-the-winter-soldier","hotstar"],"iron-man":["movie/iron-man","hotstar"],"deadpool-wolverine":["movie/deadpool-3","hotstar"],"multiverse-madness":["movie/doctor-strange-in-the-multiverse-of-madness","hotstar","vi"],"endgame":["movie/avengers-endgame","hotstar","vi"],"no-way-home":["movie/spider-man-no-way-home","hotstar","sony","zee","apple","prime"],"infinity-war":["movie/avengers-infinity-war","hotstar","vi"],"doctor-strange":["movie/doctor-strange-2016","hotstar"],"loki":["tv-show/loki","hotstar","vi"],"wandavision":["tv-show/wandavision","hotstar","vi"],"first-class":["movie/x-men-first-class","hotstar"],"xmen-origins":["movie/x-men-origins-wolverine","hotstar","vi"],"apocalypse":["movie/x-men-apocalypse","hotstar"],"x2":["movie/x2","hotstar"],"dark-phoenix":["movie/dark-phoenix","hotstar","vi"],"days-future-past":["movie/x-men-days-of-future-past","hotstar"],"xmen-1":["movie/x-men","hotstar","vi"],"last-stand":["movie/x-men-the-last-stand","hotstar","vi"],"fantastic-four":["movie/the-fantastic-four","hotstar"],"new-mutants":["movie/the-new-mutants","hotstar"],"thunderbolts":["movie/thunderbolts","hotstar"],"ff-2005":["movie/fantastic-four-2005","hotstar","vi"],"the-wolverine":["movie/the-wolverine","hotstar"],"ff-2007":["movie/fantastic-4-rise-of-the-silver-surfer","hotstar","vi"],"logan":["movie/logan","hotstar"],"xmen-97":["tv-show/x-men-97","hotstar"],"ff-2015":["movie/fantastic-four","hotstar","vi"]};
+const indiaWatch = {"shang-chi":["movie/shang-chi-and-the-legend-of-the-ten-rings","hotstar"],"inhumans":["tv-show/marvels-inhumans","hotstar","vi"],"captain-marvel":["movie/captain-marvel","hotstar","vi"],"civil-war":["movie/captain-america-civil-war","hotstar"],"avengers":["movie/the-avengers","hotstar","vi"],"guardians":["movie/guardians-of-the-galaxy","hotstar"],"captain-america-first":["movie/captain-america-the-first-avenger","hotstar"],"age-ultron":["movie/avengers-age-of-ultron","hotstar","vi"],"winter-soldier":["movie/captain-america-the-winter-soldier","hotstar"],"iron-man":["movie/iron-man","hotstar"],"deadpool-wolverine":["movie/deadpool-3","hotstar"],"multiverse-madness":["movie/doctor-strange-in-the-multiverse-of-madness","hotstar","vi"],"endgame":["movie/avengers-endgame","hotstar","vi"],"no-way-home":["movie/spider-man-no-way-home","hotstar","sony","zee","apple","prime"],"infinity-war":["movie/avengers-infinity-war","hotstar","vi"],"doctor-strange":["movie/doctor-strange-2016","hotstar"],"loki":["tv-show/loki","hotstar","vi"],"wandavision":["tv-show/wandavision","hotstar","vi"],"first-class":["movie/x-men-first-class","hotstar"],"xmen-origins":["movie/x-men-origins-wolverine","hotstar","vi"],"apocalypse":["movie/x-men-apocalypse","hotstar"],"x2":["movie/x2","hotstar"],"dark-phoenix":["movie/dark-phoenix","hotstar","vi"],"days-future-past":["movie/x-men-days-of-future-past","hotstar"],"xmen-1":["movie/x-men","hotstar","vi"],"last-stand":["movie/x-men-the-last-stand","hotstar","vi"],"fantastic-four":["movie/the-fantastic-four","hotstar"],"new-mutants":["movie/the-new-mutants","hotstar"],"thunderbolts":["movie/thunderbolts","hotstar"],"ff-2005":["movie/fantastic-four-2005","hotstar","vi"],"the-wolverine":["movie/the-wolverine","hotstar"],"ff-2007":["movie/fantastic-4-rise-of-the-silver-surfer","hotstar","vi"],"logan":["movie/logan","hotstar"],"xmen-97":["tv-show/x-men-97","hotstar"],"ff-2015":["movie/fantastic-four","hotstar","vi"]};
 const platformIcons = {
   hotstar: ['✦', 'JioHotstar'],
   vi: ['Vi', 'Vi Movies & TV'],
@@ -409,7 +477,9 @@ function watchLink(id, title) {
 }
 
 for (const placeholder of document.querySelectorAll('[data-optional-watch]')) {
-  placeholder.innerHTML = watchLink(placeholder.dataset.optionalWatch, placeholder.previousElementSibling.textContent);
+  const id = placeholder.dataset.optionalWatch;
+  const title = placeholder.previousElementSibling.textContent;
+  placeholder.innerHTML = '<span class="runtime">' + formatMinutes(runtimes[id]) + '</span>' + watchLink(id, title);
 }
 
 function renderList() {
@@ -442,7 +512,8 @@ function renderList() {
       (note ? ' aria-describedby="note-' + id + '"' : '') +
       '><span class="check" aria-hidden="true">' + (checked ? '✓' : '') +
       '</span><span class="itemname">' + esc(entry.title) +
-      '</span><span class="kind' + (entry.type === 'series' ? ' series">SERIES' : '">FILM') + '</span></button>' +
+      '</span><span class="kind' + (entry.type === 'series' ? ' series">SERIES' : '">FILM') + '</span>' +
+      (runtimes[entry.id] ? '<span class="runtime">' + formatMinutes(runtimes[entry.id]) + '</span>' : '') + '</button>' +
       (entry.custom ? '<button type="button" class="item-remove" data-remove-id="' + id + '" aria-label="Remove title">×</button>' : '') +
       watchLink(entry.id, entry.title) +
       (note ? '<details class="spoiler-detail"><summary aria-label="Spoiler note for ' + esc(entry.title) +
@@ -662,7 +733,49 @@ motionPreference.addEventListener('change', () => {
 });
 runnerPower.hidden = motionPreference.matches;
 
-function update(){let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';const exactProgress=list.length?n/list.length*100:0;$('railFill').style.width=exactProgress+'%';moveTimelineHero(exactProgress);document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
+function formatMinutes(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const remainder = minutes % 60;
+  return (hours ? hours + 'h ' : '') + remainder + 'm';
+}
+
+let minutesNeeded = 0, unknownRuntimes = 0, lastCountdownMinutes = null;
+function updateBingeTotals() {
+  const watched = new Set(state.watched);
+  let total = 0;
+  minutesNeeded = 0;
+  unknownRuntimes = 0;
+  for (const entry of all()) {
+    const runtime = runtimes[entry.id];
+    total += runtime || 0;
+    if (watched.has(entry.id)) continue;
+    if (runtime) minutesNeeded += runtime;
+    else unknownRuntimes++;
+  }
+  $('timeNeeded').textContent = formatMinutes(minutesNeeded);
+  $('timeTotal').textContent = 'Full watchlist · ' + formatMinutes(total) +
+    (all().some(entry => !runtimes[entry.id]) ? ' (known runtimes)' : '');
+  lastCountdownMinutes = null;
+  updateBingeCountdown();
+}
+
+function updateBingeCountdown() {
+  const left = Math.max(0, Math.floor((releaseTime - Date.now()) / 60000));
+  if (left === lastCountdownMinutes) return;
+  lastCountdownMinutes = left;
+  $('timeLeft').textContent = formatMinutes(left);
+  const difference = left - minutesNeeded;
+  const note = $('bingeNote');
+  note.dataset.short = String(difference < 0);
+  if (unknownRuntimes) note.textContent = 'Runtime unavailable for ' + unknownRuntimes + (unknownRuntimes === 1 ? ' unwatched title.' : ' unwatched titles.');
+  else if (!minutesNeeded) note.textContent = 'You’re caught up.';
+  else if (!difference) note.textContent = 'Your watchlist fits exactly.';
+  else note.textContent = difference < 0
+    ? formatMinutes(-difference) + ' more than the countdown allows.'
+    : formatMinutes(difference) + ' to spare if you watch straight through.';
+}
+
+function update(){updateBingeTotals();let list=all(),w=new Set(state.watched),n=list.filter(x=>w.has(x.id)).length,p=list.length?Math.round(n/list.length*100):0,m=list.filter(x=>x.type==='movie'),s=list.filter(x=>x.type==='series');$('doneCount').textContent=n;$('totalCount').textContent=list.length;$('progressPct').textContent=p+'%';$('timelinePct').textContent=p+'%';$('progressFill').style.width=p+'%';const exactProgress=list.length?n/list.length*100:0;$('railFill').style.width=exactProgress+'%';moveTimelineHero(exactProgress);document.querySelectorAll('.milestone').forEach((el,i)=>el.classList.toggle('passed',p>=i*25));$('ringPct').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--acid) ${p*3.6}deg,#2b2e3c 0deg)`;$('movieMetric').textContent=m.filter(x=>w.has(x.id)).length+' / '+m.length;$('seriesMetric').textContent=s.filter(x=>w.has(x.id)).length+' / '+s.length;$('remainingMetric').textContent=(list.length-n)+' TITLES';$('statusTitle').textContent=p===100?'Opening night ready':p>=60?'Deep in the multiverse':p>=25?'Your mission is underway':'The story starts here';$('statusCopy').textContent=p===100?'You are caught up. Ready for the big screen.':p>=60?'Great progress. Keep going at your own pace.':p>=25?'Nice progress. Keep exploring the timeline.':'Mark titles watched and follow your journey to Doomsday.'}
 const updateProgress = update;
 let wasComplete = null;
 let completionTimers = [];
@@ -735,7 +848,7 @@ function showModal() {
   draftHero = state.name ? state.hero : null;
   $('stepLabel').textContent = '01 / 03 · YOUR CALLSIGN';
   $('modalTitle').textContent = state.name ? 'Update your profile' : 'Welcome, Agent.';
-  $('modalCopy').textContent = 'Choose your display name. Your profile and progress stay in this browser.';
+  $('modalCopy').textContent = 'Choose your display name. Your watch progress stays in this browser.';
   $('nameInput').value = state.name;
   $('nameInput').classList.remove('hidden');
   $('nameLabel').classList.remove('hidden');
@@ -796,7 +909,7 @@ function nextStep() {
   toast('PROFILE SAVED ON THIS DEVICE');
 }
 const releaseTime = Date.parse('2026-12-17T00:00:00+05:30');
-function tick(){let d=Math.max(0,releaseTime-Date.now()),days=Math.floor(d/864e5);d%=864e5;let h=Math.floor(d/36e5);d%=36e5;let m=Math.floor(d/6e4),s=Math.floor(d%6e4/1e3);$('days').textContent=String(days).padStart(3,'0');$('hours').textContent=String(h).padStart(2,'0');$('minutes').textContent=String(m).padStart(2,'0');$('seconds').textContent=String(s).padStart(2,'0')}
+function tick(){updateBingeCountdown();let d=Math.max(0,releaseTime-Date.now()),days=Math.floor(d/864e5);d%=864e5;let h=Math.floor(d/36e5);d%=36e5;let m=Math.floor(d/6e4),s=Math.floor(d%6e4/1e3);$('days').textContent=String(days).padStart(3,'0');$('hours').textContent=String(h).padStart(2,'0');$('minutes').textContent=String(m).padStart(2,'0');$('seconds').textContent=String(s).padStart(2,'0')}
 $('avatar').addEventListener('click',showModal);$('saveProfile').addEventListener('click',nextStep);$('cancelModal').addEventListener('click',hideModal);$('backdrop').addEventListener('click',e=>{if(e.target===$('backdrop')&&state.name)hideModal()});$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')nextStep();if(e.key==='Escape'&&state.name)hideModal()});$('resetBtn').addEventListener('click',()=>{if(!state.watched.length){toast('NO WATCH PROGRESS TO RESET');return}if(confirm('Clear all watched progress?')){state.watched=[];save();renderList();toast('WATCH PROGRESS RESET')}});const quizQuestions = [
   ['Doomsday','Who was announced as Victor von Doom in Avengers: Doomsday?','Robert Downey Jr.','Chris Evans','Pedro Pascal','Tom Hiddleston','Downey returns to the MCU in a new role as Victor von Doom.','https://d23.com/marvel-studios-announces-avengers-doomsday-cast/'],
   ['Doomsday','Which actor from the original X-Men films was announced in the Doomsday cast?','Patrick Stewart','Hugh Jackman','Halle Berry','Famke Janssen','Disney’s cast announcement includes Patrick Stewart.','https://d23.com/marvel-studios-announces-avengers-doomsday-cast/'],
@@ -1201,6 +1314,104 @@ opening.addEventListener('keydown', event => {
   if (event.key === 'Escape') finishOpening();
   if (event.key === 'Tab') event.preventDefault();
 });
+const wallSize = 100;
+const wallGrid = $('wallGrid');
+const signButton = $('signWall');
+const wallStatus = $('wallStatus');
+let pendingSignature = null;
+let wallRequestPending = false;
+let newestVisibleSignature = 0;
+
+function renderWall(signatures) {
+  const newest = Math.max(0, ...signatures.map(entry => entry.sequence));
+  if (newest < newestVisibleSignature) return;
+  newestVisibleSignature = newest;
+  const occupied = new Map(signatures.map(entry => [entry.slot, entry]));
+  const grid = document.createDocumentFragment();
+  for (let slot = 0; slot < wallSize; slot++) {
+    const tile = document.createElement('li');
+    tile.className = 'wall-cell';
+    const entry = occupied.get(slot);
+    if (entry && icons[entry.hero]) {
+      tile.classList.add('is-signed');
+      if (entry.sequence === newest) tile.classList.add('is-newest');
+      tile.title = entry.name + ' · ' + icons[entry.hero][1];
+      tile.innerHTML = sprite(entry.hero);
+      const silhouette = tile.querySelector('canvas');
+      paintHero(silhouette, entry.hero);
+      const brush = silhouette.getContext('2d');
+      brush.globalCompositeOperation = 'source-in';
+      brush.fillStyle = palettes[entry.hero][1];
+      brush.fillRect(0, 0, 32, 32);
+      const name = document.createElement('strong');
+      name.textContent = entry.name;
+      const hero = document.createElement('small');
+      hero.textContent = icons[entry.hero][1];
+      tile.append(name, hero);
+    } else {
+      tile.setAttribute('aria-hidden', 'true');
+    }
+    grid.append(tile);
+  }
+  wallGrid.replaceChildren(grid);
+  $('wallCount').textContent = signatures.length + ' / ' + wallSize;
+}
+
+async function loadWall() {
+  try {
+    const response = await fetch('/api/signatures');
+    if (!response.ok) throw new Error();
+    renderWall((await response.json()).signatures);
+    if (!wallRequestPending && wallStatus.dataset.loadError) {
+      delete wallStatus.dataset.loadError;
+      wallStatus.textContent = '';
+    }
+  } catch {
+    if (!wallRequestPending) {
+      wallStatus.dataset.loadError = 'true';
+      wallStatus.textContent = 'Couldn’t load the wall. It will try again shortly.';
+    }
+  }
+}
+
+async function signWall() {
+  if (wallRequestPending) return;
+  if (!state.name) {
+    wallStatus.textContent = 'Save your profile, then sign the wall.';
+    showModal();
+    return;
+  }
+  if (pendingSignature?.name !== state.name || pendingSignature.hero !== state.hero) {
+    pendingSignature = { name: state.name, hero: state.hero, token: crypto.randomUUID() };
+  }
+  wallRequestPending = true;
+  signButton.disabled = true;
+  signButton.textContent = 'Signing…';
+  try {
+    const response = await fetch('/api/signatures', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pendingSignature)
+    });
+    if (!response.ok) throw new Error();
+    renderWall((await response.json()).signatures);
+    wallStatus.textContent = pendingSignature.name + ' signed the wall.';
+    delete wallStatus.dataset.loadError;
+    pendingSignature = null;
+  } catch {
+    wallStatus.textContent = 'Couldn’t confirm your signature. Click Sign the wall to retry.';
+  } finally {
+    wallRequestPending = false;
+    signButton.disabled = false;
+    signButton.textContent = 'Sign the wall';
+  }
+}
+
+renderWall([]);
+loadWall();
+signButton.addEventListener('click', signWall);
+setInterval(() => { if (!document.hidden && !wallRequestPending) loadWall(); }, 30000);
+
 drawSprites(document);
 updateProfile();
 renderList();
