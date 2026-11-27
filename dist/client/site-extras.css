@@ -2,8 +2,25 @@
 .guide-launch:hover,.guide-launch:focus-visible{border-color:#ffe16d;outline-offset:3px}
 .credits-footer{margin-top:26px;border-top:1px solid #60466b;padding-top:12px}
 .credits-footer .footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:0;padding:0;border:0;color:#dac3dc;font:500 .75rem 'DM Mono',monospace}
-.credits-links{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
-.creator-credit{margin:14px 0 0;color:#fff0dc;font:700 1rem 'Space Grotesk',sans-serif}
+.credits-links{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:12px}
+.creator-credit{margin:14px 0 0;color:#fff0dc;font:700 1rem 'Space Grotesk',system-ui,sans-serif;text-align:center}
+.footer-fineprint{display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px;margin:6px 0 0;padding:0 4px;font:500 .8125rem/1.35 system-ui,sans-serif}
+.footer-fineprint a{display:inline-flex;align-items:center;min-height:44px;color:#ddcbe1;text-decoration:underline;text-underline-offset:3px}
+.footer-fineprint a:hover,.footer-fineprint a:focus-visible{color:#ffe16d}
+.site-information{margin:0;background:#161220;color:#fff0dc;font:1rem/1.6 system-ui,sans-serif}
+.site-information a{color:#ffe6ab;text-underline-offset:3px}
+.site-information a:focus-visible{outline:2px solid #ffe16d;outline-offset:3px}
+.information-header,.information-card,.information-footer{box-sizing:border-box;width:min(100% - 32px,740px);margin-inline:auto}
+.information-header{display:flex;justify-content:space-between;gap:12px;padding-block:12px}
+.information-header a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+.information-card{color:#fff0dc;background:#241932;border:1px solid #60466b;border-radius:6px;padding:clamp(18px,5vw,38px)}
+.information-card h1{margin:0;font-size:clamp(1.8rem,6vw,2.55rem);line-height:1.15}
+.information-card h2{margin:0 0 6px;font-size:1.125rem;line-height:1.3}
+.information-card section{margin-top:22px}
+.information-card p{margin:0}
+.information-card .information-date{margin-top:8px;color:#ddcbe1;font-size:.875rem}
+.information-footer{margin-bottom:22px}
+.cookie-notice a{color:#ffe6ab;text-underline-offset:2px}
 .credits-links a{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;min-width:135px;min-height:43px;padding:6px 11px;border:1px solid #60466b;border-radius:5px;color:#ffe6ab;font:700 .875rem 'Space Grotesk',sans-serif;text-underline-offset:3px}
 .credits-links a::before{content:"";position:absolute;z-index:-1;inset:0;opacity:0;background:var(--hero-art) center/cover no-repeat;transition:opacity .18s}
 .credits-links a:hover,.credits-links a:focus-visible{border-color:#ffe16d;color:#fff2df;outline-offset:3px}
