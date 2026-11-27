@@ -19,12 +19,16 @@
   const threadBody = byId('threadBody');
   const clearSelection = byId('clearSelection');
   const spoilerButton = byId('spoilerMode');
+  const musicButton = byId('connectionMusic');
+  const soundtrack = byId('connectionSoundtrack');
   const profileKey = 'doomsday-watch.v2';
   const width = 1600, height = 1085;
   const dpi = Math.min(window.devicePixelRatio || 1, 2);
   let scale = 1;
   let selection = null;
   let spoilers = false;
+  let musicMuted = false;
+  let musicStarted = false;
   let drag = null;
   try {
     const profile = JSON.parse(localStorage.getItem(profileKey) || '{}');
@@ -35,7 +39,11 @@
       return;
     }
     spoilers = profile.spoilers === true;
+    musicMuted = profile.musicMuted === true;
   } catch {}
+  showWebProtocol();
+  soundtrack.volume = 0.24;
+  updateMusicButton();
   canvas.width = width * dpi;
   canvas.height = height * dpi;
   canvas.style.width = width + 'px';
@@ -53,6 +61,53 @@
     button.type = 'button';
     button.addEventListener('click', action);
     return button;
+  }
+
+  function showWebProtocol() {
+    const opening = byId('webProtocol');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let dismissing = false;
+
+    function finish() {
+      opening.close();
+      byId('webTitle').focus({ preventScroll: true });
+    }
+
+    function dismiss() {
+      if (dismissing) return;
+      dismissing = true;
+      clearTimeout(dismissTimer);
+      if (reducedMotion.matches) {
+        finish();
+        return;
+      }
+      opening.classList.add('is-fading');
+      setTimeout(finish, 360);
+    }
+
+    byId('skipWebProtocol').addEventListener('click', dismiss);
+    opening.addEventListener('cancel', event => {
+      event.preventDefault();
+      dismiss();
+    });
+    opening.showModal();
+    const dismissTimer = setTimeout(dismiss, reducedMotion.matches ? 450 : 1000);
+  }
+
+  function updateMusicButton() {
+    byId('connectionMusicLabel').textContent = musicMuted ? 'Music: Off' : 'Music: On';
+    musicButton.setAttribute('aria-pressed', String(musicMuted));
+    musicButton.setAttribute('aria-label', musicMuted ? 'Unmute Spider-Man music' : 'Mute Spider-Man music');
+    musicButton.title = 'Spider-Man Main Title · MIDI arrangement';
+  }
+
+  function startMusic() {
+    if (musicMuted || document.hidden || !soundtrack.paused) return;
+    soundtrack.play().then(() => { musicStarted = true; }).catch(() => {});
+  }
+
+  function startMusicOnInteraction(event) {
+    if (!musicStarted && !event.target.closest?.('#connectionMusic')) startMusic();
   }
 
   function normalizeTitle(value) {
@@ -230,14 +285,44 @@
     } catch {}
     renderInspector();
   });
-  window.addEventListener('storage', event => {
-    if (event.key !== profileKey && event.key !== null) return;
+
+  musicButton.addEventListener('click', () => {
+    musicMuted = !musicMuted;
     try {
-      const preference = JSON.parse(localStorage.getItem(profileKey) || '{}')?.spoilers === true;
-      if (preference === spoilers) return;
-      spoilers = preference;
-      renderInspector();
+      const profile = JSON.parse(localStorage.getItem(profileKey) || '{}');
+      localStorage.setItem(profileKey, JSON.stringify({ ...profile, musicMuted }));
     } catch {}
+    updateMusicButton();
+    if (musicMuted) soundtrack.pause();
+    else startMusic();
+  });
+  document.addEventListener('click', startMusicOnInteraction);
+  document.addEventListener('keydown', startMusicOnInteraction);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) soundtrack.pause();
+    else if (musicStarted) startMusic();
+  });
+
+  function syncPreferences() {
+    try {
+      const profile = JSON.parse(localStorage.getItem(profileKey) || '{}');
+      const spoilerPreference = profile?.spoilers === true;
+      if (spoilerPreference !== spoilers) {
+        spoilers = spoilerPreference;
+        renderInspector();
+      }
+      musicMuted = profile?.musicMuted === true;
+      updateMusicButton();
+      if (musicMuted) soundtrack.pause();
+      else if (musicStarted) startMusic();
+    } catch {}
+  }
+
+  window.addEventListener('storage', event => {
+    if (event.key === profileKey || event.key === null) syncPreferences();
+  });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) syncPreferences();
   });
   renderInspector();
   drawEdges();

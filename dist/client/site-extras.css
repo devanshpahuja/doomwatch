@@ -12,7 +12,7 @@
 .credits-links .social-linkedin{--hero-art:url("./footer-art/captain-america.png")}
 .credits-links .social-github{--hero-art:url("./footer-art/hulk.png")}
 @media(prefers-reduced-motion:reduce){.credits-links a::before{transition:none}}
-.credits-footer.connection-footer{width:min(100% - 40px,1500px);margin:0 auto 28px}
+.credits-footer.connection-footer{width:min(100% - 40px,1228px);margin:0 auto 28px}
 .footer-spider-track{position:relative;margin-top:11px;height:38px;overflow:hidden}
 .footer-spider-track::before{content:"";position:absolute;top:50%;left:0;right:0;border-top:1px dotted #785f82}
 .footer-spider{position:absolute;top:2px;left:0;display:block;width:37px;height:33px;filter:drop-shadow(0 0 6px #ff48645c)}

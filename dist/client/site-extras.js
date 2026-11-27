@@ -35,7 +35,8 @@
     ['#titleSearch','Find a title','Type a film or series name to jump to it on the map.'],
     ['.atlas','Follow the links','Select a title to highlight its connections. Drag the map or use the zoom controls to get closer.'],
     ['#relationControls','Filter the web','Toggle story, character, multiverse, or shared-lore links to see the relationships that interest you.'],
-    ['#spoilerMode','Choose what to reveal','Use the Spoilers switch to show plot details in the connection notes.']
+    ['#spoilerMode','Choose what to reveal','Use the Spoilers switch to show plot details in the connection notes.'],
+    ['#connectionMusic','Control the soundtrack','Use the Music switch in the header to mute or unmute the Spider-Man theme.']
   ] : [
     ['.cardhead','Track your watchlist','Mark a film or series watched as you finish it. Start with Canon, or browse Build-up and Optional titles.'],
     ['.binge-card','Check your binge time','Compare your remaining watch time with the countdown. Canon remaining shows how much time you need for the core list.'],
