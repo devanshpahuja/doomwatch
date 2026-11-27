@@ -211,10 +211,9 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 .wall-cell strong{font:700 1.13rem/1.05 'Dancing Script','Segoe Script',cursive;overflow-wrap:anywhere}
 .wall-cell small{margin-top:3px;color:#454545;font-size:.7rem;line-height:1.1}
 .wall-actions .feature-button:disabled{cursor:default}
-.wall-sign-control{position:relative}
-.wall-invitation{visibility:hidden;position:absolute;z-index:2;top:100%;right:0;width:max-content;max-width:min(220px,70vw);padding:8px 10px;border:1px solid #ffdf47;background:#20162c;color:#fff0db;font-size:.82rem}
+.wall-actions{display:grid;grid-template-columns:auto auto;column-gap:10px;row-gap:5px;justify-items:end}
+.wall-invitation{grid-column:1 / -1;color:#ffe6ab;font-size:.875rem;text-align:right}
 .wall-invitation:empty{display:none}
-.wall-sign-control:hover .wall-invitation,.wall-sign-control:focus-within .wall-invitation{visibility:visible}
 .wall-cell .wall-earth{color:#262626;font:700 .69rem var(--mono)}
 
 .doom-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
@@ -275,12 +274,10 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 </article><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section>
 <section class="card signature-wall" id="signatureWall" aria-labelledby="wallHeading">
   <header class="wall-heading">
-    <div><h2 id="wallHeading">Signature wall</h2><p>One signature per browser. Sign with your display name and hero.</p></div>
+    <div><h2 id="wallHeading">Signature wall</h2><p>Sign once with your display name and chosen hero.</p></div>
     <div class="wall-actions"><span class="wall-count" id="wallCount">— / 100</span>
-      <div class="wall-sign-control">
-        <button class="feature-button" id="signWall" type="button" aria-describedby="wallInvitation" disabled>Sign the wall</button>
-        <span class="wall-invitation" id="wallInvitation" role="tooltip"></span>
-      </div>
+      <button class="feature-button" id="signWall" type="button" aria-describedby="wallInvitation" disabled>Sign the wall</button>
+      <span class="wall-invitation" id="wallInvitation" role="status"></span>
     </div>
   </header>
   <div class="wall-scroll" tabindex="0" role="region" aria-label="10 by 10 signature wall">
@@ -1477,6 +1474,7 @@ const signButton = $('signWall');
 const wallStatus = $('wallStatus');
 let wallReady = false;
 let viewerSigned = false;
+let viewerSignature = null;
 let wallRequestPending = false;
 let newestVisibleSignature = -1;
 let wallCheckpoint = -1;
@@ -1519,19 +1517,33 @@ function renderWall(signatures, checkpoint = 0) {
   $('wallCount').textContent = signatures.length + ' / ' + wallSize;
 }
 
+function ordinal(number) {
+  return number + ordinalSuffix[ordinals.select(number)];
+}
+
 function updateSignButton() {
   signButton.disabled = !wallReady || viewerSigned || wallRequestPending;
   signButton.textContent = wallRequestPending ? 'Signing…' : viewerSigned ? 'Already signed' : 'Sign the wall';
-  $('wallInvitation').textContent = signButton.disabled ? '' :
-    'Be the ' + nextSignature + ordinalSuffix[ordinals.select(nextSignature)] + ' person to sign the wall';
+  const invitation = $('wallInvitation');
+  const message = viewerSignature !== null
+    ? 'You were the ' + ordinal(viewerSignature) + ' visitor to sign the wall.'
+    : viewerSigned ? 'Your signature is on the wall.'
+    : wallReady ? 'You will be the ' + ordinal(nextSignature) + ' visitor to sign the wall.' : '';
+  if (invitation.textContent !== message) invitation.textContent = message;
 }
 
 function showWall(data) {
   if (data.checkpoint < wallCheckpoint) return;
-  if (data.checkpoint > wallCheckpoint) viewerSigned = false;
+  if (data.checkpoint > wallCheckpoint) {
+    viewerSigned = false;
+    viewerSignature = null;
+  }
   wallCheckpoint = data.checkpoint;
   renderWall(data.signatures, data.checkpoint);
   viewerSigned ||= data.signed === true;
+  if (Number.isSafeInteger(data.signedSequence) && data.signedSequence > wallCheckpoint) {
+    viewerSignature = data.signedSequence - wallCheckpoint;
+  }
   wallReady = true;
   updateSignButton();
 }
@@ -1578,7 +1590,7 @@ async function signWall() {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error);
     showWall(data);
-    wallStatus.textContent = 'Your signature is on the wall.';
+    wallStatus.textContent = '';
     delete wallStatus.dataset.loadError;
   } catch (error) {
     wallStatus.textContent = error.message === 'Load the wall and enable cookies before signing.'

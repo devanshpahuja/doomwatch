@@ -34,14 +34,15 @@ async function readWall(request, db) {
   const visitor = wallVisitor(request);
   if (!visitor) {
     const [{ results }, { results: [checkpoint] }] = await db.batch([db.prepare(SIGNATURES), db.prepare(CHECKPOINT)]);
-    return json({ signatures: results, signed: false, checkpoint: checkpoint.sequence }, 200, {
+    return json({ signatures: results, signed: false, signedSequence: null, checkpoint: checkpoint.sequence }, 200, {
       'Set-Cookie': COOKIE + '=' + crypto.randomUUID() + '; Max-Age=34560000; Path=/; Secure; HttpOnly; SameSite=Lax'
     });
   }
   const [{ results }, { results: matches }, { results: [checkpoint] }] = await db.batch([
     db.prepare(SIGNATURES), db.prepare(VISITOR).bind(visitor), db.prepare(CHECKPOINT)
   ]);
-  return json({ signatures: results, signed: matches.length > 0, checkpoint: checkpoint.sequence });
+  const signedSequence = matches[0]?.sequence ?? null;
+  return json({ signatures: results, signed: signedSequence !== null, signedSequence, checkpoint: checkpoint.sequence });
 }
 
 async function sign(request, db) {
@@ -68,12 +69,12 @@ async function sign(request, db) {
   }
   const visitor = wallVisitor(request);
   if (!visitor) return json({ error: 'Load the wall and enable cookies before signing.' }, 409);
-  const [, , { results }, { results: [checkpoint] }] = await db.batch([
+  const [, , { results }, { results: [checkpoint] }, { results: [signature] }] = await db.batch([
     db.prepare(SIGN).bind(visitor, name, hero),
     db.prepare(REMEMBER).bind(visitor),
-    db.prepare(SIGNATURES), db.prepare(CHECKPOINT)
+    db.prepare(SIGNATURES), db.prepare(CHECKPOINT), db.prepare(VISITOR).bind(visitor)
   ]);
-  return json({ signatures: results, signed: true, checkpoint: checkpoint.sequence });
+  return json({ signatures: results, signed: true, signedSequence: signature.sequence, checkpoint: checkpoint.sequence });
 }
 
 export default {

@@ -44,7 +44,7 @@
     ['#shareProgress','Share your progress','Use Send a Signal to share a snapshot of your readiness.'],
     ['#openStory','Make a Hero Cover','Create a cover starring your chosen hero that you can save or share.'],
     ['.doom-tabs a[href="/connections"]','Explore Connections','Open the web to see how titles connect through stories, characters, and different universes.'],
-    ['#signatureWall .wall-heading','Sign the wall','Leave your display name and hero on the shared wall. Each browser can sign once.'],
+    ['#signatureWall .wall-heading','Sign the wall','Leave your display name and hero on the shared wall. Your hero can sign the wall once.'],
     ['.ticket-button','Find tickets','Open the ticket listing from Book Doomsday Tickets.']
   ]).map(([selector,title,description]) => ({target:document.querySelector(selector),title,description}))
     .filter(step => step.target);
