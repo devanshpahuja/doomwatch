@@ -108,3 +108,10 @@ h1 span{color:var(--paper)}
   .controls button{padding:6px 8px;min-height:44px}
 }
 @media(max-width:430px){h1 span{display:block}}
+#mapFilters summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
+#connectionSheet{width:min(100%,580px);max-width:100%;max-height:55dvh;inset:auto 0 0;margin:0 auto;padding:12px 12px max(12px,env(safe-area-inset-bottom));background:var(--panel);border:2px solid var(--ink);border-top:3px solid var(--red);color:var(--paper);overflow:auto}
+#connectionSheet::backdrop{background:#080b1459}
+#connectionSheet form{display:flex;justify-content:flex-end;padding-bottom:6px}
+#connectionSheet .inspector{display:block;overflow:visible;max-height:none}
+@media(min-width:851px){#mapFilters summary{display:none}}
+@media(max-width:850px){.explorer{min-height:0}.explorer>.inspector{display:none}.map-tools{align-items:start}#mapFilters[open]{flex-basis:100%}.map-actions form{flex:1 1 175px;flex-wrap:nowrap}.map-actions input{min-width:0;width:0;flex:1}.map-actions{align-items:center}.map-tools button{min-height:44px}}

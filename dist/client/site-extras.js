@@ -31,25 +31,28 @@
   const launch = document.getElementById('openGuide');
   if (!launch) return;
   const onConnections = Boolean(document.getElementById('atlas'));
-  const guide = (onConnections ? [
+  const fullGuide = (onConnections ? [
     ['#titleSearch','Find a title','Type a film or series name to jump to it on the map.'],
     ['.atlas','Follow the links','Select a title to highlight its connections. Drag the map or use the zoom controls to get closer.'],
-    ['#relationControls','Filter the web','Toggle story, character, multiverse, or shared-lore links to see the relationships that interest you.'],
+    ['#mapFilters','Filter the web','Toggle story, character, multiverse, or shared-lore links to see the relationships that interest you.'],
     ['#spoilerMode','Choose what to reveal','Use the Spoilers switch to show plot details in the connection notes.'],
     ['#connectionMusic','Control the soundtrack','Use the Music switch in the header to mute or unmute the Spider-Man theme.']
   ] : [
-    ['.cardhead','Track your watchlist','Mark a film or series watched as you finish it. Start with Canon, or browse Build-up and Optional titles.'],
-    ['.binge-card','Check your binge time','Compare your remaining watch time with the countdown. Canon remaining shows how much time you need for the core list.'],
+    ['#nextCard','Track your watchlist','Mark a film or series watched as you finish it. Start with Canon, or browse Build-up and Optional titles.'],
+    ['.binge-card','Check your binge time','See your remaining Canon time and the daily pace to finish by release.'],
     ['.topright','Set up your hero','Select your avatar to change heroes. The buttons beside it control music and spoilers.'],
     ['#openQuiz','Try Multiverse Trials','Open the quiz to test what you remember about the films and series.'],
-    ['#shareProgress','Share your progress','Use Send a Signal to share a snapshot of your readiness.'],
+    ['#shareProgress','Share your progress','Use Share progress to share a snapshot of your readiness.'],
     ['#openStory','Make a Hero Cover','Create a cover starring your chosen hero that you can save or share.'],
     ['.doom-tabs a[href="/connections"]','Explore Connections','Open the web to see how titles connect through stories, characters, and different universes.'],
     ['#signWall','Sign the wall','Leave your display name and hero on the shared wall. Your hero can sign the wall once.'],
     ['.ticket-button','Find tickets','Open the ticket listing from Book Doomsday Tickets.']
   ]).map(([selector,title,description]) => ({target:document.querySelector(selector),title,description}))
     .filter(step => step.target);
-  if (!guide.length) return;
+  if (!fullGuide.length) return;
+  let guide = fullGuide;
+  const activities = document.querySelector('.activities');
+  let activitiesWereOpen = false;
 
   const dialog = document.createElement('dialog');
   dialog.className = 'help-tour';
@@ -129,6 +132,7 @@
 
   function showStep() {
     const current = guide[step];
+    if (activities) activities.open = activitiesWereOpen || activities.contains(current.target);
     progress.textContent = (step + 1) + ' of ' + guide.length;
     title.textContent = current.title;
     copy.textContent = current.description;
@@ -141,13 +145,17 @@
     alignStep();
   }
 
-  launch.addEventListener('click',() => {
+  function startGuide(welcome) {
+    guide = welcome ? [fullGuide[0], fullGuide[1], fullGuide.find(item => item.title === 'Explore Connections')] : fullGuide;
+    activitiesWereOpen = activities?.open || false;
     originalScroll = window.scrollY;
     step = 0;
     dialog.showModal();
     showStep();
     next.focus({preventScroll:true});
-  });
+  }
+  launch.addEventListener('click', () => startGuide(false));
+  launch.addEventListener('start-welcome', () => startGuide(true));
   back.addEventListener('click',() => { if (step > 0) { step--; showStep(); if (back.disabled) next.focus(); } });
   next.addEventListener('click',() => {
     if (step === guide.length - 1) dialog.close();
@@ -158,6 +166,13 @@
     resizeObserver.disconnect();
     cancelAnimationFrame(layoutFrame);
     layoutFrame = 0;
+    if (activities) activities.open = activitiesWereOpen;
+    if (guide !== fullGuide) {
+      const nextCard = document.getElementById('nextCard');
+      nextCard.scrollIntoView({block:'center',behavior:'instant'});
+      nextCard.focus({preventScroll:true});
+      return;
+    }
     window.scrollTo({top:originalScroll,behavior:'instant'});
     launch.focus({preventScroll:true});
   });

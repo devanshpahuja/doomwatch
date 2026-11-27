@@ -24,7 +24,7 @@
   <header class="top">
     <a class="brand" href="/"><span class="brandmark" aria-hidden="true">Earth–616</span>Doomwatch</a>
     <nav aria-label="Doomwatch views">
-      <a href="/#watchlist">Watchlist</a>
+      <a href="/">Watchlist</a>
       <a href="/connections" aria-current="page">Connections</a>
       <button class="guide-launch" id="openGuide" type="button" aria-haspopup="dialog">Help</button>
     </nav>
@@ -51,7 +51,7 @@
         <button id="spoilerMode" type="button" aria-label="Show spoilers" aria-pressed="false">Spoilers: Off</button>
       </div>
       <div class="map-tools">
-        <div id="relationControls" role="group" aria-label="Connection types"></div>
+        <details id="mapFilters"><summary>Filters</summary><div id="relationControls" role="group" aria-label="Connection types"></div></details>
         <div class="zoom" role="group" aria-label="Map zoom">
           <button id="zoomOut" type="button" aria-label="Zoom out">−</button>
           <button id="zoomFit" type="button" aria-label="Fit map">Fit</button>
@@ -98,6 +98,9 @@
   </nav>
   <div class="footer-spider-track" aria-hidden="true"><canvas class="footer-spider" width="37" height="33"></canvas></div>
 </footer>
+<dialog id="connectionSheet" aria-labelledby="threadTitle">
+  <form method="dialog"><button type="submit" autofocus>Back to map</button></form>
+</dialog>
 <dialog class="protocol-opening" id="webProtocol" aria-labelledby="webProtocolTitle">
   <div class="protocol-card">
     <div class="protocol-insignia" aria-hidden="true"></div>

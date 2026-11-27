@@ -19,6 +19,17 @@
   const threadBody = byId('threadBody');
   const clearSelection = byId('clearSelection');
   const spoilerButton = byId('spoilerMode');
+  const sheet = byId('connectionSheet');
+  const inspector = document.querySelector('.inspector');
+  const explorer = inspector.parentElement;
+  const phone = matchMedia('(max-width:850px)');
+  function updateMapLayout() {
+    byId('mapFilters').open = !phone.matches;
+    if (!phone.matches && sheet.open) sheet.close();
+  }
+  updateMapLayout();
+  phone.addEventListener('change', updateMapLayout);
+  sheet.addEventListener('close', () => explorer.append(inspector));
   const musicButton = byId('connectionMusic');
   const soundtrack = byId('connectionSoundtrack');
   const profileKey = 'doomsday-watch.v2';
@@ -210,7 +221,14 @@
     drawEdges();
     renderInspector();
     mapStatus.textContent = node ? node.title + ' selected.' : 'Selection cleared.';
-    if (move && node) centerOn(node.x, node.y);
+    if (phone.matches && node) {
+      applyScale(Math.max(scale, 1.1), [node.x, node.y]);
+      if (!sheet.open) {
+        sheet.append(inspector);
+        sheet.showModal();
+      }
+    } else if (move && node) centerOn(node.x, node.y);
+    if (!node && sheet.open) sheet.close();
   }
 
   function applyScale(next, point) {
@@ -239,7 +257,7 @@
     byId('titleOptions').append(option);
     byId('titleIndex').append(makeButton('', node.title, () => {
       selectTitle(node.id, true);
-      node.button.focus();
+      if (!sheet.open) node.button.focus();
     }));
   }
 

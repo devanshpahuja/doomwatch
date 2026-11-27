@@ -226,6 +226,10 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 #spoilerToggle{white-space:nowrap;min-height:38px;padding:8px 10px;font-size:12px}
 #spoilerToggle[aria-pressed="true"]{background:#f05163}
 @media(max-width:520px){#spoilerToggle{padding:6px;font-size:10px;min-height:34px}}
+.ready-plan{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-top:14px}.ready-plan .binge-card{grid-column:auto}.next-body{padding:12px 16px}.next-body h3{margin:0;font-size:1.6rem}.next-body p{margin:4px 0 8px}.next-actions{display:flex;align-items:center;gap:14px}.next-actions a,.activities summary,.full-wall summary,.binge-body summary{cursor:pointer;align-content:center;min-height:44px}.next-actions button{min-height:44px;background:#ffdf47;color:#201624}.next-actions [hidden]{display:none}.activities,.full-wall{padding:0 14px}.wall-preview{display:none}.actions{gap:12px;flex-wrap:wrap}.topright #musicToggle,.topright #spoilerToggle,.topright .avatar,.doom-tabs a,.doom-tabs button{min-height:44px}.topright .avatar{min-width:44px}.topright #musicToggle{font-size:13px}.hero{min-height:0;padding-block:16px}.hero .cover-title{font-size:clamp(42px,6vw,82px);margin:8px 0}.hero .clock .num{font-size:clamp(24px,4vw,38px)}.hero .heroarea,.hero .herobottom{margin-top:8px}.timelinepct,.summary .ringrow{display:none}
+@media(min-width:651px){.full-wall>summary{display:none}.full-wall{padding:0}}
+@media(max-width:650px){.ready-plan{grid-template-columns:1fr}.hero .cover-title{font-size:40px}.hero .unit{padding:4px}.wall-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;list-style:none;margin:0;padding:0 12px}.wall-preview:empty{display:none}.doom-tabs{margin-block:6px}.top{height:auto;min-height:56px}.runtime{font-size:.82rem}}
+#nextHero{float:right;display:grid;place-items:center;width:46px;height:46px}#nextHero canvas{width:40px;height:40px;image-rendering:pixelated}.progress #shareProgress{float:right;margin:0 0 6px 12px;min-height:44px}.progress{display:flow-root}.progress .track{clear:both}.topright #musicToggle,.topright #spoilerToggle{font-size:12px}.ready-plan #timeCanon{margin:0 0 5px}.ready-plan .binge-body{padding-block:10px}.ready-plan #dailyPace{color:#ffdf47}
 </style><link rel="stylesheet" href="/cookie-notice.css">
 <script src="/cookie-notice.js" defer></script>
 <link rel="stylesheet" href="/site-extras.css">
@@ -234,44 +238,47 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 <link rel="icon" type="image/png" sizes="64x64" href="/footer-art/doomwatch-64.png">
 </head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-label="Show spoilers" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Change hero"><span class="pixelface">❔</span></button></div></header>
-<main>
-<section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
-<section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
 <nav class="doom-tabs" aria-label="Doomwatch views">
   <a href="#watchlist" aria-current="page">Watchlist</a>
   <a href="/connections">Connections</a>
   <button class="guide-launch" id="openGuide" type="button" aria-haspopup="dialog">Help</button>
 </nav>
-<nav class="feature-toolbar" aria-label="Readiness activities">
+<main>
+<section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
+<section class="ready-plan" aria-label="Your watch plan"><article class="card" id="nextCard" tabindex="-1"><div class="sidehead"><h2>Up next</h2><span id="nextPhase"></span></div><div class="next-body"><span id="nextHero" aria-hidden="true"></span><h3 id="nextTitle" aria-live="polite"></h3><p id="nextRuntime"></p><div class="next-actions"><button class="feature-button" id="markNext">Mark watched</button><a id="nextProvider" target="_blank" rel="noopener noreferrer">Where to watch</a></div></div></article><article class="card binge-card" aria-labelledby="bingeHeading">
+  <div class="sidehead"><h2 id="bingeHeading">Binge time</h2></div>
+  <div class="binge-body">
+    <p id="timeCanon"></p><strong id="dailyPace"></strong><details><summary>All watch times</summary><div class="binge-metrics">
+      <div class="binge-metric"><span>Time until Doomsday</span><strong id="timeLeft">—</strong></div>
+      <div class="binge-metric"><span>Time needed to finish</span><strong id="timeNeeded">—</strong></div>
+    </div>
+
+    <p class="binge-total" id="timeTotal"></p>
+    <p class="binge-note" id="bingeNote"></p></details>
+  </div>
+</article></section>
+<section class="intro"><div><div class="eyebrow">MARVEL CINEMATIC UNIVERSE &nbsp; / &nbsp; YOUR WATCHLIST</div><h2>Welcome, <span id="displayName">Agent</span><span class="accent">.</span></h2></div><button class="intro-replay" id="introReplay" type="button">Replay opening</button></section>
+
+
+<details class="activities"><summary>Activities</summary><nav class="feature-toolbar" aria-label="Readiness activities">
   <button class="feature-button" id="openQuiz" type="button">Multiverse Trials</button>
-  <button class="feature-button" id="shareProgress" type="button">Send a Signal</button>
+
   <a class="feature-button" href="#signatureWall">Signature wall</a>
   <button class="feature-button" id="openStory" type="button">Create Hero Cover</button>
   <a class="feature-button ticket-button" href="https://www.district.in/movies/avengers-doomsday-movie-tickets-MV176735" target="_blank" rel="noopener noreferrer" aria-label="Book Avengers Doomsday tickets on District">🎟 Book Doomsday Tickets</a>
-</nav>
+</nav></details>
 <section class="timeline"><div class="timelinehead"><div><h2>Your journey through the multiverse</h2><p>MARK TITLES WATCHED TO MOVE YOUR HERO</p></div><div class="timelinepct"><span id="timelinePct">0%</span> COMPLETE</div></div><div class="rail"><div class="railbase"></div><div class="railfill" id="railFill"></div><canvas id="timelineEffects" class="hero-effects" aria-hidden="true"></canvas>
 <div id="timelineHero" class="timeline-hero" aria-hidden="true"><span class="hero-shadow"></span><canvas id="timelineSprite" width="32" height="32"></canvas></div><div class="milestone first" style="left:0%">ORIGINS</div><div class="milestone" style="left:25%">AVENGERS</div><div class="milestone" style="left:50%">INFINITY</div><div class="milestone" style="left:75%">MULTIVERSE</div><div class="milestone last" style="left:100%">DOOMSDAY</div></div>
 <div class="timeline-companion"><span id="timelineHeroName"></span><button type="button" id="timelinePower" class="feature-button">Replay power</button></div>
 </section>
-<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">CANON · BUILD-UP · OPTIONAL</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title for spoilers. On touchscreens, tap its info icon.</p><div class="watch-region">
+<section class="grid"><div><article class="card"><div class="cardhead"><div><div class="title">The watchlist</div><div class="sub">CANON · BUILD-UP · OPTIONAL</div></div><div class="count"><span id="doneCount">0</span> / <span id="totalCount">0</span> WATCHED</div></div><div class="progress"><button class="feature-button" id="shareProgress" type="button">Share progress</button><div class="progtop"><span>MCU &amp; MULTIVERSE CATCH-UP</span><strong id="progressPct">0%</strong></div><div class="track"><div class="fill" id="progressFill"></div></div></div><p class="spoiler-help" id="spoilerHelp" hidden>Hover over a title for spoilers. On touchscreens, tap its info icon.</p><div class="watch-region">
   <span>Where to watch · India</span>
 </div><div id="watchlist"></div>
 <details class="legacy-four">
   <summary>Optional · Earlier Fantastic Four films</summary>
   <p>Earlier film versions sit outside your readiness score.</p><ul><li><span>Fantastic Four (2005)</span><span data-optional-watch="ff-2005"></span></li><li><span>Fantastic Four: Rise of the Silver Surfer (2007)</span><span data-optional-watch="ff-2007"></span></li><li><span>Fantastic Four (2015)</span><span data-optional-watch="ff-2015"></span></li></ul>
 </details><div class="actions"><button class="action" id="resetBtn">↻ RESET PROGRESS</button></div></article></div>
-<aside class="side"><article class="card binge-card" aria-labelledby="bingeHeading">
-  <div class="sidehead"><h2 id="bingeHeading">Binge time</h2></div>
-  <div class="binge-body">
-    <div class="binge-metrics">
-      <div class="binge-metric"><span>Time until Doomsday</span><strong id="timeLeft">—</strong></div>
-      <div class="binge-metric"><span>Time needed to finish</span><strong id="timeNeeded">—</strong></div>
-    </div>
-    <p class="binge-total" id="timeCanon"></p>
-    <p class="binge-total" id="timeTotal"></p>
-    <p class="binge-note" id="bingeNote"></p>
-  </div>
-</article><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section>
+<aside class="side"><article class="card summary"><div class="sidehead"><h2>Mission status</h2><span class="mono">↗</span></div><div class="ringrow"><div class="ring" id="ring"><div class="ringtext"><span id="ringPct">0%</span><small class="mono">WATCHED</small></div></div><div class="summarycopy"><strong id="statusTitle">The story starts here</strong><span id="statusCopy">Mark titles as watched and track your journey to Doomsday.</span></div></div><div class="metrics"><div class="metric"><span>Feature films</span><span id="movieMetric">0 / 0</span></div><div class="metric"><span>Series &amp; specials</span><span id="seriesMetric">0 / 0</span></div><div class="metric"><span>Still on your list</span><span id="remainingMetric">0 TITLES</span></div></div></article><article class="card heroes"><div class="sidehead"><div><div class="title">Your hero avatar</div><div class="sub">PIXEL CHIBI · MULTIVERSE EDITION</div></div><span class="mono">⌘</span></div><div class="heroicons" id="squadIcons"></div><div class="herofoot"><span>YOUR MULTIVERSE CREW</span><span>EDIT VIA AVATAR ↗</span></div></article><article class="note"><div class="notelabel">◉ &nbsp; WATCH PROTOCOL / 001</div><p>Follow the titles in order, or make your own path through the multiverse. Your watch progress saves on this device.</p></article></aside></section>
 <section class="card signature-wall" id="signatureWall" aria-labelledby="wallHeading">
   <header class="wall-heading">
     <div><h2 id="wallHeading">Signature wall</h2><p>Sign once with your display name and chosen hero.</p></div>
@@ -280,10 +287,11 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
       <span class="wall-invitation" id="wallInvitation" role="status"></span>
     </div>
   </header>
+  <ul class="wall-preview" id="wallPreview" aria-label="Latest signatures"></ul><details class="full-wall"><summary>View full wall</summary>
   <div class="wall-scroll" tabindex="0" role="region" aria-label="10 by 10 signature wall">
     <ul class="wall-grid" id="wallGrid" aria-label="Signatures"></ul>
   </div>
-  <p class="wall-status" id="wallStatus" role="status"></p>
+  </details><p class="wall-status" id="wallStatus" role="status"></p>
 </section>
 </main>
 <footer class="credits-footer"><div class="footer"><span>DOOMWATCH · FAN WATCHLIST</span><span>NO ACCOUNT · YOUR WATCH PROGRESS STAYS ON THIS DEVICE</span></div>
@@ -546,6 +554,19 @@ function renderList() {
   const previous = document.activeElement?.dataset?.watchId;
   const previousPhase = document.activeElement?.dataset?.phase;
   const entries = all();
+  const nextEntry = entries.find(entry => !watched.has(entry.id));
+  $('nextTitle').textContent = nextEntry?.title || 'You’re all caught up';
+  $('nextPhase').textContent = nextEntry?.phase || '';
+  $('nextRuntime').textContent = nextEntry ? (runtimes[nextEntry.id] ? formatMinutes(runtimes[nextEntry.id]) : 'Runtime unavailable') : '';
+  $('markNext').hidden = $('nextProvider').hidden = !nextEntry;
+  if (nextEntry) {
+    $('markNext').onclick = () => {
+      toggle(nextEntry.id);
+      toast(nextEntry.title + ' marked watched');
+    };
+    const provider = indiaWatch[nextEntry.id];
+    $('nextProvider').href = 'https://www.justwatch.com/in/' + (provider ? provider[0] : 'search?q=' + encodeURIComponent(nextEntry.title));
+  }
   const phaseEntries = new Map();
   for (const entry of entries) {
     if (!phaseEntries.has(entry.phase)) phaseEntries.set(entry.phase, []);
@@ -622,7 +643,7 @@ window.addEventListener('storage', event => {
     renderList();
   } catch {}
 });
-function toggle(id){state.watched=state.watched.includes(id)?state.watched.filter(x=>x!==id):[...state.watched,id];save();renderList()}function removeTitle(id){state.custom=state.custom.filter(x=>x.id!==id);state.watched=state.watched.filter(x=>x!==id);save();renderList();toast('TITLE REMOVED')}
+function toggle(id){if (!state.watched.includes(id) && !matchMedia('(prefers-reduced-motion: reduce)').matches) $('nextHero').animate([{transform:'translateY(0)'},{transform:'translateY(-10px) rotate(-8deg)'},{transform:'translateY(0)'}],{duration:450});state.watched=state.watched.includes(id)?state.watched.filter(x=>x!==id):[...state.watched,id];save();renderList()}function removeTitle(id){state.custom=state.custom.filter(x=>x.id!==id);state.watched=state.watched.filter(x=>x!==id);save();renderList();toast('TITLE REMOVED')}
 const heroMoves = [
   {label:'Shield charge', effect:'shield', color:'#70b9ff', lift:12, angle:8},
   {label:'Repulsor flight', effect:'jet', color:'#71f7ff', lift:57, angle:17},
@@ -806,7 +827,7 @@ function formatMinutes(minutes) {
   return (hours ? hours + 'h ' : '') + remainder + 'm';
 }
 
-let minutesNeeded = 0, unknownRuntimes = 0, lastCountdownMinutes = null;
+let canonMinutes = 0, minutesNeeded = 0, unknownRuntimes = 0, lastCountdownMinutes = null;
 function updateBingeTotals() {
   const watched = new Set(state.watched);
   let total = 0, canonRemaining = 0;
@@ -822,8 +843,9 @@ function updateBingeTotals() {
     }
     else unknownRuntimes++;
   }
+  canonMinutes = canonRemaining;
   $('timeNeeded').textContent = formatMinutes(minutesNeeded);
-  $('timeCanon').textContent = 'Canon remaining · ' + formatMinutes(canonRemaining);
+  $('timeCanon').textContent = formatMinutes(canonRemaining) + ' of Canon left';
   $('timeTotal').textContent = 'Full watchlist · ' + formatMinutes(total) +
     (all().some(entry => !runtimes[entry.id]) ? ' (known runtimes)' : '');
   lastCountdownMinutes = null;
@@ -835,6 +857,11 @@ function updateBingeCountdown() {
   if (left === lastCountdownMinutes) return;
   lastCountdownMinutes = left;
   $('timeLeft').textContent = formatMinutes(left);
+  const daysAvailable = Math.max(1, left / 1440);
+  $('dailyPace').textContent = !canonMinutes ? 'Canon complete' : !left ? 'Release day has arrived' :
+    canonMinutes > left ? 'More Canon time remains than the countdown allows' :
+    left < 1440 ? formatMinutes(canonMinutes) + ' to finish Canon today' :
+    'About ' + formatMinutes(Math.ceil(canonMinutes / daysAvailable)) + ' a day to finish Canon';
   const difference = left - minutesNeeded;
   const note = $('bingeNote');
   note.dataset.short = String(difference < 0);
@@ -912,7 +939,7 @@ update = function () {
   }
   wasComplete = complete;
 };
-function updateProfile(){if(runnerPosition!==null)moveTimelineHero(runnerTarget);$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));updateMusicButton();$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();startMusic();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
+function updateProfile(){ $('nextHero').innerHTML = sprite(state.hero); drawSprites($('nextHero')); if(runnerPosition!==null)moveTimelineHero(runnerTarget);$('displayName').textContent=state.name||'Agent';$('avatar').innerHTML=`<span class="pixelface">${sprite(state.hero)}</span>`;$('squadIcons').innerHTML=icons.slice(0,5).map((x,i)=>`<button class="herochoice" title="${x[1]}" aria-label="Choose ${x[1]}" data-hero="${i}" aria-pressed="${i===state.hero}"><span class="pixelface">${sprite(i)}</span></button>`).join('');drawSprites($('avatar'));drawSprites($('squadIcons'));updateMusicButton();$('squadIcons').querySelectorAll('.herochoice').forEach(b=>b.addEventListener('click',()=>{state.hero=Number(b.dataset.hero);save();updateProfile();startMusic();toast(`${icons[state.hero][1].toUpperCase()} AVATAR SELECTED`)}))}
 function renderIconPicker(){ $('iconGrid').innerHTML=icons.map((x,i)=>`<button class="iconbtn ${i===draftHero?'selected':''}" data-icon="${i}" aria-pressed="${i===draftHero}" aria-label="${x[1]}" title="${x[1]}">${sprite(i)}<small>${x[1]}</small></button>`).join('');drawSprites($('iconGrid'));$('saveProfile').disabled=step===2&&draftHero===null;$('iconGrid').querySelectorAll('.iconbtn').forEach(b=>b.addEventListener('click',()=>{draftHero=Number(b.dataset.icon);renderIconPicker();$('iconGrid').querySelector('[data-icon="'+draftHero+'"]').focus()}))}
 function showHeroPicker() {
   step = 2;
@@ -986,7 +1013,7 @@ function nextStep() {
   hideModal();
   startMusic();
   if (firstSetup) {
-    $('openGuide').click();
+    $('openGuide').dispatchEvent(new Event('start-welcome'));
     const guide = document.querySelector('.help-tour[open]');
     if (guide) guide.addEventListener('close', completeWelcome, { once: true });
     else completeWelcome();
@@ -1264,7 +1291,7 @@ async function copyText(field) {
 }
 
 function shareProgress() {
-  openFeature('Send a Signal');
+  openFeature('Share progress');
   const snapshot = readinessSnapshot();
   const url = shareUrl(snapshot);
   const text = snapshot.name + ' is ' + readinessPercent(snapshot) + '% ready for Avengers: Doomsday! ' +
@@ -1514,6 +1541,13 @@ function renderWall(signatures, checkpoint = 0) {
     grid.append(tile);
   }
   wallGrid.replaceChildren(grid);
+  const latest = signatures.slice().sort((a,b) => b.sequence - a.sequence).slice(0,3);
+  $('wallPreview').replaceChildren(...latest.map(entry => {
+    const item = document.createElement('li');
+    item.className = 'wall-cell is-signed';
+    item.append(wallPortrait(entry.hero), ...Array.from(wallGrid.children[entry.slot].querySelectorAll('strong,small'), el => el.cloneNode(true)));
+    return item;
+  }));
   $('wallCount').textContent = signatures.length + ' / ' + wallSize;
 }
 
@@ -1602,6 +1636,10 @@ async function signWall() {
   }
 }
 
+const wallLayout = matchMedia('(min-width:651px)');
+function setWallLayout() { document.querySelector('.full-wall').open = wallLayout.matches; }
+setWallLayout();
+wallLayout.addEventListener('change', setWallLayout);
 renderWall([]);
 loadWall();
 signButton.addEventListener('click', signWall);
@@ -1615,6 +1653,6 @@ renderList();
 tick();
 setInterval(tick,1000);
 if (!state.name) showModal();
-else if (!showSharedReadiness() && !reduceMotion.matches) playOpening();
+else showSharedReadiness();
 })();
 </script></body></html>
