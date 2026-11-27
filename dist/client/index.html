@@ -236,7 +236,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 <script src="/site-extras.js" defer></script>
 <link rel="icon" type="image/png" sizes="32x32" href="/footer-art/doomwatch-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/footer-art/doomwatch-64.png">
-</head><body><div class="wrap">
+</head><body class="watchlist-page"><div class="wrap">
 <header class="top"><div class="brand"><div class="brandmark"><span>EARTH–616</span></div>DOOMWATCH</div><div class="topright"><button class="feature-button" id="musicToggle" type="button" aria-pressed="false" aria-label="Mute hero music" title="Hero music begins after interaction">Music: On</button><button class="feature-button" id="spoilerToggle" type="button" aria-label="Show spoilers" aria-pressed="false">Spoilers: Off</button><button class="avatar" id="avatar" aria-label="Change hero"><span class="pixelface">❔</span></button></div></header>
 <nav class="doom-tabs" aria-label="Doomwatch views">
   <a href="#watchlist" aria-current="page">Watchlist</a>
@@ -245,7 +245,7 @@ body{background:radial-gradient(circle,#b57ca722 1px,transparent 1.5px) 0 0/6px 
 </nav>
 <main>
 <section class="hero"><div class="hero-art" aria-hidden="true"><div class="portal"></div><canvas class="villain" width="32" height="32" data-sprite="12"></canvas><canvas class="fighter" width="32" height="32" data-sprite="1"></canvas><canvas class="mutant" width="32" height="32" data-sprite="4"></canvas></div><div class="herotop"><div class="herolabel"><b>◉</b> THEATRICAL COUNTDOWN</div></div><h1 class="cover-title" tabindex="-1"><span class="cover-kicker">AVENGERS WATCHLIST</span>DOOMWATCH</h1><div class="heroarea"><div class="clock"><div class="unit"><div class="num" id="days">000</div><div class="unitlabel">DAYS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="hours">00</div><div class="unitlabel">HOURS</div></div><div class="colon">:</div><div class="unit"><div class="num" id="minutes">00</div><div class="unitlabel">MINUTES</div></div><div class="colon">:</div><div class="unit"><div class="num" id="seconds">00</div><div class="unitlabel">SECONDS</div></div></div><div class="heronote"><strong>⚡ AVENGERS: DOOMSDAY</strong>Your multiverse watch mission starts here. Catch up on the stories, meet the heroes, and be ready for opening night.</div></div><div class="herobottom"><span>EXPECTED RELEASE &nbsp; <time datetime="2026-12-17T00:00:00+05:30">17 DEC 2026 · MIDNIGHT IST</time></span><span class="green">● &nbsp; SPOILER-FREE WATCH MODE</span></div></section>
-<section class="ready-plan" aria-label="Your watch plan"><article class="card" id="nextCard" tabindex="-1"><div class="sidehead"><h2>Up next</h2><span id="nextPhase"></span></div><div class="next-body"><span id="nextHero" aria-hidden="true"></span><h3 id="nextTitle" aria-live="polite"></h3><p id="nextRuntime"></p><div class="next-actions"><button class="feature-button" id="markNext">Mark watched</button><a id="nextProvider" target="_blank" rel="noopener noreferrer">Where to watch</a></div></div></article><article class="card binge-card" aria-labelledby="bingeHeading">
+<section class="ready-plan" aria-label="Your watch plan"><article class="card" id="nextCard" tabindex="-1"><div class="sidehead"><h2>Up next</h2><span id="nextPhase"></span></div><div class="next-body"><span id="nextHero" aria-hidden="true"></span><h3 id="nextTitle" aria-live="polite"></h3><p id="nextRuntime"></p><div class="next-actions"><button class="feature-button" id="markNext">Mark watched</button><a class="feature-button play-link" id="nextProvider" target="_blank" rel="noopener noreferrer"><span class="play-icon" aria-hidden="true"></span> Play</a></div></div></article><article class="card binge-card" aria-labelledby="bingeHeading">
   <div class="sidehead"><h2 id="bingeHeading">Binge time</h2></div>
   <div class="binge-body">
     <p id="timeCanon"></p><strong id="dailyPace"></strong><details><summary>All watch times</summary><div class="binge-metrics">
@@ -569,6 +569,7 @@ function renderList() {
       toggle(nextEntry.id);
       toast(nextEntry.title + ' marked watched');
     };
+    $('nextProvider').setAttribute('aria-label', 'Play ' + nextEntry.title + ' · opens JustWatch in a new tab');
     const provider = indiaWatch[nextEntry.id];
     $('nextProvider').href = 'https://www.justwatch.com/in/' + (provider ? provider[0] : 'search?q=' + encodeURIComponent(nextEntry.title));
   }

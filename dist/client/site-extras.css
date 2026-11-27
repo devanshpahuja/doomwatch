@@ -58,3 +58,166 @@
 @media(max-width:500px){.credits-footer.connection-footer{width:calc(100% - 24px)}.guide-launch{padding:7px 8px;font-size:.8rem}}
 @media(max-height:460px){.help-tour-panel{padding:8px}.help-tour button{min-height:40px}.help-tour-content{padding-bottom:6px}}
 @media(prefers-reduced-motion:reduce){.footer-spider-track.is-visible .footer-spider{animation:none}}
+
+/* Shared control dimensions with colors set by each page. */
+:is(.watchlist-page,.connections-page){
+  --control-ink:#100a17;
+  --control-edge:#80638e;
+  --control-surface:#362647;
+  --control-text:#fff0da;
+  --control-active:#ffe05b;
+  --panel-rule:#58436a;
+  --panel-inset:clamp(12px,2.1vw,20px);
+}
+.connections-page{
+  --control-edge:#6c8ab2;
+  --control-surface:#253958;
+  --panel-rule:#456183;
+}
+:is(.watchlist-page,.connections-page) :is(
+  .top nav a,.doom-tabs a,.guide-launch,.feature-button,.music-toggle,.intro-replay,
+  .phase-select,.map-actions button,.filter,.zoom button,.shortcut,.thread-link,
+  #titleIndex button,#connectionSheet button,#clearSelection,.protocol-card button,
+  .modalfoot button,.help-tour button,.cookie-notice button,#resetBtn
+){
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  min-height:44px;
+  max-width:100%;
+  padding:8px 13px;
+  border-radius:4px;
+  font:750 .875rem/1.2 var(--display);
+  text-align:center;
+  text-decoration:none;
+  white-space:normal;
+}
+:is(.watchlist-page,.connections-page) :is(button,a,summary):focus-visible{
+  outline:2px solid var(--control-active);
+  outline-offset:3px;
+}
+:is(.watchlist-page,.connections-page) :is(.top nav a,.doom-tabs a,.guide-launch,.music-toggle,.intro-replay){
+  border:1px solid var(--control-edge);
+  background:var(--control-surface);
+  color:var(--control-text);
+  box-shadow:none;
+}
+:is(.watchlist-page,.connections-page) :is(.top nav a,.doom-tabs a)[aria-current]{
+  border-color:var(--control-active);
+  background:var(--control-active);
+  color:var(--control-ink);
+}
+.watchlist-page .feature-button,.watchlist-page .modalfoot .primary{
+  border:1px solid #ffea94;
+  background:var(--control-active);
+  color:var(--control-ink);
+  box-shadow:2px 2px var(--control-ink);
+}
+.watchlist-page .feature-button:hover:not(:disabled){background:#fff0a5}
+.watchlist-page .topright .feature-button,.watchlist-page .play-link,
+.watchlist-page .timeline-companion .feature-button,.watchlist-page .activities .feature-button{
+  border-color:var(--control-edge);
+  background:var(--control-surface);
+  color:var(--control-text);
+}
+.watchlist-page :is(.topright .feature-button,.play-link,.timeline-companion .feature-button,.activities .feature-button):hover:not(:disabled){
+  background:#503761;
+}
+:is(.watchlist-page .topright .feature-button,.connections-page .music-toggle)[aria-pressed="true"]{
+  background:#71243e;
+  border-color:#f58ba1;
+}
+.watchlist-page .play-link{min-width:92px}
+.watchlist-page .play-icon{
+  width:0;
+  height:0;
+  border-block:6px solid transparent;
+  border-left:9px solid currentColor;
+}
+.watchlist-page .next-actions [hidden]{display:none}
+.watchlist-page :is(.card,.timeline,.note){
+  border:1px solid var(--panel-rule);
+  border-radius:5px;
+  box-shadow:3px 3px var(--control-ink);
+}
+.watchlist-page .ready-plan{gap:14px}
+.watchlist-page .cardhead{padding:12px var(--panel-inset);border-radius:4px 4px 0 0}
+.watchlist-page .progress{padding-inline:var(--panel-inset)}
+.watchlist-page #resetBtn{border:1px solid var(--control-edge);background:var(--control-surface);color:var(--control-text)}
+.watchlist-page .feature-dialog{border:1px solid var(--control-edge);border-radius:6px}
+.watchlist-page .modal{border-radius:6px}
+.watchlist-page .card .sidehead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:44px;
+  padding:10px var(--panel-inset);
+  border-bottom:1px solid var(--panel-rule);
+  border-radius:4px 4px 0 0;
+  background:#352444;
+}
+.watchlist-page .sidehead h2{
+  margin:0;
+  font-size:clamp(20px,2vw,25px);
+  line-height:1.05;
+}
+.watchlist-page :is(.next-body,.ready-plan .binge-body){padding:12px var(--panel-inset)}
+.watchlist-page .next-body{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:3px 12px;
+}
+.watchlist-page .next-body h3{overflow-wrap:anywhere;line-height:1.15}
+.watchlist-page #nextHero{grid-column:2;grid-row:1 / 3;align-self:start}
+.watchlist-page #nextRuntime{grid-column:1;margin:0}
+.watchlist-page #nextPhase{color:#ffe4a0;font-size:.875rem;font-weight:700}
+.watchlist-page .next-actions{grid-column:1 / -1;flex-wrap:wrap;gap:10px;margin-top:8px}
+.watchlist-page .binge-body details{margin-top:8px;border-top:1px solid var(--panel-rule)}
+.watchlist-page .binge-body summary{width:fit-content;padding:0 8px 0 2px;color:#ffe4a0;font-weight:700}
+.watchlist-page .binge-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.watchlist-page .intro{align-items:center;flex-direction:row;flex-wrap:wrap;gap:8px;padding:14px 0}
+.watchlist-page .doom-tabs{gap:8px;margin:8px 0}
+.watchlist-page .topright{gap:6px}
+.watchlist-page .topright .avatar{display:grid;place-items:center;padding:0;border-radius:4px}
+.watchlist-page .phase-select{border-color:#ae925a}
+.watchlist-page .item-wrap>.item{min-height:48px}
+.watchlist-page :is(.watch-link,.spoiler-detail summary,.feature-close){
+  min-height:44px;
+  min-width:44px;
+}
+.watchlist-page .watch-link{justify-content:center}
+.watchlist-page .watch-link:hover{background:#392848}
+.watchlist-page :is(.activities>summary,.full-wall>summary,.legacy-four>summary){
+  align-content:center;
+  min-height:44px;
+  padding-inline:8px;
+  font-weight:700;
+}
+.watchlist-page .feature-toolbar{margin:0 0 12px}
+.watchlist-page .wall-preview{gap:8px}
+.watchlist-page .wall-actions{align-items:center}
+.watchlist-page .wall-status:empty{display:none}
+.watchlist-page .signature-wall:not(:has(.wall-status:not(:empty))){padding-bottom:12px}
+.connections-page .top nav{gap:8px}
+.connections-page .controls{padding:var(--panel-inset);gap:10px;border:1px solid var(--panel-rule);border-radius:5px 5px 0 0}
+.connections-page .map-actions input{height:44px;border-radius:4px}
+.connections-page .explorer{border:1px solid var(--panel-rule);border-top:0;border-radius:0 0 5px 5px;overflow:hidden}
+.connections-page .atlas:focus-visible{outline-offset:-4px}
+.connections-page #mapFilters summary{padding-inline:8px;color:#ffe4a0}
+.connections-page .title-index{border:1px solid var(--panel-rule);border-radius:5px;padding:0 var(--panel-inset)}
+.connections-page .title-index summary{min-height:44px;align-content:center}
+.connections-page #titleIndex{padding-bottom:var(--panel-inset)}
+.connections-page :is(.thread-link,.shortcut,#titleIndex button){justify-content:flex-start;text-align:left}
+.credits-links a{justify-content:center;min-width:105px;min-height:44px;text-decoration:none}
+.credits-footer .footer{justify-content:center;text-align:center}
+
+@media(max-width:420px){
+  .watchlist-page .topright :is(.feature-button,#musicToggle,#spoilerToggle){padding-inline:6px;font-size:.75rem}
+  .watchlist-page .wall-heading{align-items:start}
+  .watchlist-page .wall-actions{justify-items:start}
+  .watchlist-page .wall-invitation{text-align:left}
+  .credits-links a{min-width:84px;padding-inline:8px;font-size:.8rem}
+}
