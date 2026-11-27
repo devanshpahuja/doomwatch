@@ -44,7 +44,7 @@
     ['#shareProgress','Share your progress','Use Send a Signal to share a snapshot of your readiness.'],
     ['#openStory','Make a Hero Cover','Create a cover starring your chosen hero that you can save or share.'],
     ['.doom-tabs a[href="/connections"]','Explore Connections','Open the web to see how titles connect through stories, characters, and different universes.'],
-    ['#signatureWall .wall-heading','Sign the wall','Leave your display name and hero on the shared wall. Your hero can sign the wall once.'],
+    ['#signWall','Sign the wall','Leave your display name and hero on the shared wall. Your hero can sign the wall once.'],
     ['.ticket-button','Find tickets','Open the ticket listing from Book Doomsday Tickets.']
   ]).map(([selector,title,description]) => ({target:document.querySelector(selector),title,description}))
     .filter(step => step.target);
@@ -54,9 +54,11 @@
   dialog.className = 'help-tour';
   dialog.setAttribute('aria-labelledby','helpTourTitle');
   dialog.setAttribute('aria-describedby','helpTourCopy');
-  dialog.innerHTML = '<div class="help-tour-spot" aria-hidden="true"></div><div class="help-tour-panel"><div class="help-tour-head"><span class="help-tour-progress"></span><button type="button" data-close>Close guide</button></div><h2 class="help-tour-title" id="helpTourTitle"></h2><p id="helpTourCopy"></p><div class="help-tour-actions"><button type="button" data-back>Back</button><button type="button" data-next>Next</button></div></div>';
+  dialog.innerHTML = '<div class="help-tour-spot" aria-hidden="true"></div><div class="help-tour-panel"><div class="help-tour-head"><span class="help-tour-progress"></span><button type="button" data-close>Close guide</button></div><div class="help-tour-content" tabindex="0"><h2 class="help-tour-title" id="helpTourTitle"></h2><p id="helpTourCopy"></p></div><div class="help-tour-actions"><button type="button" data-back>Back</button><button type="button" data-next autofocus>Next</button></div></div>';
   document.body.append(dialog);
   const spot = dialog.querySelector('.help-tour-spot');
+  const panel = dialog.querySelector('.help-tour-panel');
+  const content = dialog.querySelector('.help-tour-content');
   const title = dialog.querySelector('#helpTourTitle');
   const copy = dialog.querySelector('#helpTourCopy');
   const progress = dialog.querySelector('.help-tour-progress');
@@ -64,15 +66,65 @@
   const next = dialog.querySelector('[data-next]');
   let step = 0;
   let originalScroll = 0;
+  let layoutFrame = 0;
+
+  function visibleViewport() {
+    const viewport = window.visualViewport;
+    const left = viewport?.offsetLeft ?? 0;
+    const top = viewport?.offsetTop ?? 0;
+    const width = viewport?.width ?? document.documentElement.clientWidth;
+    const height = viewport?.height ?? document.documentElement.clientHeight;
+    return { left, top, width, height };
+  }
+
+  function highlightBounds(viewport) {
+    return {
+      left: viewport.left + 4,
+      right: viewport.left + viewport.width - 4,
+      top: viewport.top + 6,
+      bottom: panel.getBoundingClientRect().top - 12
+    };
+  }
 
   function positionSpot() {
     if (!dialog.open) return;
-    const rect = guide[step].target.getBoundingClientRect();
-    const left = Math.max(4,rect.left - 6), top = Math.max(4,rect.top - 6);
-    const right = Math.min(window.innerWidth - 4,rect.right + 6);
-    const bottom = Math.min(window.innerHeight - 4,rect.bottom + 6);
-    Object.assign(spot.style,{left:left+'px',top:top+'px',width:Math.max(0,right-left)+'px',height:Math.max(0,bottom-top)+'px'});
+    const bounds = highlightBounds(visibleViewport());
+    const target = guide[step].target.getBoundingClientRect();
+    const left = Math.max(bounds.left, target.left - 6);
+    const top = Math.max(bounds.top, target.top - 6);
+    const width = Math.max(0, Math.min(bounds.right, target.right + 6) - left);
+    const height = Math.max(0, Math.min(bounds.bottom, target.bottom + 6) - top);
+    spot.toggleAttribute('data-offscreen', !width || !height);
+    Object.assign(spot.style, { left: left+'px', top: top+'px', width: width+'px', height: height+'px' });
   }
+
+  function alignStep() {
+    if (!dialog.open) return;
+    const viewport = visibleViewport();
+    const width = Math.min(viewport.width - 24, 440);
+    const bottom = Math.max(0, document.documentElement.clientHeight - viewport.top - viewport.height);
+    dialog.style.setProperty('--tour-width', width+'px');
+    dialog.style.setProperty('--tour-left', viewport.left + (viewport.width - width) / 2+'px');
+    dialog.style.setProperty('--tour-bottom', bottom+'px');
+    dialog.style.setProperty('--tour-panel-height', viewport.height * 0.55+'px');
+
+    const bounds = highlightBounds(viewport);
+    const target = guide[step].target.getBoundingClientRect();
+    const space = Math.max(0, bounds.bottom - bounds.top - 12);
+    const top = bounds.top + 6 + (space - Math.min(target.height, space)) / 2;
+    window.scrollBy({ top: target.top - top, behavior: 'instant' });
+    positionSpot();
+  }
+
+  function scheduleAlignment() {
+    if (!dialog.open || layoutFrame) return;
+    layoutFrame = requestAnimationFrame(() => {
+      layoutFrame = 0;
+      alignStep();
+    });
+  }
+
+  const resizeObserver = new ResizeObserver(scheduleAlignment);
 
   function showStep() {
     const current = guide[step];
@@ -81,8 +133,11 @@
     copy.textContent = current.description;
     back.disabled = step === 0;
     next.textContent = step === guide.length - 1 ? 'Done' : 'Next';
-    current.target.scrollIntoView({block:'center',behavior:'instant'});
-    positionSpot();
+    content.scrollTop = 0;
+    resizeObserver.disconnect();
+    resizeObserver.observe(panel);
+    resizeObserver.observe(current.target);
+    alignStep();
   }
 
   launch.addEventListener('click',() => {
@@ -99,9 +154,14 @@
   });
   dialog.querySelector('[data-close]').addEventListener('click',() => dialog.close());
   dialog.addEventListener('close',() => {
+    resizeObserver.disconnect();
+    cancelAnimationFrame(layoutFrame);
+    layoutFrame = 0;
     window.scrollTo({top:originalScroll,behavior:'instant'});
     launch.focus({preventScroll:true});
   });
   window.addEventListener('scroll',positionSpot,{passive:true});
-  window.addEventListener('resize',positionSpot);
+  window.addEventListener('resize',scheduleAlignment);
+  window.visualViewport?.addEventListener('resize',scheduleAlignment);
+  window.visualViewport?.addEventListener('scroll',scheduleAlignment);
 })();

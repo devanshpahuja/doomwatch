@@ -24,17 +24,20 @@
   94%{left:0;transform:rotate(-93deg)}
   100%{left:0;transform:rotate(0)}
 }
-.help-tour{position:fixed;inset:auto 12px max(12px,env(safe-area-inset-bottom));width:min(100% - 24px,440px);margin:0 auto;padding:0;overflow:visible;border:0;background:transparent;color:#fff0dc}
+.help-tour{position:fixed;inset:auto auto calc(var(--tour-bottom,0px) + max(12px,env(safe-area-inset-bottom))) var(--tour-left,12px);width:var(--tour-width,min(100% - 24px,440px));max-width:none;margin:0;padding:0;overflow:visible;border:0;background:transparent;color:#fff0dc}
 .help-tour::backdrop{background:transparent}
 .help-tour-spot{position:fixed;pointer-events:none;border-radius:7px;outline:2px solid #ffe076;box-shadow:0 0 0 200vmax #27272def;z-index:0}
-.help-tour-panel{position:relative;z-index:1;padding:16px;border:1px solid #aa81ba;border-radius:8px;background:#30223d;box-shadow:0 9px 28px #0b0715a8;font:1rem/1.35 'Space Grotesk',sans-serif}
+.help-tour-spot[data-offscreen]{outline:0}
+.help-tour-panel{position:relative;z-index:1;display:flex;flex-direction:column;max-height:var(--tour-panel-height,50dvh);padding:12px;box-sizing:border-box;border:1px solid #aa81ba;border-radius:8px;background:#30223d;box-shadow:0 9px 28px #0b0715a8;font:1rem/1.35 'Space Grotesk',sans-serif}
+.help-tour-content{min-height:0;overflow:auto;overscroll-behavior:contain;padding:4px 0 10px}
 .help-tour-head,.help-tour-actions{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.help-tour-title{margin:5px 0 0;color:#fff0dc;font:700 1.35rem/1.15 'Space Grotesk',sans-serif;letter-spacing:normal}
-.help-tour-panel p{margin:8px 0 14px;color:#f1dcf1}
+.help-tour-title{margin:4px 0 0;color:#fff0dc;font:700 1.25rem/1.15 'Space Grotesk',sans-serif;letter-spacing:normal}
+.help-tour-panel p{margin:6px 0 0;color:#f1dcf1}
 .help-tour-progress{color:#ffe076;font:500 .8rem 'DM Mono',monospace}
-.help-tour button{min-height:40px;padding:6px 10px;border:1px solid #9672a4;border-radius:4px;background:#411f50;color:#fff0dc;font:700 .875rem 'Space Grotesk',sans-serif;cursor:pointer}
+.help-tour button{min-height:44px;padding:6px 10px;border:1px solid #9672a4;border-radius:4px;background:#411f50;color:#fff0dc;font:700 .875rem 'Space Grotesk',sans-serif;cursor:pointer}
 .help-tour button:disabled{opacity:.45;cursor:default}
 .help-tour button[data-next]{background:#ffe076;border-color:#ffe076;color:#25192b}
 .help-tour button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media(max-width:500px){.credits-footer.connection-footer{width:calc(100% - 24px)}.guide-launch{padding:7px 8px;font-size:.8rem}}
+@media(max-height:460px){.help-tour-panel{padding:8px}.help-tour button{min-height:40px}.help-tour-content{padding-bottom:6px}}
 @media(prefers-reduced-motion:reduce){.footer-spider-track.is-visible .footer-spider{animation:none}}
